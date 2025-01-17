@@ -30,8 +30,8 @@ global.owner = [
 
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
 
-global.mods = ['584120346669', '584128382768', '', '', '']
-global.suittag = ['584120346669']
+global.mods = ['50488198573', '50488198573', '', '', '']
+global.suittag = ['50488198573']
 global.prems = []
 
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
@@ -41,25 +41,25 @@ global.baileys = 'V 6.7.9'
 global.languaje = 'Español'
 global.vs = '2.1.5'
 global.vsJB = '5.0'
-global.nameqr = 'Yuki Suou - Bot'
-global.namebot = '✿◟Yυƙι-Sυσυ-Bσƚ◞✿'
+global.nameqr = '𝑲𝒊𝒓𝒊𝒕𝒐-𝑩𝒐𝒕'
+global.namebot = '💠◟𝑲𝒊𝒓𝒊𝒕𝒐-𝑩𝒐𝒕◞💠'
 global.sessions = 'Sessions'
 global.jadi = 'JadiBots' 
-global.yukiJadibts = true
+global.kiritoJadibts = true
 
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
 
 global.packsticker =`°.⎯⃘̶⎯̸⎯ܴ⎯̶᳞͇ࠝ⎯⃘̶⎯̸⎯ܴ⎯̶᳞͇ࠝ⎯⃘̶⎯̸.°\n✦ Bσƚ:\n✦ Pɾσριҽƚαɾισ:\n✦ Fҽƈԋα ԃҽ Cɾҽαƈιóɳ:\n✦ Hσɾα ԃҽ Cɾҽαƈιóɳ:\n♾━━━━━━━━`
-global.packsticker2 = `━━━━━━━━♾\n⪛✰ 𝐘𝐮𝐤𝐢-𝐒𝐮𝐨𝐮-𝐁𝐨𝐭 ✰⪜\nⁱᵃᵐ|𝔇ĕ𝐬†𝓻⊙γ𒆜\n⇝ ${moment.tz('America/Los_Angeles').format('DD/MM/YY')}\n⇝ ${moment.tz('America/Los_Angeles').format('HH:mm:ss')} \n°.⎯⃘̶⎯̸⎯ܴ⎯̶᳞͇ࠝ⎯⃘̶⎯̸⎯ܴ⎯̶᳞͇ࠝ⎯⃘̶⎯̸.°\n\nѕτιϲκєя ϐγ: Yυƙι-Sυσυ-Bσƚ`
+global.packsticker2 = `━━━━━━━━♾\n⪛✰ 𝐊𝐢𝐫𝐢𝐭𝐨-𝐁𝐨𝐭 ✰⪜\n𝐃𝐞𝐲𝐥𝐢𝐧\n⇝ ${moment.tz('America/Los_Angeles').format('DD/MM/YY')}\n⇝ ${moment.tz('America/Los_Angeles').format('HH:mm:ss')} \n°.⎯⃘̶⎯̸⎯ܴ⎯̶᳞͇ࠝ⎯⃘̶⎯̸⎯ܴ⎯̶᳞͇ࠝ⎯⃘̶⎯̸.°\n\nѕτιϲκєя ϐγ: Yυƙι-Sυσυ-Bσƚ`
 
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
 
-global.packname = `⪛✰ 𝐘𝐮𝐤𝐢-𝐒𝐮𝐨𝐮-𝐁𝐨𝐭 ✰⪜`
-global.botname = '𝐘𝐮𝐤𝐢-𝐒𝐮𝐨𝐮-𝐁𝐨𝐭'
-global.wm = 'ৎ୭࠭͢𝐘𝐮𝐤𝐢_𝐒𝐮𝐨𝐮-𝐁𝐨𝐭ⷭ𓆪͟͞ '
-global.author = 'Made By ⁱᵃᵐ|𝔇ĕ𝐬†𝓻⊙γ𒆜'
-global.dev = '© ⍴᥆ᥕᥱrᥱძ ᑲᥡ ⁱᵃᵐ|𝔇ĕ𝐬†𝓻⊙γ𒆜'
-global.textbot = 'Yυƙι-Sυσυ-Bσƚ • Powered By ⁱᵃᵐ|𝔇ĕ𝐬†𝓻⊙γ𒆜'
+global.packname = `𝐊𝐢𝐫𝐢𝐭𝐨-𝐁𝐨𝐭`
+global.botname = '𝐊𝐢𝐫𝐢𝐭𝐨-𝐁𝐨𝐭'
+global.wm = '𝐊𝐢𝐫𝐢𝐭𝐨-𝐁𝐨𝐭'
+global.author = 'Made By 𝑫𝒆𝒚𝒍𝒊𝒏'
+global.dev = '© ⍴᥆ᥕᥱrᥱძ ᑲᥡ 𝑫𝒆𝒚𝒍𝒊𝒏'
+global.textbot = 'Yυƙι-Sυσυ-Bσƚ • Powered By 𝑫𝒆𝒚𝒍𝒊𝒏'
 
 global.moneda = 'Yenes'
 global.welcom1 = 'Edita Con #setwelcome'
@@ -105,13 +105,13 @@ global.cn ='https://whatsapp.com/channel/0029VapSIvR5EjxsD1B7hU3T';
 
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
 
-global.estilo = { key: {  fromMe: false, participant: `0@s.whatsapp.net`, ...(false ? { remoteJid: "5219992095479-1625305606@g.us" } : {}) }, message: { orderMessage: { itemCount : -999999, status: 1, surface : 1, message: '❀ Yυƙι-Sυσυ-Bσƚ ☄︎︎', orderTitle: 'Bang', thumbnail: catalogo, sellerJid: '0@s.whatsapp.net'}}}
+global.estilo = { key: {  fromMe: false, participant: `0@s.whatsapp.net`, ...(false ? { remoteJid: "5219992095479-1625305606@g.us" } : {}) }, message: { orderMessage: { itemCount : -999999, status: 1, surface : 1, message: '𝑲𝒊𝒓𝒊𝒕𝒐-𝑩𝒐𝒕 ☄︎︎', orderTitle: 'Bang', thumbnail: catalogo, sellerJid: '0@s.whatsapp.net'}}}
 
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
 
 global.ch = {
-ch1: '120363343811229130@newsletter',
-ch2: '120363322713003916@newsletter',
+ch1: '120363365444927738@newsletter',
+ch2: '120363365444927738@newsletter',
 }
 
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
