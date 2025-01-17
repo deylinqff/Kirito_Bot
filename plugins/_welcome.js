@@ -6,7 +6,7 @@ export async function before(m, { conn, participants, groupMetadata }) {
     let userId = m.messageStubParameters[0];
 
     const welcomeImage = 'https://qu.ax/jqiVK.jpg'; // Imagen de bienvenida
-    const goodbyeImage = 'https://qu.ax/plaEy.jpg'; // Imagen de despedida
+    const goodbyeImage = 'https://qu.ax/jqiVK.jpg'; // Imagen de despedida
 
     let pp;
     try {
