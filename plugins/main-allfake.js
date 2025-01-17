@@ -81,7 +81,7 @@ global.waitttt = '🕒 *𝗘𝘀𝗽𝗲𝗿𝗮 𝗨𝗻 𝗠𝗼𝗺𝗲𝗻�
 
 //Enlaces
 var canal = 'https://whatsapp.com/channel/0029VawF8fBBvvsktcInIz3m'  
-let canal2 = 'https://whatsapp.com/channel/0029VawF8fBBvvsktcInIz3m'
+let canal2 = 'https://whatsapp.com/channel/0029VayQwPsFnSzESZJ9Us3z'
 var git = 'https://github.com/deylinqff'
 var github = 'https://github.com/deylinqff/Kirito_Bot' 
 let correo = 'deylibaquedano801@gmail.com'
