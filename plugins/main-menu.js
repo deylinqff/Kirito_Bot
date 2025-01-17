@@ -1,474 +1,518 @@
-import moment from 'moment-timezone';
+import fs from 'fs'
+import fetch from 'node-fetch'
+import { xpRange } from '../lib/levelling.js'
+const { levelling } = '../lib/levelling.js'
+import { promises } from 'fs'
+import { join } from 'path'
+let handler = async (m, { conn, usedPrefix, usedPrefix: _p, __dirname, text, command }) => {
+try {        
+/*let _package = JSON.parse(await promises.readFile(join(__dirname, '../package.json')).catch(_ => ({}))) || {}*/
+let { exp, dragones, level, role } = global.db.data.users[m.sender]
+let { min, xp, max } = xpRange(level, global.multiplier)
+let name = await conn.getName(m.sender)
+let _uptime = process.uptime() * 1000
+let _muptime
+if (process.send) {
+process.send('uptime')
+_muptime = await new Promise(resolve => {
+process.once('message', resolve)
+setTimeout(resolve, 1000)
+}) * 1000
+}
+let user = global.db.data.users[m.sender]
+let muptime = clockString(_muptime)
+let uptime = clockString(_uptime)
+let totalreg = Object.keys(global.db.data.users).length
+let rtotalreg = Object.values(global.db.data.users).filter(user => user.registered == true).length
+let who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? conn.user.jid : m.sender
+let mentionedJid = [who]
+let perfil = await conn.profilePictureUrl(who, 'image').catch(_ => 'https://i.ibb.co/GtYw361/Yuki.jpg')
+let taguser = '@' + m.sender.split("@s.whatsapp.net")[0]
+const vid = ['https://qu.ax/Bjirw.mp4', 'https://qu.ax/Bjirw.mp4', 'https://qu.ax/Bjirw.mp4']
 
-let handler = async (m, { conn, args }) => {
-  let userId = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.sender;
-  let user = global.db.data.users[userId];
-  let name = conn.getName(userId);
-  let cumpleanos = user.birth || 'No especificado';
-  let genero = user.genre || 'No especificado';
-  let exp = user.exp || 0;
-  let nivel = user.level || 0;
-  let coins = user.coin || 0;
-  let role = user.role || 'Esclavo';
+let menu = `𔓕꯭  ꯭ 𓏲꯭֟፝੭ 𝓚𝓪𝓴𝓪𝓻𝓸𝓽𝓸-𝓑𝓸𝓽-𝓜𝓓 𓏲꯭֟፝੭ ꯭  ꯭𔓕
 
-  let perfil = await conn.profilePictureUrl(userId, 'image').catch(_ => 'https://files.catbox.moe/xr2m6u.jpg');
+🐲 ¡𝐇𝐨𝐥𝐚! 𝐂𝐨𝐦𝐨 𝐄𝐬𝐭𝐚𝐬 𝐄𝐥 𝐃𝐢𝐚 𝐃𝐞 𝐇𝐨𝐲 *${taguser}* 𝐒𝐨𝐲 𝐤𝐚𝐤𝐚𝐫𝐨𝐭𝐨𝐁𝐨𝐭 ${saludo}. 
 
-  let txt = `
-𝐇𝐨𝐥𝐚! 𝐒𝐨𝐲 ${botname}
-ᴀǫᴜɪ ᴛɪᴇɴᴇs ʟᴀ ʟɪsᴛᴀ ᴅᴇ ᴄᴏᴍᴀɴᴅᴏs
-╭┈ ↷
-│ᰔᩚ Cliente » @${userId.split('@')[0]}
-│⛁ ${moneda} » ${coins}
-│✰ Experiencia » ${exp.toLocaleString()}
-│✦ Nivel » ${nivel}
-│✤ Rango » ${role}
-│🜲 𝓓𝓮𝓿𝓮𝓵𝓸𝓹𝓮𝓭 𝓫𝔂  ⁱᵃᵐ|𝔇ĕ𝐬†𝓻⊙γ𒆜⁩
-╰─────────────────
-ᴄʀᴇᴀ ᴜɴ sᴜʙ-ʙᴏᴛ ᴄᴏɴ ᴛᴜ ɴᴜᴍᴇʀᴏ ᴜᴛɪʟɪᴢᴀɴᴅᴏ *#serbot* o *#serbot code*
+┏━━⪩「 𝐈𝐍𝐅𝐎 𝐂𝐑𝐄𝐀𝐃𝐎𝐑ᚐ 」⪨
+┃❂ ⧼👑⧽ *Creador:* ĹєǤ𝒆𝐧𝐃
+┃❂ ⧼🔱⧽ *Modo:* Publico
+┃❂ ⧼🌠⧽ *Baileys:* Multi Device
+┃❂ ⧼🤖⧽ *Bot:* ${(conn.user.jid == global.conn.user.jid ? 'Oficial' : 'Sub-Bot')}
+┃❂ ⧼⏱️⧽ *Activado:* ${uptime}
+┃❂ ⧼👥⧽ *Usuarios:* ${totalreg}
+┗━━━━━━━━━━━━━━━━━⪩‎‎
+‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎
+‎┏━━⪩「 𝐈𝐍𝐅𝐎 𝐃𝐄 𝐔𝐒𝐔𝐀𝐑𝐈𝐎 」⪨
+┃❂ ⧼👤⧽ *Cliente:* ${name}
+┃❂ ⧼✨⧽ *Exp:* ${exp}
+┃❂ ⧼🐉⧽ *Dragones:* ${dragones}
+┃❂ ⧼🌟⧽ *Nivel:* ${level}
+┃❂ ⧼⚜️⧽ *Rango:* ${role}
+┗━━━━━━━━━━━━━━━━━⪩
+‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎
+*─ׄ─ׄ─⭒─ׄ─ׅ─ׄ⭒─ׄ─ׄ─⭒─ׄ─ׄ─⭒─ׄ─ׅ──ׄ*
+ *【𝕷 𝖎 𝖘 𝖙 𝖆 - 𝕯𝖊 - 𝕮 𝖔 𝖒 𝖆 𝖓 𝖉 𝖔 𝖘】* 
 
-»  ⊹˚• \`Info-Bot\` •˚⊹
+┏━━❃「 𝐈𝐧𝐟𝐨 𝐁𝐨𝐭 」❃
+┃❀ .botreglas
+┃❀ .menu
+┃❀ .menujuegos
+┃❀ .menuanime
+┃❀ .menuhorny 
+┃❀ .menuaudios 
+┃❀ .runtime
+┃❀ .script
+┃❀ .staff
+┃❀ .blocklist
+┗━━━━━━━━━━━━━━━━━⪩
+┏━━❃「 𝐈𝐧𝐟𝐨𝐫𝐦𝐚𝐜𝐢𝐨́𝐧ᚐ 」❃
+┃✿ .creador
+┃✿ .editautoresponder
+┃✿ .owner
+┃✿ .dash
+┃✿ .dashboard
+┃✿ .views
+┃✿ .database
+┃✿ .usuarios
+┃✿ .user
+┃✿ .ds
+┃✿ .listprem
+┃✿ .status
+┃✿ .solicitud *<mensaje>*
+┃✿ .sug *<mensaje>*
+┃✿ .horario
+┃✿ .skyplus
+┃✿ .infobot
+┃✿ .ping
+┃✿ .reportar
+┃✿ .sistema
+┃✿ .speed
+┃✿ .speedtest
+┃✿ .reportar
+┗━━━━━━━━━━━━━━━━━⪩
+┏━━❃「 𝐑𝐞𝐠𝐢𝐬𝐭𝐫𝐨 」❃
+┃❋ .reg
+┃❋ .unreg
+┃❋ .profile
+┃❋ .marry
+┃❋ .setgenre
+┃❋ .delgenre
+┃❋ .setbirth
+┃❋ .delbirth
+┃❋ .setdescription
+┃❋ .deldescription
+┗━━━━━━━━━━━━━━━━━⪩
+┏━━⪩「 𝐃𝐢𝐯𝐞𝐫𝐬𝐢𝐨𝐧 」⪨
+┃☬ .amistad
+┃☬ .gay <@tag> | <nombre>
+┃☬ .lesbiana <@tag> | <nombre>
+┃☬ .pajero <@tag> | <nombre>
+┃☬ .pajera <@tag> | <nombre>
+┃☬ .puto <@tag> | <nombre>
+┃☬ .puta <@tag> | <nombre>
+┃☬ .manco <@tag> | <nombre>
+┃☬ .manca <@tag> | <nombre>
+┃☬ .revelargenero *<texto>*
+┃☬ .rata <@tag> | <nombre>
+┃☬ .prostituta <@tag> | <nombre>
+┃☬ .prostituto <@tag> | <nombre> 
+┃☬ .consejo
+┃☬ .divorce
+┃☬ .doxear
+┃☬ .doxxing <nombre> | <@tag>
+┃☬ .formarpareja
+┃☬ .formarpareja5
+┃☬ .horny
+┃☬ .hornycard
+┃☬ .huevo @user
+┃☬ .iqtest
+┃☬ .marica
+┃☬ .meme
+┃☬ .aplauso
+┃☬ .marron
+┃☬ .suicide
+┃☬ .chupalo
+┃☬ .minovia @user
+┃☬ .morse *<encode|decode>*
+┃☬ .nombreninja *<texto>*
+┃☬ .pajeame
+┃☬ .personalidad
+┃☬ .piropo
+┃☬ .pokedex *<pokemon>*
+┃☬ .pregunta
+┃☬ .ship
+┃☬ .love
+┃☬ .simpcard
+┃☬ .sorteo
+┃☬ .itssostupid
+┃☬ .estupido
+┃☬ .stupid
+┃☬ .top *<texto>*
+┃☬ .formartrio @usuario1 @usuario2
+┃☬ .waste @user
+┃☬ .zodiac *2002 02 25*
+┗━━━━━━━━━━━━━━━━━⪩
+┏━━⪩「 𝐉𝐮𝐞𝐠𝐨𝐬ᚐ 」⪨
+┃✧ .cancion
+┃✧ .pista
+┃✧ .ttt nueva sala 
+┃✧ .ahorcado
+┃✧ .math <mode>
+┃✧ .ppt
+┃✧ .pvp @user
+┃✧ .reto
+┃✧ .sopa
+┃✧ .verdad
+┗━━━━━━━━━━━━━━━━━⪩
+┏━━⪩「 𝐄𝐦𝐨𝐱-𝐀𝐧𝐢𝐦𝐞」⪨
+┃✥ .angry/enojado @tag
+┃✥ .bath/bañarse @tag
+┃✥ .bite/morder @tag
+┃✥ .bleh/lengua @tag
+┃✥ .blush/sonrojarse @tag
+┃✥ .bored/aburrido @tag
+┃✥ .coffe/cafe @tag
+┃✥ .cry/llorar @tag
+┃✥ .cuddle/acurrucarse @tag
+┃✥ .dance/bailar @tag
+┃✥ .drunk/borracho @tag
+┃✥ .eat/comer @tag
+┃✥ .facepalm/palmada @tag
+┃✥ .grop/manosear @tag
+┃✥ .happy/feliz @tag
+┃✥ .hello/hola @tag
+┃✥ .hug/abrazar @tag
+┃✥ .kill/matar @tag
+┃✥ .kiss/besar @tag
+┃✥ .kiss2/besar2 @tag
+┃✥ .laugh/reirse @tag
+┃✥ .lick/lamer @tag
+┃✥ .love2/enamorada @tag
+┃✥ .patt/acariciar @tag
+┃✥ .poke/picar @tag
+┃✥ .pout/pucheros @tag
+┃✥ .preg/embarazar @tag
+┃✥ .punch/golpear @tag
+┃✥ .run/correr @tag
+┃✥ .sad/triste @tag
+┃✥ .scared/asustada @tag
+┃✥ .seduce/seducir @tag
+┃✥ .shy/timida @tag
+┃✥ .slap/bofetada @tag
+┃✥ .sleep/dormir @tag
+┃✥ .smoke/fumar @tag
+┃✥ .think/pensando @tag
+┃✥ .undress/encuerar @tag
+┗━━━━━━━━━━━━━━━━━⪩
+┏━━⪩「 𝐇𝐨𝐫𝐧𝐲ᚐ 」⪨
+┃✤ .sixnine/69 @tag
+┃✤ .anal/culiar @tag
+┃✤ .blowjob/mamada @tag
+┃✤ .boobjob/rusa @tag
+┃✤ .cum/leche @tag
+┃✤ .fap/paja @tag
+┃✤ .follar @tag
+┃✤ .footjob/pies @tag
+┃✤ .fuck/coger @tag
+┃✤ .fuck2/coger2 @tag
+┃✤ .grabboobs/agarrartetas @tag
+┃✤ .penetrar @user
+┃✤ .lickpussy/coño @tag
+┃✤ .sexo/sex @tag
+┃✤ .spank/nalgada @tag
+┃✤ .suckboobs/chupartetas @tag
+┃✤ .violar/perra @tag
+┃✤ .lesbianas/tijeras @tag
+┃✤ .rule34 <personaje>
+┗━━━━━━━━━━━━━━━━━⪩
+┏━━⪩「 𝐑𝐨𝐥𝐥𝐰𝐚𝐢𝐟𝐮𝐬 」⪨
+┃✦ .character
+┃✦ .darrw
+┃✦ .obtenidos
+┃✦ .c
+┃✦ .robarpersonaje
+┃✦ .rw
+┃✦ .toprw
+┗━━━━━━━━━━━━━━━━━⪩
+┏━━⪩「 𝐄𝐜𝐨𝐧𝐨𝐦𝐢𝐚ᚐ 」⪨
+┃✱ .apostar 
+┃✱ .bal
+┃✱ .bank
+┃✱ .dragones
+┃✱ .prestar
+┃✱ .deuda
+┃✱ .pagar
+┃✱ .apostar *<cantidad>*
+┃✱ .cf
+┃✱ .crimen
+┃✱ .depositar
+┃✱ .minar
+┃✱ .retirar
+┃✱ .rob2
+┃✱ .rob
+┃✱ .ruleta *<cantidad> <color>*
+┃✱ .Buy
+┃✱ .Buyall
+┃✱ .slot <apuesta>
+┃✱ .slut
+┃✱ .trabajar
+┃✱ .transfer [tipo] [cantidad] [@tag]
+┗━━━━━━━━━━━━━━━━━⪩
+┏━━⪩「 𝐑-𝐏-𝐆ᚐ 」⪨
+┃♤ .adventure
+┃♤ .annual
+┃♤ .cofre
+┃♤ .daily
+┃♤ .claim
+┃♤ .cazar
+┃♤ .halloween
+┃♤ .heal
+┃♤ .lb
+┃♤ .levelup
+┃♤ .inventario 
+┃♤ .mazmorra
+┃♤ .monthly
+┃♤ .navidad
+┃♤ .addprem [@user] <days>
+┃♤ .weekly
+┗━━━━━━━━━━━━━━━━━⪩
+┏━━⪩「 𝐒𝐞𝐫𝐛𝐨𝐭/𝐂𝐨𝐝𝐞 」⪨
+┃✾ .jadibot 
+┃✾ .deletebot
+┃✾ .bots
+┃✾ .stop
+┃✾ .serbot
+┃✾ .serbot --code 
+┃✾ .token
+┃✾ .rentbot
+┗━━━━━━━━━━━━━━━━━⪩
+┏━━⪩「 𝐁𝐮𝐬𝐜𝐚𝐝𝐨𝐫𝐞𝐬ᚐ 」⪨
+┃❖ .animesearch
+┃❖ .appstore
+┃❖ .bingsearch
+┃❖ .cuevana
+┃❖ .githubsearch
+┃❖ .gimage
+┃❖ .gnula
+┃❖ .googlesearch *<texto>*
+┃❖ .npmjs
+┃❖ .steam
+┃❖ .twitterstalk <username>
+┃❖ .tiktoksearch <txt>
+┃❖ .tweetposts *<búsqueda>*
+┃❖ .wikis
+┃❖ .xnxxsearch <query>
+┃❖ .ytsearch
+┃❖ .imagen <query>
+┃❖ .infoanime
+┃❖ .animelink
+┗━━━━━━━━━━━━━━━━━⪩
+┏━━⪩「 𝐃𝐞𝐬𝐜𝐚𝐫𝐠𝐚𝐬 」⪨
+┃Ѽ .animedl
+┃Ѽ .animeinfo
+┃Ѽ .apk2
+┃Ѽ .apkmod
+┃Ѽ .facebook
+┃Ѽ .fb
+┃Ѽ .gdrive
+┃Ѽ .gitclone *<url git>*
+┃Ѽ .instagram2
+┃Ѽ .ig2
+┃Ѽ .imagen <query>
+┃Ѽ .mangad <nombre del manga> <número del capítulo>
+┃Ѽ .mediafire
+┃Ѽ .mega
+┃Ѽ .npmdl
+┃Ѽ .aptoide
+┃Ѽ .pinterest
+┃Ѽ .pinvid
+┃Ѽ .play
+┃Ѽ .play2
+┃Ѽ .play3
+┃Ѽ .play4
+┃Ѽ .playdoc
+┃Ѽ .playdoc2
+┃Ѽ .mp3
+┃Ѽ .mp4
+┃Ѽ .tiktokrandom
+┃Ѽ .spotify
+┃Ѽ .tiktokimg <url>
+┃Ѽ .tiktokmp3 *<link>*
+┃Ѽ .tiktok
+┃Ѽ .tiktok2 *<link>*
+┃Ѽ .wallpaper <query>
+┃Ѽ .tw
+┃Ѽ .ss2
+┃Ѽ .ssvid
+┗━━━━━━━━━━━━━━━━━⪩
+┏━━⪩「 𝐀𝐢/𝐈𝐚 」⪨
+┃☫ .demo
+┃☫ .gemini
+┃☫ .goku
+┃☫ .bot
+┗━━━━━━━━━━━━━━━━━⪩
+┏━━⪩「 𝐆𝐫𝐮𝐩𝐨𝐬 」⪨
+┃♕ .add
+┃♕ admins <texto>
+┃♕ .bienvenidos/nuevos
+┃♕ .nights/noches
+┃♕ .dias/days
+┃♕ .grupotime *<open/close>* *<número>*
+┃♕ .grupo abrir / cerrar
+┃♕ .delete
+┃♕ .demote
+┃♕ .encuesta <text|text2>
+┃♕ .hidetag
+┃♕ .infogrupo
+┃♕ .invite *<numero>*
+┃♕ .kick
+┃♕ .listonline
+┃♕ .link
+┃♕ .listadv
+┃♕ .promote
+┃♕ .rentar
+┃♕ .rentar2 *<link>*
+┃♕ .revoke
+┃♕ .setbye <text>
+┃♕ .Setdesc <text>
+┃♕ .setname <text>
+┃♕ .setppgrup
+┃♕ .setwelcome <text>
+┃♕ .tagall *<mesaje>*
+┃♕ .invocar *<mesaje>*
+┗━━━━━━━━━━━━━━━━━⪩
+┏━━⪩「 𝐇𝐞𝐫𝐫𝐚𝐦𝐢𝐞𝐧𝐭𝐚𝐬 」⪨
+┃✰ .cal *<ecuacion>*
+┃✰ .clima *<lugar>*
+┃✰ .fake
+┃✰ .getbio *@tag*
+┃✰ .getname *@tag*
+┃✰ .remini
+┃✰ .hd
+┃✰ .enhance
+┃✰ .nuevafotochannel
+┃✰ .nosilenciarcanal
+┃✰ .silenciarcanal
+┃✰ .noseguircanal
+┃✰ .seguircanal
+┃✰ .avisoschannel
+┃✰ .resiviravisos
+┃✰ .inspect
+┃✰ .inspeccionar
+┃✰ .eliminarfotochannel
+┃✰ .reactioneschannel
+┃✰ .reaccioneschannel
+┃✰ .nuevonombrecanal
+┃✰ .nuevadescchannel
+┃✰ .IPdoxx
+┃✰ .photo <query>
+┃✰ .readmore *<teks>|<teks>*
+┃✰ .ver
+┃✰ .reenviar
+┃✰ .spamwa <number>|<mesage>|<no of messages>
+┃✰ .ssweb
+┃✰ .ss
+┃✰ .tamaño *<cantidad>*
+┃✰ .document *<audio/video>*
+┗━━━━━━━━━━━━━━━━━⪩
+┏━━⪩「 𝐂𝐨𝐧𝐯𝐞𝐫𝐭𝐢𝐝𝐨𝐫𝐞𝐬ᚐ 」⪨
+┃ꕥ .ibb
+┃ꕥ .paste nombre txt
+┃ꕥ .to <reply image>
+┃ꕥ .toanime
+┃ꕥ .togifaud
+┃ꕥ .tourl
+┃ꕥ .tovideo
+┃ꕥ .tts <lang> <teks>
+┃ꕥ .tts2
+┃ꕥ .tourl2
+┗━━━━━━━━━━━━━━━━━⪩
+┏━━⪩「 𝐒𝐭𝐢𝐜𝐤𝐞𝐫𝐬 」⪨
+┃☠︎︎ .emojimix *<emoji+emoji>*
+┃☠︎︎ .pfp
+┃☠︎︎ .qc
+┃☠︎︎ .stiker <img>
+┃☠︎︎ .sticker <url>
+┃☠︎︎ .toimg (reply)
+┃☠︎︎ .take *<nombre>|<autor>*
+┗━━━━━━━━━━━━━━━━━⪩
+┏━━⪩「 𝐂𝐨𝐧𝐟𝐢𝐠𝐮𝐫𝐚𝐜𝐢𝐨́𝐧 」⪨
+┃⚘ .enable <option>
+┃⚘ .disable <option>
+┃⚘ .autoadmin
+┃⚘ .banchat
+┃⚘ .banuser <@tag> <razón>
+┃⚘ .grupocrear <nombre>
+┃⚘ .join <link>
+┃⚘ .unbanchat
+┃⚘ .unbanuser <@tag>
+┗━━━━━━━━━━━━━━━━━⪩
+┏━━⪩「 𝐂𝐫𝐞𝐚𝐝𝐨𝐫/𝐎𝐰𝐧𝐞𝐫 」⪨
+┃🜲 .listafk
+┃🜲 .expired *<días>*
+┃🜲 .addyenes *<@user>*
+┃🜲 .addprem [@user] <days>
+┃🜲 .copia
+┃🜲 .broadcast
+┃🜲 .bc
+┃🜲 .broadcastgroup
+┃🜲 .bcgc
+┃🜲 .bcgc2
+┃🜲 .cleanfiles
+┃🜲 .cleartmp
+┃🜲 .setcmd *<texto>*
+┃🜲 .deletefile
+┃🜲 .delexpired
+┃🜲 .delvn <text>
+┃🜲 .delmsg <text>
+┃🜲 .delimg <text>
+┃🜲 .delsticker <text>
+┃🜲 .delprem <@user>
+┃🜲 .reunion *<texto>*
+┃🜲 .removeowner @user
+┃🜲 .dsowner
+┃🜲 $
+┃🜲 .fetch
+┃🜲 .get
+┃🜲 .getplugin *<nombre>*
+┃🜲 .groups
+┃🜲 .grouplist
+┃🜲 .kickall @user
+┃🜲 .nuevabiobot <teks>
+┃🜲 .nuevafotobot *<imagen>*
+┃🜲 .nuevonombrebot <teks>
+┃🜲 .prefix [prefix]
+┃🜲 .resetpersonajes
+┃🜲 .resetprefix
+┃🜲 .restart
+┃🜲 .saveplugin nombre
+┃🜲 .update
+┃🜲 .actualizar
+┃🜲 >
+┃🜲 =>
+┗━━━━━━━━━━━━━━━━━⪨
+> © 𝐏𝐨𝐰𝐞𝐫𝐞𝐝 𝐁𝐲 ☆꧁༒ĹєǤ𝒆𝐧𝐃༒꧂☆`.trim()
 
-✎ Comandos para ver estado e información de la Bot.
-ꨄ︎ *#help • #menu*
-→ Ver la lista de comandos de la Bot.
-ꨄ︎ *#uptime • #runtime*
-→ Ver tiempo activo o en linea de la Bot.
-ꨄ︎ *#sc • #script*
-→ Link del repositorio oficial de la Bot
-ꨄ︎ *#staff • #colaboradores*
-→ Ver la lista de desarrolladores de la Bot.
-ꨄ︎ *#serbot • #serbot code
-→ Crea una sesión de Sub-Bot.
-ꨄ︎ *#bots • #sockets*
-→ Ver la lista de Sub-Bots activos.
-ꨄ︎ *#creador*
-→ Contacto del creador de la Bot.
-ꨄ︎ *#status • #estado*
-→ Ver el estado actual de la Bot.
-ꨄ︎ *#links • #grupos*
-→ Ver los enlaces oficiales de la Bot.
-ꨄ︎ *#infobot • #infobot*
-→ Ver la información completa de la Bot.
-ꨄ︎ *#sug • #newcommand*
-→ Sugiere un nuevo comando.
-ꨄ︎ *#solicitud • #sugerencia*
-→ Envia una sugerencia al canal de la Bot.
-ꨄ︎ *#p • #ping*
-→ Ver la velocidad de respuesta del Bot.
-ꨄ︎ *#reporte • #reportar*
-→ Reporta alguna falla o problema de la Bot.
-ꨄ︎ *#sistema • #system*
-→ Ver estado del sistema de alojamiento.
-ꨄ︎ *#speed • #speedtest*
-→ Ver las estadísticas de velocidad de la Bot.
-ꨄ︎ *#views • #usuarios*
-→ Ver la cantidad de usuarios registrados en el sistema.
-ꨄ︎ *#funciones • #totalfunciones*
-→ Ver todas las funciones de la Bot.
-ꨄ︎ *#ds • #fixmsgespera*
-→ Eliminar archivos de sesión innecesarios.
-ꨄ︎ *#editautoresponder*
-→ Configurar un Prompt personalizado de la Bot.
+await conn.sendMessage(m.chat, { video: { url: vid.getRandom() }, caption: menu, contextInfo: { mentionedJid: [m.sender], isForwarded: true, forwardedNewsletterMessageInfo: { newsletterJid: channelRD.id, newsletterName: channelRD.name, serverMessageId: -1, }, forwardingScore: 999, externalAdReply: { title: '🐉 ꙰,𝐊𝐚𝐤𝐚𝐫𝐨𝐭𝐨𝐁𝐨𝐭', body: dev, thumbnailUrl: perfil, sourceUrl: redes, mediaType: 1, renderLargerThumbnail: false,
+}, }, gifPlayback: true, gifAttribution: 0 }, { quoted: null })
+await m.react(emojis)    
 
-»  ⊹˚• \`Buscadores\` •˚⊹
+} catch (e) {
+await m.reply(`✘ Ocurrió un error al enviar el menú\n\n${e}`)
+await m.react(error)
+}}
 
-✎ Comandos para realizar búsquedas en distintas plataformas.
-ꨄ *#tiktoksearch • #tiktoks*
-→ Buscador de videos de tiktok.
-ꨄ *#tweetposts*
-→ Buscador de posts de Twitter/X.
-ꨄ *#ytsearch • #yts*
-→ Realiza búsquedas de Youtube.
-ꨄ *#githubsearch*
-→ Buscador de usuarios de GitHub.
-ꨄ *#cuevana • #cuevanasearch*
-→ Buscador de películas/series por Cuevana.
-ꨄ *#google*
-→ Realiza búsquedas por Google.
-ꨄ *#pin • #pinterest*
-→ Buscador de imagenes de Pinterest.
-ꨄ *#imagen • #image*
-→ buscador de imagenes de Google.
-ꨄ *#animesearch • #animess*
-→ Buscador de animes de tioanime.
-ꨄ *#animei • #animeinfo*
-→ Buscador de capítulos de #animesearch.
-ꨄ *#infoanime*
-→ Buscador de información de anime/manga.
-ꨄ *#hentaisearch • #searchhentai*
-→ Buscador de capítulos hentai.
-ꨄ #xnxxsearch • #xnxxs*
-→ Buscador de vídeos de Xnxx.
-ꨄ *#xvsearch • #xvideossearch*
-→ Buscador de vídeos de Xvideos.
-ꨄ *#pornhubsearch • #phsearch*
-→ Buscador de videos de Pornhub.
-ꨄ *#npmjs*
-→ Buscandor de npmjs.
+handler.help = ['menu']
+handler.tags = ['main']
+handler.command = ['menu', 'help', 'menú', 'allmenú', 'allmenu', 'menucompleto'] 
+handler.register = true
+export default handler
 
-»  ⊹˚• \`Descargas\` •˚⊹
-
-✎ Comandos de descargas para varios archivos.
-ꨄ︎ *#tiktok • #tt*
-→ Descarga videos de TikTok.
-ꨄ︎ *#mediafire • #mf*
-→ Descargar un archivo de MediaFire.
-ꨄ︎ *#pinvid • #pinvideo* + [enlacé]
-→ Descargar vídeos de Pinterest. 
-ꨄ︎ *#mega • #mg* + [enlacé]
-→ Descargar un archivo de MEGA.
-ꨄ︎ *#play • #play2*
-→ Descarga música/video de YouTube.
-ꨄ︎ *#ytmp3 • #ytmp4*
-→ Descarga música/video de YouTube mediante url.
-ꨄ︎ *#fb • #facebook*
-→ Descarga videos de Facebook.
-ꨄ︎ *#twitter • #x* + [Link]
-→ Descargar un video de Twitter/X
-ꨄ︎ *#ig • #instagram*
-→ Descarga contenido de Instagram.
-ꨄ︎ *#tts • #tiktoks* + [busqueda]
-→ Buscar videos de tiktok 
-ꨄ︎ *#terabox • #tb* + [enlace]
-→ Descargar archivos por Terabox.
-ꨄ︎ *#gdrive • #drive* + [enlace]
-→ Descargar archivos por Google Drive.
-ꨄ︎ *#ttimg • #ttmp3* + <url>
-→ Descarga fotos/audios de tiktok. 
-ꨄ︎ *#gitclone* + <url> 
-→ Descarga un repositorio de github.
-ꨄ︎ *#xvideosdl*
-→ Descarga videos porno de (Xvideos). 
-ꨄ︎ *#xnxxdl*
-→ Descarga videos porno de (xnxx).
-ꨄ︎ *#apk • #modapk*
-→ Descarga un apk de Aptoide.
-ꨄ︎ *#tiktokrandom • #ttrandom*
-→ Descarga un video aleatorio de tiktok.
-ꨄ︎ *#npmdl • #npmdownloader*
-→ Descarga paquetes de NPMJs.
-ꨄ︎ *#animelinks • #animedl*
-→ Descarga Links disponibles de descargas.
-
-»  ⊹˚• \`Gacha\` •˚⊹
-
-✎ Comandos de gacha para reclamar y colecciónar personajes.
-ꨄ︎ *#rollwaifu • #rw • #roll*
-→ Waifu o husbando aleatorio.
-ꨄ︎  *#claim • #c • #reclamar*
-→ Reclamar un personaje.
-ꨄ︎ *#harem • #waifus • #claims*
-→ Ver tus personajes reclamados.
-ꨄ︎ *#charimage • #waifuimage • #wimage* 
-→ Ver una imagen aleatoria de un personaje.
-ꨄ︎ *#charinfo • #winfo • #waifuinfo*
-→ Ver información de un personaje.
-ꨄ︎ *#givechar • #givewaifu • #regalar*
-→ Regalar un personaje a otro usuario.
-ꨄ︎ *#vote • #votar*
-→ Votar por un personaje para subir su valor.
-ꨄ︎ *#waifusboard • #waifustop • #topwaifus*
-→ Ver el top de personajes con mayor valor.
-
-»  ⊹˚• \`Stickers\` •˚⊹
-
-✎ Comandos para creaciones de stickers etc.
-ꨄ︎ *#sticker • #s*
-→ Crea stickers de (imagen/video)
-ꨄ︎ *#pfp • #getpic*
-→ Obtén la foto de perfil de un usuario.
-ꨄ︎ *#qc*
-→ Crea stickers con texto o de un usuario.
-ꨄ︎ *#toimg • #img*
-→ Convierte stickers en imagen.
-ꨄ *#brat*︎ 
-→ Crea stickers con texto.
-ꨄ︎ *#emojimix*
-→ Fuciona 2 emojis para crear un sticker.
-ꨄ︎ *#furbrat*
-→ Crea un sticker con tu nombre.
-ꨄ︎ *#wm*
-→ Cambia el nombre de los stickers.
-
-»  ⊹˚• \`Herramientas\` •˚⊹
-
-✎ Comandos de herramientas con muchas funciones.
-ꨄ︎ *#calcular • #calcular • #cal*
-→ Calcular todo tipo de ecuaciones.
-ꨄ︎ *#tiempo • #clima*
-→ Ver el clima de un pais.
-ꨄ︎ *#horario*
-→ Ver el horario global de los países.
-ꨄ︎ *#fake • #fakereply*
-→ Crea un mensaje falso de un usuario.
-ꨄ︎ *#enhance • #remini • #hd*
-→ Mejora la calidad de una imagen.
-ꨄ︎ *#letra*
-→ Cambia la fuente de las letras.
-ꨄ︎ *#read • #readviewonce • #ver*
-→ Ver imágenes de una sola vista.
-ꨄ︎ *#whatmusic • #shazam*
-→ Descubre el nombre de canciones o vídeos.
-ꨄ︎ *#spamwa • #spam*
-→ Envia spam aun usuario.
-ꨄ︎ *#ss • #ssweb*
-→ Ver el estado de una página web.
-ꨄ︎ *#length • #tamaño*
-→ Cambia el tamaño de imágenes y vídeos.
-ꨄ︎ *#say • #decir* + [texto]
-→ Repetir un mensaje.
-ꨄ︎ *#todoc • #toducument*
-→ Crea documentos de (audio, imágenes y vídeos).
-ꨄ︎ *#translate • #traducir • #trad*
-→ Traduce palabras en otros idiomas.
-
-»  ⊹˚• \`Perfil\` •˚⊹
-
-✎ Comandos de perfil para ver, configurar y comprobar estados de tu perfil.
-ꨄ︎ *#reg • #verificar • #register*
-→ Registra tu nombre y edad en el bot.
-ꨄ︎ *#unreg*
-→ Elimina tu registro del bot.
-ꨄ︎ *#profile*
-→ Muestra tu perfil de usuario.
-ꨄ︎ *#marry* [mension / etiquetar]
-→ Propón matrimonio a otro usuario.
-ꨄ︎ *#divorce*
-→ Divorciarte de tu pareja.
-ꨄ︎ *#setgenre • #setgenero*
-→ Establece tu género en el perfil del bot.
-ꨄ︎ *#delgenre • #delgenero*
-→ Elimina tu género del perfil del bot.
-ꨄ︎ *#setbirth • #setnacimiento*
-→ Establece tu fecha de nacimiento en el perfil del bot.
-ꨄ︎ *#delbirth • #delnacimiento*
-→ Elimina tu fecha de nacimiento del perfil del bot.
-ꨄ︎ *#setdescription • #setdesc*
-→ Establece una descripción en tu perfil del bot.
-ꨄ︎ *#deldescription • #deldesc*
-→ Elimina la descripción de tu perfil del bot.
-ꨄ︎ *#lb • #lboard* + <Paginá>
-→ Top de usuarios con más (experiencia, ${moneda} y nivel).
-ꨄ︎ *#level • #lvl* + <@Mencion>
-→ Ver tu nivel y experiencia actual.
-ꨄ︎ *#comprarpremium • #premium*
-→ Compra un pase premium para usar el bot sin límites.
-ꨄ︎ #confesiones • #confesar*
-→ Confiesa tus sentimientos a alguien de manera anonima.
-
-»  ⊹˚• \`Grupo\` •˚⊹
-
-✎ Comandos de grupos para una mejor gestión de ellos.
-ꨄ︎ *#config • #on*
-→ Ver opciones de configuración de grupos.
-ꨄ︎ *#hidetag*
-→ Envia un mensaje mencionando a todos los usuarios
-ꨄ︎ *#gp • #infogrupo*
-→  Ver la Informacion del grupo.
-ꨄ︎ *#linea • #listonline*
-→ Ver la lista de los usuarios en linea.
-ꨄ︎ *#setwelcome*
-→ Establecer un mensaje de bienvenida personalizado.
-ꨄ︎ *#setbye*
-→ Establecer un mensaje de despedida personalizado.
-ꨄ︎ *#link*
-→ El bot envia el link del grupo.
-ꨄ︎ *#admins • #admin*
-→ Mencionar a los admins para solicitar ayuda.
-ꨄ︎ *#restablecer • #revoke*
-→ Restablecer el enlace del grupo.
-ꨄ︎ *#grupo • #group* [open / abrir]
-→ Cambia ajustes del grupo para que todos los usuarios envien mensaje.
-ꨄ︎ *#grupo • #gruop* [close / cerrar]
-→ Cambia ajustes del grupo para que solo los administradores envien mensaje.
-ꨄ︎ *#kick* [número / mension]
-→ Elimina un usuario de un grupo.
-ꨄ︎ *#add • #añadir • #agregar* [número]
-→ Invita a un usuario a tu grupo.
-ꨄ︎ *#promote* [mension / etiquetar]
-→ El bot dara administrador al usuario mencionando.
-ꨄ︎ *#demote* [mension / etiquetar]
-→ El bot quitara administrador al usuario mencionando.
-ꨄ︎ *#gpbanner • #groupimg*
-→ Cambiar la imagen del grupo.
-ꨄ︎ *#gpname • #groupname*
-→ Cambiar el nombre del grupo.
-ꨄ︎ *#gpdesc • #groupdesc*
-→ Cambiar la descripción del grupo.
-ꨄ︎ *#advertir • #warn • #warning*
-→ Darle una advertencia aún usuario.
-ꨄ ︎*#unwarn • #delwarn*
-→ Quitar advertencias.
-ꨄ︎ *#advlist • #listadv*
-→ Ver lista de usuarios advertidos.
-ꨄ︎ *#banchat*
-→ Banear el Bot en un chat o grupo.
-ꨄ︎ *#unbanchat*
-→ Desbanear el Bot del chat o grupo.
-ꨄ︎ *#mute* [mension / etiquetar]
-→ El bot elimina los mensajes del usuario.
-ꨄ︎ *#unmute* [mension / etiquetar]
-→ El bot deja de eliminar los mensajes del usuario.
-ꨄ︎ *#encuesta • #poll*
-→ Crea una encuesta.
-ꨄ︎ *#delete • #del*
-→ Elimina mensaje de otros usuarios.
-ꨄ︎ *#fantasmas*
-→ Ver lista de inactivos del grupo.
-ꨄ︎ *#kickfantasmas*
-→ Elimina a los inactivos del grupo.
-ꨄ︎ *#invocar • #tagall • #todos*
-→ Invoca a todos los usuarios de un grupo.
-ꨄ︎ *#setemoji • #setemo*
-→ Cambia el emoji que se usa en la invitación de usuarios.
-ꨄ︎ *#listnum • #kicknum*
-→ Elimine a usuario por el prefijo de país.
-
-»  ⊹˚• \`Anime\` •˚⊹
-
-✎ Comandos de reacciones de anime.
-ꨄ︎ *#angry • #enojado* + <mencion>
-→ Estar enojado
-ꨄ︎ *#bite* + <mencion>
-→ Muerde a alguien
-ꨄ︎ *#bleh* + <mencion>
-→ Sacar la lengua
-ꨄ︎ *#blush* + <mencion>
-→ Sonrojarte
-ꨄ︎ *#bored • #aburrido* + <mencion>
-→ Estar aburrido
-ꨄ︎ *#cry* + <mencion>
-→ Llorar por algo o alguien
-ꨄ︎ *#cuddle* + <mencion>
-→ Acurrucarse
-ꨄ︎ *#dance* + <mencion>
-→ Sacate los pasitos prohíbidos
-ꨄ︎ *#drunk* + <mencion>
-→ Estar borracho
-ꨄ︎ *#eat • #comer* + <mencion>
-→ Comer algo delicioso
-ꨄ︎ *#facepalm* + <mencion>
-→ Darte una palmada en la cara
-ꨄ︎ *#happy • #feliz* + <mencion>
-→ Salta de felicidad
-ꨄ︎ *#hug* + <mencion>
-→ Dar un abrazo
-ꨄ︎ *#impregnate • #preg* + <mencion>
-→ Embarazar a alguien
-ꨄ︎ *#kill* + <mencion>
-→ Toma tu arma y mata a alguien
-ꨄ︎ *#kiss • #besar* • #kiss2 + <mencion>
-→ Dar un beso
-ꨄ︎ *#laugh* + <mencion>
-→ Reírte de algo o alguien
-ꨄ︎ *#lick* + <mencion>
-→ Lamer a alguien
-ꨄ︎ *#love • #amor* + <mencion>
-→ Sentirse enamorado
-ꨄ︎ *#pat* + <mencion>
-→ Acaricia a alguien
-ꨄ︎ *#poke* + <mencion>
-→ Picar a alguien
-ꨄ︎ *#pout* + <mencion>
-→ Hacer pucheros
-ꨄ︎ *#punch* + <mencion>
-→ Dar un puñetazo
-ꨄ︎ *#run* + <mencion>
-→ Correr
-ꨄ︎ *#sad • #triste* + <mencion>
-→ Expresar tristeza
-ꨄ︎ *#scared* + <mencion>
-→ Estar asustado
-ꨄ︎ *#seduce* + <mencion>
-→ Seducir a alguien
-ꨄ︎ *#shy • #timido* + <mencion>
-→ Sentir timidez
-ꨄ︎ *#slap* + <mencion>
-→ Dar una bofetada
-ꨄ︎ *#dias • #days*
-→ Darle los buenos días a alguien 
-ꨄ︎ *#noches • #nights*
-→ Darle las buenas noches a alguien 
-ꨄ︎ *#sleep* + <mencion>
-→ Tumbarte a dormir
-ꨄ︎ *#smoke* + <mencion>
-→ Fumar
-ꨄ︎ *#think* + <mencion>
-→ Pensar en algo
-
-»  ⊹˚• \`NSFW\` •˚⊹
-
-✎ Comandos NSFW (Contenido para adultos)
-ꨄ︎ *#anal* + <mencion>
-→ Hacer un anal
-ꨄ︎ *#waifu*
-→ Buscá una waifu aleatorio.
-ꨄ︎ *#bath* + <mencion>
-→ Bañarse
-ꨄ︎ *#blowjob • #mamada • #bj* + <mencion>
-→ Dar una mamada
-ꨄ︎ *#boobjob* + <mencion>
-→ Hacer una rusa
-ꨄ︎ *#cum* + <mencion>
-→ Venirse en alguien.
-ꨄ︎ *#fap* + <mencion>
-→ Hacerse una paja
-ꨄ︎ *#ppcouple • #ppcp*
-→ Genera imagenes para amistades o parejas.
-ꨄ︎ *#footjob* + <mencion>
-→ Hacer una paja con los pies
-ꨄ︎ *#fuck • #coger • #fuck2* + <mencion>
-→ Follarte a alguien
-ꨄ︎ *#cafe • #coffe*
-→ Tomate un cafecito con alguien
-ꨄ︎ *#violar • #perra + <mencion>
-→ Viola a alguien
-ꨄ︎ *#grabboobs* + <mencion>
-→ Agarrrar tetas
-ꨄ︎ *#grop* + <mencion>
-→ Manosear a alguien
-ꨄ︎ *#lickpussy* + <mencion>
-→ Lamer un coño
-ꨄ︎ *#rule34 • #r34* + [Tags]
-→ Buscar imagenes en Rule34
-ꨄ︎ *#sixnine • #69* + <mencion>
-→ Haz un 69 con alguien
-ꨄ︎ *#spank • #nalgada* + <mencion>
-→ Dar una nalgada
-ꨄ︎ *#suckboobs* + <mencion>
-→ Chupar tetas
-ꨄ︎ *#undress • #encuerar* + <mencion>
-→ Desnudar a alguien
-ꨄ︎ *#yuri • #tijeras* + <mencion>
-→ Hacer tijeras.
-  `.trim();
-
-  await conn.sendMessage(m.chat, { 
-      text: txt,
-      contextInfo: {
-          mentionedJid: [m.sender, userId],
-          isForwarded: true,
-          forwardedNewsletterMessageInfo: {
-              newsletterJid: channelRD.id,
-              newsletterName: channelRD.name,
-              serverMessageId: -1,
-          },
-          forwardingScore: 999,
-          externalAdReply: {
-              title: botname,
-              body: textbot,
-              thumbnailUrl: banner,
-              mediaType: 1,
-              showAdAttribution: true,
-              renderLargerThumbnail: true,
-          },
-      },
-  }, { quoted: m });
-
-};
-
-handler.help = ['menu'];
-handler.tags = ['main'];
-handler.command = ['menu', 'menú', 'help', 'ayuda'];
-
-export default handler;
+const more = String.fromCharCode(8206)
+const readMore = more.repeat(4001)
+function clockString(ms) {
+let h = isNaN(ms) ? '--' : Math.floor(ms / 3600000)
+let m = isNaN(ms) ? '--' : Math.floor(ms / 60000) % 60
+let s = isNaN(ms) ? '--' : Math.floor(ms / 1000) % 60
+return [h, m, s].map(v => v.toString().padStart(2, 0)).join(':')}
