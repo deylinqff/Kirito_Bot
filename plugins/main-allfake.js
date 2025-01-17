@@ -47,7 +47,7 @@ global.colab2 = 'Niño Piña'
 global.colab3 = 'Legendary'
 
 //Ids channel
-global.idchannel = '120363365444927738@newsletter'
+global.idchannel = '120363372653753296@newsletter'
 global.canalIdM = ["120363365444927738@newsletter", "120363365444927738@newsletter"]
 global.canalNombreM = ["↫ 𝐊𝐢𝐫𝐢𝐭𝐨-𝐁𝐨𝐭 𝐂𝐡𝐚𝐧𝐧𝐞𝐥 ↬", "✧𝐊𝐞𝐫𝐢𝐭-𝐁𝐨𝐭✧"]
 global.channelRD = await getRandomChannel()
