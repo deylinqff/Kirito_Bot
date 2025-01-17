@@ -33,7 +33,7 @@ m.coin = false
 try {
 let user = global.db.data.users[m.sender]
 if (typeof user !== 'object')
-  
+
 global.db.data.users[m.sender] = {}
 if (user) {
 if (!isNumber(user.exp))
@@ -365,8 +365,8 @@ if (!['grupo-unbanchat.js'].includes(name) && chat && chat.isBanned && !isROwner
 if (name != 'grupo-unbanchat.js' && name != 'owner-exec.js' && name != 'owner-exec2.js' && name != 'grupo-delete.js' && chat?.isBanned && !isROwner) return 
 if (m.text && user.banned && !isROwner) {
 if (user.antispam > 2) return
-m.reply(`🍭 Estas baneado/a, no puedes usar comandos en este bot!\n\n${user.bannedReason ? `\n📝 *Motivo:* 
-${user.bannedReason}` : '📄 *Motivo:* Sin Especificar'}\n\n🍧 Si quieres que seas desbaneado en este bot escribe a: Wa.me/584120346669`)
+m.reply(`💠 Estas baneado/a, no puedes usar comandos en este bot!\n\n${user.bannedReason ? `\n📝 *Motivo:* 
+${user.bannedReason}` : '📄 *Motivo:* Sin Especificar'}\n\n🚀 Si quieres que seas desbaneado en este bot escribe a: Wa.me/50488198573`)
 user.antispam++        
 return
 }
@@ -381,9 +381,9 @@ if (m.chat in global.db.data.chats || m.sender in global.db.data.users) {
 let chat = global.db.data.chats[m.chat]
 let user = global.db.data.users[m.sender]
 let setting = global.db.data.settings[this.user.jid]
-if (name != 'Grupo-unbanchat.js' && chat?.isBanned)
+if (name != 'grupo-unbanchat.js' && chat?.isBanned)
 return 
-if (name != 'Owner-unbanuser.js' && user?.banned)
+if (name != 'owner-unbanuser.js' && user?.banned)
 return
 }
 let hl = _prefix 
@@ -435,7 +435,7 @@ m.reply('chirrido -_-')
 else
 m.exp += xp
 if (!isPrems && plugin.coin && global.db.data.users[m.sender].coin < plugin.coin * 1) {
-conn.reply(m.chat, `🍬 Se agotaron tus ${global.moneda}`, m)
+conn.reply(m.chat, `⚡ Se agotaron tus ${global.moneda}`, m)
 continue
 }
 let extra = {
@@ -580,18 +580,18 @@ let user2 = m.pushName || 'Anónimo'
 let verifyaleatorio = ['registrar', 'reg', 'verificar', 'verify', 'register'].getRandom()
 
 const msg = {
-rowner: '「👑」 *Esta función solo puede ser usada por mi creador*\n\n> 𝕯𝖊𝖞𝖑𝖎𝖓', 
-owner: '「👑」 *Esta función solo puede ser usada por mi desarrollador.', 
-mods: '「🤴🏻」 *Esta función solo puede ser usada por mis desarrolladores.*', 
-premium: '「🚀」 *Esta función solo es para usuarios Premium.', 
-group: '「⚠️」 *Esta funcion solo puede ser ejecutada en grupos.*', 
-private: '「💬」 *Esta función solo puede ser usada en chat privado.*', 
-admin: '「👑」 *Este comando solo puede ser usado por admins.*', 
-botAdmin: '「🍁」 *Para usar esta función debo ser admin.*', 
-unreg: '「🚀」 *No te encuentras registrado, registrese para usar esta función*\n\n*/reg nombre.edad*\n\n*Ejemplo* : */reg 𝕯𝖊𝖞𝖑𝖎𝖓.15*',
-restrict: '「💫」 *Esta característica esta desactivada.*'
+rowner: `〘✨〙 El comando *${comando}* solo puede ser usado por el creador del bot.`, 
+owner: `〘🚀〙 El comando *${comando}* solo puede ser usado por los desarrolladores del bot.`, 
+mods: `〘✨〙 El comando *${comando}* solo puede ser usado por los moderadores del bot.`, 
+premium: `〘🚀〙 El comando *${comando}* solo puede ser usado por los usuarios premium.`, 
+group: `〘✨〙 El comando *${comando}* solo puede ser usado en grupos.`,
+private: `〘🚀〙 El comando *${comando}* solo puede ser usado al chat privado del bot.`,
+admin: `〘✨〙 El comando *${comando}* solo puede ser usado por los administradores del grupo.`, 
+botAdmin: `〘🚀〙 Para ejecutar el comando *${comando}* debo ser administrador del grupo.`,
+unreg: `〘✨〙 El comando *${comando}* solo puede ser usado por los usuarios registrado, registrate usando:\n> » #${verifyaleatorio} ${user2}.${edadaleatoria}`,
+restrict: `〘🚀〙 Esta caracteristica está desactivada.`
 }[type];
-if (msg) return conn.reply(m.chat, msg, m, rcanal).then(_ => m.react('✖️'))}
+if (msg) return m.reply(msg).then(_ => m.react('✖️'))}
 
 let file = global.__filename(import.meta.url, true)
 watchFile(file, async () => {
