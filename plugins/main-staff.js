@@ -11,27 +11,26 @@ let staff = `
 
 🪐 *Creador:*
 
-☁️ ⁱᵃᵐ|𝔇ĕ𝐬†𝓻⊙γ𒆜
+☁️ 𝑫𝒆𝒚𝒍𝒊𝒏
 🔖 *Rol:* Creador
-👾 *GitHub:* https://github.com/The-King-Destroy
+👾 *GitHub:* https://github.com/deylinqff
 
 🍃 *Colaboradores:*
 
-🫧 𝓔𝓶𝓶𝓪 𝓥𝓲𝓸𝓵𝓮𝓽𝓼 𝓥𝓮𝓻𝓼𝓲ó𝓷 
+🫧 no hay 
 🔖 *Rol:* Developer
-👾 *GitHub:* https://github.com/Elpapiema
+👾 *GitHub:* 
 
-🍍 Niño Piña
+🍍 no hay 
 🔖 *Rol:* Developer
-👾 *GitHub:* https://github.com/WillZek
-
-⚡ ☆꧁༒ĹєǤ𝒆𝐧𝐃༒꧂☆
+👾 *GitHub:* 
+⚡ no hay 
 🔖 *Rol:* Developer
-👾 *GitHub:* https://github.com/Diomar-s
+👾 *GitHub:* 
 
-🌪️ 𝓛𝓮𝓰𝓷𝓪
+🌪️ no hay 
 🔖 *Rol:* Moderador 
-👾 *GitHub:* https://github.com/Legna-chan`.trim();
+👾 *GitHub:* `.trim();
 
 await conn.sendMessage(m.chat, { 
     text: staff,
