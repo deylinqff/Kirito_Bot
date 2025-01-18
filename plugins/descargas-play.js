@@ -3,14 +3,14 @@ import yts from "yt-search";
 
 let handler = async (m, { conn, text }) => {
 if (!text) {
-return m.reply("🍬 Ingresa el texto de lo que quieres buscar.")
+return m.reply("『 ✎ 』 Ingresa el texto de lo que quieres buscar.")
 }
 
 let ytres = await yts(text)
 let video = ytres.videos[0]
   
 if (!video) {
-return m.reply("🍭 No se encontraron resultados...")
+return m.reply("『 ⍰ 』 No se encontraron resultados...")
 }
 
 let { title, thumbnail, timestamp, views, ago, url } = video
@@ -23,7 +23,7 @@ let HS = `🎬 Título: *${title}*
 *°.⎯⃘̶⎯̸⎯ܴ⎯̶᳞͇ࠝ⎯⃘̶⎯̸⎯ܴ⎯̶᳞͇ࠝ⎯⃘̶⎯̸.°*
 > 👀 Vistas: *${vistas}*
 *°.⎯⃘̶⎯̸⎯ܴ⎯̶᳞͇ࠝ⎯⃘̶⎯̸⎯ܴ⎯̶᳞͇ࠝ⎯⃘̶⎯̸.°*
-> 🍬 Canal *${author.name || 'Desconocido'}*
+> 🔔 Canal *${author.name || 'Desconocido'}*
 *°.⎯⃘̶⎯̸⎯ܴ⎯̶᳞͇ࠝ⎯⃘̶⎯̸⎯ܴ⎯̶᳞͇ࠝ⎯⃘̶⎯̸.°*
 > 📆 Publicado *${ago}*
 *°.⎯⃘̶⎯̸⎯ܴ⎯̶᳞͇ࠝ⎯⃘̶⎯̸⎯ܴ⎯̶᳞͇ࠝ⎯⃘̶⎯̸.°*
