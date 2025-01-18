@@ -1,7 +1,7 @@
 import axios from 'axios';
 let enviando = false;
 const handler = async (m, {conn, text, usedPrefix, command}) => {
-if (!text) return conn.reply(m.chat, `🍬 Por favor, ingresa un enlace de Twitter/X valido.`, m, rcanal);
+if (!text) return conn.reply(m.chat, `『 ✎ 』 Por favor, ingresa un enlace de Twitter/X valido.`, m, rcanal);
 if (enviando) return;
     enviando = true;
 try {
@@ -9,7 +9,7 @@ try {
    const res = await TwitterDL(text);
  if (res?.result.type == 'video') {
      m.react(done)
-     const caption = res?.result.caption ? res.result.caption : '🍬 Aqui tienes ฅ^•ﻌ•^ฅ.';
+     const caption = res?.result.caption ? res.result.caption : '『 ♛ 』 Aqui tienes ฅ^•ﻌ•^ฅ.';
      for (let i = 0; i < res.result.media.length; i++) {
      await conn.sendMessage(m.chat, {video: {url: res.result.media[i].result[0].url}, caption: caption}, {quoted: m});
      };
@@ -18,7 +18,7 @@ try {
  } else if (res?.result.type == 'photo') {
      const caption =
     m.react(done)
-    res?.result.caption ? res.result.caption : '🍬 Aqui tienes ฅ^•ﻌ•^ฅ.';
+    res?.result.caption ? res.result.caption : '『 ☻ 』 Aqui tienes ฅ^•ﻌ•^ฅ.';
      for (let i = 0; i < res.result.media.length; i++) {
      await conn.sendMessage(m.chat, {image: {url: res.result.media[i].url}, caption: caption}, {quoted: m});
      };
