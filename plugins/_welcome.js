@@ -35,7 +35,7 @@ export async function before(m, { conn, participants, groupMetadata }) {
 
     // Mensaje de despedida (cuando se sale)
     if (chat.welcome && m.messageStubType === 28) {
-        let bye = `┌─⌬ 𝑲𝒊𝒓𝒊𝒕𝒐-𝑩𝒐𝒕  \n│「 𝐀𝐃𝐈Ó𝐒 🗣️‼️ 」\n└┬⌬ 「 @${userId.split`@`[0]} 」\n   │😔 SE NOS FUE xd\n   │👺 NO VUELVAS SAIYAN\n   └───────────────┈ ⳹`;
+        let bye = `┌─⌬ 𝑲𝒊𝒓𝒊𝒕𝒐-𝑩𝒐𝒕  \n│「 𝐀𝐃𝐈Ó𝐒 🗣️‼️ 」\n└┬⌬ 「 @${userId.split`@`[0]} 」\n   │😔 SE NOS FUE xd\n   │👺 jamás te quisimos aquí\n   └───────────────┈ ⳹`;
         let img2;
         try {
             img2 = await (await fetch(goodbyeImage)).buffer(); 
@@ -47,7 +47,7 @@ export async function before(m, { conn, participants, groupMetadata }) {
 
     // Mensaje de expulsión (cuando se echa a alguien)
     if (chat.welcome && m.messageStubType === 32) {
-        let kick = `┌─⌬ 𝑲𝒊𝒓𝒊𝒕𝒐-𝑩𝒐𝒕 \n│「 𝐀𝐃𝐈Ó𝐒 🗣️‼️ 」\n└┬⌬ 「 @${userId.split`@`[0]} 」\n   │😔 SE NOS FUE xd\n   │👺 Nunca te quisimos aqui\n   └───────────────┈ ⳹`;
+        let kick = `┌─⌬ 𝑲𝒊𝒓𝒊𝒕𝒐-𝑩𝒐𝒕 \n│「 𝐀𝐃𝐈Ó𝐒 🗣️‼️ 」\n└┬⌬ 「 @${userId.split`@`[0]} 」\n   │😔 SE NOS FUE xd\n   │👺 jamás te quisimos aquí\n   └───────────────┈ ⳹`;
         let img3;
         try {
             img3 = await (await fetch(goodbyeImage)).buffer();
