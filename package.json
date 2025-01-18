@@ -1,5 +1,5 @@
 {
-"name": "Yuki_Suou-Bot",
+"name": "Kirito-Bot",
 "version": "2.1.5",
 "description": "Super WhatsApp Bot Multi Device",
 "main": "index.js",
@@ -18,16 +18,16 @@
 "eslint": "eslint .",
 "eslintfix": "eslint --fix ."
 },
-"homepage": "https://github.com/The-King-Destroy/Yuki_Suou-Bot",
+"homepage": "https://github.com/deylinqff/Kirito_Bot",
 "author": {
-"name": "The-King-Destroy"
+"name": "The-King-Deylin"
 },
 "repository": {
 "type": "git",
-"url": "git+https://github.com/The-King-Destroy/Yuki_Suou-Bot.git"
+"url": "git+https://github.com/deylinqff/Kirito_Bot.git"
 },
 "bugs": {
-"url": "https://github.com/The-King-Destroy/Yuki_Suou-Bot/issues"
+"url": "https://github.com/deylinqff/Kirito_Bot/issues"
 },
 "license": "GPL-3.0-or-later",
 "dependencies": {
