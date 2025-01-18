@@ -7,8 +7,8 @@ let Reg = /\|?(.*)([.|] *?)([0-9]*)$/i;
 let handler = async function (m, { conn, text, usedPrefix, command }) {
     let user = global.db.data.users[m.sender];
     let name2 = conn.getName(m.sender);
-    let perfil = await conn.profilePictureUrl(m.sender, 'image').catch(_ => 'https://files.catbox.moe/xr2m6u.jpg');
-    let pp = await conn.profilePictureUrl(m.sender, 'image').catch((_) => 'https://files.catbox.moe/xr2m6u.jpg');
+    let perfil = await conn.profilePictureUrl(m.sender, 'image').catch(_ => 'https://qu.ax/ssRru.jpg');
+    let pp = await conn.profilePictureUrl(m.sender, 'image').catch((_) => 'https://qu.ax/pEaYV.jpg');
     let bio = 0, fechaBio;
     let sinDefinir = '😿 Es privada';
     let biografia = await conn.fetchStatus(m.sender).catch(() => null);
@@ -43,12 +43,12 @@ let handler = async function (m, { conn, text, usedPrefix, command }) {
     global.db.data.users[m.sender].joincount += 5;
     
     let sn = createHash('md5').update(m.sender).digest('hex').slice(0, 20);
-    m.react('📩');
+    m.react('⚡');
     
 let regbot = `👤 𝗥 𝗘 𝗚 𝗜 𝗦 𝗧 𝗥 𝗔 𝗗 𝗢 👤
 •┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄•
-「☁️」𝗡𝗼𝗺𝗯𝗿𝗲 » ${name}
-「⭐」𝗘𝗱𝗮𝗱 » ${age} años
+「👑」𝗡𝗼𝗺𝗯𝗿𝗲 » ${name}
+「⚡」𝗘𝗱𝗮𝗱 » ${age} años
 •┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄•
 「🎁」𝗥𝗲𝗰𝗼𝗺𝗽𝗲𝗻𝘀𝗮𝘀:
 • 💸 ${moneda} » 15
