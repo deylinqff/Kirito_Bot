@@ -37,7 +37,7 @@ const getDownloadLinks = async (url) => {
 
 let handler = async (m, { conn, command, args, text, usedPrefix }) => {
     if (!args[0]) {
-        return conn.reply(m.chat, `🍬 Por favor, ingresa el link del anime para obtener información.\n\n> Nota: En el comando #animes no da los links completos porque son muy largos y por éso usé un acortador, pero igualmente sirven.`, m);
+        return conn.reply(m.chat, `👑 Por favor, ingresa el link del anime para obtener información.\n\n> Nota: En el comando #animes no da los links completos porque son muy largos y por éso usé un acortador, pero igualmente sirven.`, m);
     }
     const links = await getDownloadLinks(args[0]);
     if (links.error) {
