@@ -3,12 +3,12 @@ import yts from 'yt-search';
 
 let handler = async (m, { conn, text, args }) => {
   if (!text) {
-    return m.reply("🍬 Ingresa un texto de lo que quieres buscar.");
+    return m.reply("『 ✎ 』 Ingresa un texto de lo que quieres buscar.");
   }
 
   let ytres = await search(args.join(" "));
   if (ytres.length === 0) {
-    return m.reply("🍭 No se encontraron resultados...");
+    return m.reply("『 ⍰ 』 No se encontraron resultados...");
   }
 
   let txt = `🎬 Título: *${ytres[0].title}*
@@ -19,7 +19,7 @@ let handler = async (m, { conn, text, args }) => {
 *°.⎯⃘̶⎯̸⎯ܴ⎯̶᳞͇ࠝ⎯⃘̶⎯̸⎯ܴ⎯̶᳞͇ࠝ⎯⃘̶⎯̸.°*
 > 📆 Publicado: *${ytres[0].ago}*
 *°.⎯⃘̶⎯̸⎯ܴ⎯̶᳞͇ࠝ⎯⃘̶⎯̸⎯ܴ⎯̶᳞͇ࠝ⎯⃘̶⎯̸.°*
-> 🍬 Canal: *${ytres[0].author.name || 'Desconocido'}*
+> 🔔 Canal: *${ytres[0].author.name || 'Desconocido'}*
 *°.⎯⃘̶⎯̸⎯ܴ⎯̶᳞͇ࠝ⎯⃘̶⎯̸⎯ܴ⎯̶᳞͇ࠝ⎯⃘̶⎯̸.°*
 > 🔗 Enlace: https://youtu.be/${ytres[0].videoId}`;
 
