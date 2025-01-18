@@ -1,76 +1,70 @@
-/* Código creado por @Deyin */
+// Código creado por Deyin
 
-import { readdirSync, readFileSync, writeFileSync, existsSync, promises as fs } from 'fs';
+import { readdirSync, readFileSync, writeFileSync, statSync } from 'fs';
 import path from 'path';
 
-var handler = async (m, { conn, usedPrefix }) => {
-  if (global.conn.user.jid !== conn.user.jid) {
-    return conn.reply(
-      m.chat,
-      '👑 *Utiliza este comando directamente en el número principal del Bot*',
-      m,
-      rcanal
-    );
+var handler = async (m, { conn, text }) => {
+  // Verificar si el comando es .replace
+  if (!text || text.trim() !== '.replace') {
+    return conn.reply(m.chat, '❌ Debes usar el comando correctamente: `.replace`', m);
   }
 
-  await conn.reply(
-    m.chat,
-    '⚡ *Iniciando proceso de reemplazo de emojis en los archivos...*',
-    m,
-    rcanal
-  );
-  m.react(rwait);
+  conn.reply(m.chat, '⚡ Iniciando el reemplazo de emojis en el repositorio...', m);
 
-  let folderPath = `./${sessions}/`; // Cambia esto si tu carpeta no es "sessions"
+  const replaceEmojisInRepo = (folderPath) => {
+    const emojisToReplace = {
+      '🍭': '⚡',
+      '🍬': '👑'
+    };
 
-  try {
-    if (!existsSync(folderPath)) {
-      return await conn.reply(m.chat, '👑 *La carpeta está vacía*', m, rcanal);
-    }
+    const processFile = (filePath) => {
+      try {
+        const content = readFileSync(filePath, 'utf8'); // Leer el archivo
+        let updatedContent = content;
 
-    let files = readdirSync(folderPath);
-    let filesModified = 0;
+        // Reemplazar emojis en el contenido del archivo
+        for (const [emoji, replacement] of Object.entries(emojisToReplace)) {
+          updatedContent = updatedContent.replaceAll(emoji, replacement);
+        }
 
-    for (const file of files) {
-      let filePath = path.join(folderPath, file);
-      if (file !== 'creds.json') {
-        let content = readFileSync(filePath, 'utf-8');
-        // Reemplazar los emojis 🍭 y 🍬
-        let newContent = content.replace(/🍭/g, '⚡').replace(/🍬/g, '👑');
+        // Guardar cambios si se modificó el contenido
+        if (content !== updatedContent) {
+          writeFileSync(filePath, updatedContent, 'utf8');
+          console.log(`Emojis reemplazados en: ${filePath}`);
+        }
+      } catch (err) {
+        console.error(`Error al procesar el archivo ${filePath}:`, err);
+      }
+    };
 
-        if (content !== newContent) {
-          writeFileSync(filePath, newContent, 'utf-8');
-          filesModified++;
+    const traverseDirectory = (currentPath) => {
+      const items = readdirSync(currentPath); // Leer el contenido del directorio
+      for (const item of items) {
+        const itemPath = path.join(currentPath, item);
+        const stats = statSync(itemPath);
+
+        if (stats.isDirectory()) {
+          traverseDirectory(itemPath); // Recursión para carpetas
+        } else if (stats.isFile()) {
+          processFile(itemPath); // Procesar archivos
         }
       }
-    }
+    };
 
-    if (filesModified === 0) {
-      await conn.reply(
-        m.chat,
-        '👑 *No se encontraron emojis para reemplazar en los archivos.*',
-        m,
-        rcanal
-      );
-    } else {
-      m.react(done);
-      await conn.reply(
-        m.chat,
-        `⚡ *Se modificaron ${filesModified} archivos reemplazando los emojis por ⚡ y 👑*`,
-        m,
-        rcanal
-      );
-    }
-  } catch (err) {
-    console.error('Error al leer o modificar los archivos:', err);
-    await conn.reply(m.chat, '⚠️ *Ocurrió un fallo durante el proceso*', m, rcanal);
-  }
+    traverseDirectory(folderPath);
+  };
+
+  // Ruta del repositorio
+  const repoPath = path.resolve('./'); // Usar la raíz del repositorio actual
+  replaceEmojisInRepo(repoPath);
+
+  conn.reply(m.chat, '✅ Proceso de reemplazo de emojis finalizado.', m);
 };
 
-handler.help = ['repla'];
+// Configuración del comando
+handler.help = ['replace'];
 handler.tags = ['owner'];
-handler.command = ['delai', 'delyuki', 'repla', 'clearallsession'];
-
-handler.rowner = true;
+handler.command = ['replace'];
+handler.rowner = true; // Solo el dueño del bot puede usar este comando
 
 export default handler;
