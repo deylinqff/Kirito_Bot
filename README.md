@@ -43,7 +43,7 @@
 
 ### **`💛 𝘊𝘙𝘌𝘈𝘋𝘖𝘙`**
 <a
-href="https://f.uguu.se/UvzGeyrY.jpg"><img src="https://github.com/deylinqff" width="130" height="130" alt="deylin"/></a>
+href="https://github.com/deylinqff"><img src="https://github.com/deylinqff" width="130" height="130" alt="deylin"/></a>
 
 <a
 href="ninopina10@gmail.com" target="blue"><img
