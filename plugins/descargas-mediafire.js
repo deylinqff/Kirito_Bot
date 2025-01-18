@@ -2,11 +2,11 @@ import axios from 'axios'
 import fetch from 'node-fetch'
 import cheerio from 'cheerio'
 let handler = async (m, { conn, args, usedPrefix, command }) => {
-if (!args[0]) throw m.reply(`🍬 Por favor, envia un link de MediaFire para descargar el archivo.`m, rcanal)
+if (!args[0]) throw m.reply(`〘🚀〙 Por favor, envia un link de MediaFire para descargar el archivo.`m, rcanal)
 try {  
 let res = await mediafireDl(args[0])
 let { name, size, date, mime, link } = res
-let caption = `🍬 *Nombre:* ${name}
+let caption = `『⍰』 *Nombre:* ${name}
 ☁️ *Peso:* ${size}
 🚩 *Tipo:* ${mime}`.trim()
 conn.reply(m.chat, caption, m, {
