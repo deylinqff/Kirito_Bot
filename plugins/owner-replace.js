@@ -2,6 +2,7 @@
 
 import { readdirSync, readFileSync, writeFileSync, statSync } from 'fs';
 import path from 'path';
+import { execSync } from 'child_process';
 
 var handler = async (m, { conn }) => {
   conn.reply(m.chat, '⚡ Iniciando el reemplazo de emojis en el repositorio...', m);
@@ -49,11 +50,30 @@ var handler = async (m, { conn }) => {
     traverseDirectory(folderPath);
   };
 
-  // Ruta del repositorio
+  // Ruta del repositorio local (suponiendo que está en la raíz del proyecto)
   const repoPath = path.resolve('./'); // Usar la raíz del repositorio actual
   replaceEmojisInRepo(repoPath);
 
-  conn.reply(m.chat, '✅ Reemplazo de emojis completado.', m);
+  // Hacer commit de los cambios en Git y subir al repositorio de GitHub
+  try {
+    // Añadir todos los archivos modificados
+    execSync('git add .');
+    console.log('🔧 Archivos añadidos a git');
+
+    // Realizar commit con un mensaje de "Reemplazo de emojis"
+    execSync('git commit -m "Reemplazo de emojis 🍭🍬 por ⚡👑"');
+    console.log('✅ Commit realizado con éxito');
+
+    // Subir los cambios al repositorio remoto
+    execSync('git push');
+    console.log('🚀 Cambios subidos al repositorio remoto');
+    
+    // Responder al usuario en WhatsApp
+    conn.reply(m.chat, '✅ Reemplazo de emojis completado y cambios subidos al repositorio.', m);
+  } catch (error) {
+    console.error('❌ Error al hacer commit o push:', error);
+    conn.reply(m.chat, '⚠️ Ocurrió un error al intentar subir los cambios al repositorio.', m);
+  }
 };
 
 // Configuración del comando
