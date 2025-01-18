@@ -3,18 +3,13 @@
 import { readdirSync, readFileSync, writeFileSync, statSync } from 'fs';
 import path from 'path';
 
-var handler = async (m, { conn, text }) => {
-  // Verificar si el comando es .replace
-  if (!text || text.trim() !== '.replace') {
-    return conn.reply(m.chat, '❌ Debes usar el comando correctamente: `.replace`', m);
-  }
-
+var handler = async (m, { conn }) => {
   conn.reply(m.chat, '⚡ Iniciando el reemplazo de emojis en el repositorio...', m);
 
   const replaceEmojisInRepo = (folderPath) => {
     const emojisToReplace = {
       '🍭': '⚡',
-      '🍬': '👑'
+      '🍬': '👑',
     };
 
     const processFile = (filePath) => {
@@ -30,10 +25,10 @@ var handler = async (m, { conn, text }) => {
         // Guardar cambios si se modificó el contenido
         if (content !== updatedContent) {
           writeFileSync(filePath, updatedContent, 'utf8');
-          console.log(`Emojis reemplazados en: ${filePath}`);
+          console.log(`✅ Emojis reemplazados en: ${filePath}`);
         }
       } catch (err) {
-        console.error(`Error al procesar el archivo ${filePath}:`, err);
+        console.error(`❌ Error al procesar el archivo ${filePath}:`, err);
       }
     };
 
@@ -58,13 +53,13 @@ var handler = async (m, { conn, text }) => {
   const repoPath = path.resolve('./'); // Usar la raíz del repositorio actual
   replaceEmojisInRepo(repoPath);
 
-  conn.reply(m.chat, '✅ Proceso de reemplazo de emojis finalizado.', m);
+  conn.reply(m.chat, '✅ Reemplazo de emojis completado.', m);
 };
 
 // Configuración del comando
 handler.help = ['replace'];
 handler.tags = ['owner'];
-handler.command = ['replace'];
+handler.command = ['replace']; // Comando que activa el script
 handler.rowner = true; // Solo el dueño del bot puede usar este comando
 
 export default handler;
