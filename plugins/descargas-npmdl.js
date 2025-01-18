@@ -2,7 +2,7 @@ import { exec } from 'child_process';
 import fs from 'fs';
 
 let handler = async (m, { conn, text, usedPrefix, command }) => {
-  if (!text) return m.reply(`🍬 Por favor, ingresa el nombre de un paquete de NPMJs y versión (opcional).`);
+  if (!text) return m.reply(`『✎』 Por favor, ingresa el nombre de un paquete de NPMJs y versión (opcional).`);
 
   async function npmdownloader(pkg, pkgver) {
     try {
