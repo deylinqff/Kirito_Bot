@@ -43,7 +43,7 @@
 
 ### **`💛 𝘊𝘙𝘌𝘈𝘋𝘖𝘙`**
 <a
-href="https://github.com/Deylinel"><img src="https://github.com/Deylinel.png" width="130" height="130" alt="deylin"/></a>
+href="https://github.com/deylinqff"><img src="https://github.com/deylinqff.png" width="130" height="130" alt="deylin"/></a>
 
 
 <a
