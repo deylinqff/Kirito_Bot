@@ -4,15 +4,15 @@ import cheerio from 'cheerio';
 
 const handler = async (m, { conn, args, command, usedPrefix, text }) => {
 if (!db.data.chats[m.chat].nsfw && m.isGroup) {
-    return m.reply('🍬 El contenido *NSFW* está desactivado en este grupo.\n> Un administrador puede activarlo con el comando » *#nsfw*');
+    return m.reply('『 ☹ 』 El contenido *NSFW* está desactivado en este grupo.\n> Un administrador puede activarlo con el comando » *#nsfw*');
     }
 
     if (!args[0]) {
-        return conn.reply(m.chat, `🍬 Por favor, envia un link de Xvideos para descargar el video.`, m);
+        return conn.reply(m.chat, `『 ☹ 』 Por favor, envia un link de Xvideos para descargar el video.`, m);
     }
 
     try {
-        conn.reply(m.chat, `🍭 El vídeo está siendo procesado, espere un momento...\n\n- El tiempo de envio depende del peso y duración del video.`, m);
+        conn.reply(m.chat, `『 ☻ 』 El vídeo está siendo procesado, espere un momento...\n\n- El tiempo de envio depende del peso y duración del video.`, m);
         
         const res = await xvideosdl(args[0]);
         conn.sendMessage(m.chat, { document: { url: res.result.url }, mimetype: 'video/mp4', fileName: res.result.title }, { quoted: m });
