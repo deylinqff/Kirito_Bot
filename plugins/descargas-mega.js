@@ -5,7 +5,7 @@ const botName = 'Descargas de MEGA';
 
 let handler = async (m, { conn, args, usedPrefix, text, command }) => {
     try {
-        if (!text) return conn.reply(m.chat, `🍬 Por favor, envia un link de MEGA para descargar el archivo.`, null, { quoted: fkontak });
+        if (!text) return conn.reply(m.chat, `『 ⌨ 』 Por favor, envia un link de MEGA para descargar el archivo.`, null, { quoted: fkontak });
 
         const file = File.fromURL(text);
         await file.loadAttributes();
