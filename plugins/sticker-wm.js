@@ -1,10 +1,10 @@
 import { addExif } from '../lib/sticker.js';
 
 let handler = async (m, { conn, text, usedPrefix, command }) => {
-  if (!m.quoted) return m.reply(`🍬 Por favor, responde a un sticker con el comando *${usedPrefix + command}* seguido del nuevo nombre.\nEjemplo: *${usedPrefix + command} Nuevo Nombre*`);
+  if (!m.quoted) return m.reply(`『 ✎ 』 Por favor, responde a un sticker con el comando *${usedPrefix + command}* seguido del nuevo nombre.\nEjemplo: *${usedPrefix + command} Nuevo Nombre*`);
 
   const sticker = await m.quoted.download();
-  if (!sticker) return m.reply('🍭 No se pudo descargar el sticker.');
+  if (!sticker) return m.reply('『 ⍰ 』 No se pudo descargar el sticker.');
 
   const texto = text.trim() || 'MiPaquete';
   const exif = await addExif(sticker, texto);
