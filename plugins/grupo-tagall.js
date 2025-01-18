@@ -16,7 +16,7 @@ const handler = async (m, { isOwner, isAdmin, conn, text, participants, args, co
 
   const pesan = args.join` `;
   const oi = `*» INFO :* ${pesan}`;
-  let teks = `*!  MENCION GENERAL  !*\n  *PARA ${participants.length} MIEMBROS* 🗣️\n\n ${oi}\n\n┏━━━▣━━◤ ${botname} ◢━━▣━━━━⌬\n`;
+  let teks = `*!  MENCION GENERAL  !*\n  *PARA ${participants.length} MIEMBROS* 🗣️\n\n ${oi}\n\n┏━▣━━◤ ${botname} ◢━━▣━━⌬\n`;
   for (const mem of participants) {
     teks += `┣${customEmoji} @${mem.id.split('@')[0]}\n`;
   }
