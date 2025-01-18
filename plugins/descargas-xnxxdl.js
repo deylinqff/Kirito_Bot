@@ -7,11 +7,11 @@ const handler = async (m, {conn, args, command, usedPrefix}) => {
   }
   
   if (!args[0]) {
-    return conn.reply(m.chat, `🍬 Por favor, envía un link de Xnxx para descargar el video.\nUso: ${usedPrefix}${command} <link de Xnxx>`, m);
+    return conn.reply(m.chat, `『 😏 』 Por favor, envía un link de Xnxx para descargar el video.\nUso: ${usedPrefix}${command} <link de Xnxx>`, m);
   }
   
   try {
-    await conn.reply(m.chat, '🍭 El vídeo está siendo procesado, espere un momento...\n\n- El tiempo de envío depende del peso y duración del video.', m);
+    await conn.reply(m.chat, '『 😏 』 El vídeo está siendo procesado, espere un momento...\n\n- El tiempo de envío depende del peso y duración del video.', m);
     let xnxxLink = '';
     
     if (args[0].includes('xnxx')) {
@@ -25,13 +25,13 @@ const handler = async (m, {conn, args, command, usedPrefix}) => {
             if (index < matchingItem.urls.length) {
               xnxxLink = matchingItem.urls[index];
             } else {
-              throw `🍭 No se encontró un enlace para ese número, por favor ingrese un número entre el 1 y el ${matchingItem.urls.length}.`;
+              throw `『 😔 』 No se encontró un enlace para ese número, por favor ingrese un número entre el 1 y el ${matchingItem.urls.length}.`;
             }
           } else {
-            throw `🍭 Para poder usar este comando de esta forma (${usedPrefix + command} <numero>), por favor realiza la búsqueda con el comando ${usedPrefix}xnxxsearch <texto>`;
+            throw `『 🤓 』 Para poder usar este comando de esta forma (${usedPrefix + command} <numero>), por favor realiza la búsqueda con el comando ${usedPrefix}xnxxsearch <texto>`;
           }
         } else {
-          throw `🍭 Para poder usar este comando de esta (${usedPrefix + command} <numero>), por favor realiza la búsqueda con el comando ${usedPrefix}xnxxsearch <texto>`;
+          throw `『 🤓 』 Para poder usar este comando de esta (${usedPrefix + command} <numero>), por favor realiza la búsqueda con el comando ${usedPrefix}xnxxsearch <texto>`;
         }
       }
     }
