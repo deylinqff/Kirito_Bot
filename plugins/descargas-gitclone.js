@@ -3,10 +3,10 @@ import fetch from 'node-fetch'
 let regex = /(?:https|git)(?::\/\/|@)github\.com[\/:]([^\/:]+)\/(.+)/i
 let handler = async (m, { args, usedPrefix, command }) => {
   if (!args[0]) {
-    return conn.reply(m.chat, `🍬 Por favor, ingresa la URL de un repositorio de GitHub que deseas descargar.`, m, rcanal)
+    return conn.reply(m.chat, `👑 Por favor, ingresa la URL de un repositorio de GitHub que deseas descargar.`, m, rcanal)
   }
   if (!regex.test(args[0])) {
-    return conn.reply(m.chat, `🍭 Verifica que la *URL* sea de GitHub`, m, rcanal).then(_ => m.react(error))
+    return conn.reply(m.chat, `🚀 Verifica que la *URL* sea de GitHub`, m, rcanal).then(_ => m.react(error))
   }
   let [_, user, repo] = args[0].match(regex) || []
   let sanitizedRepo = repo.replace(/.git$/, '')
