@@ -2,7 +2,7 @@ import { igdl } from 'ruhend-scraper'
 
 const handler = async (m, { text, conn, args }) => {
   if (!args[0]) {
-    return conn.reply(m.chat, '🍬 Por favor, ingresa un enlace de Facebook.', m)
+    return conn.reply(m.chat, '👑 Por favor, ingresa un enlace de Facebook.', m)
   }
 
   let res;
@@ -15,7 +15,7 @@ const handler = async (m, { text, conn, args }) => {
 
   let result = res.data;
   if (!result || result.length === 0) {
-    return conn.reply(m.chat, '🍭 No se encontraron resultados.', m)
+    return conn.reply(m.chat, '⚡ No se encontraron resultados.', m)
   }
 
   let data;
@@ -26,12 +26,12 @@ const handler = async (m, { text, conn, args }) => {
   }
 
   if (!data) {
-    return conn.reply(m.chat, '🍭 No se encontró una resolución adecuada.', m)
+    return conn.reply(m.chat, '⚡ No se encontró una resolución adecuada.', m)
   }
 
   let video = data.url;
   try {
-    await conn.sendMessage(m.chat, { video: { url: video }, caption: '🍬 Aqui tienes ฅ^•ﻌ•^ฅ.', fileName: 'fb.mp4', mimetype: 'video/mp4' }, { quoted: m })
+    await conn.sendMessage(m.chat, { video: { url: video }, caption: '👑 Aqui tienes ฅ^•ﻌ•^ฅ.', fileName: 'fb.mp4', mimetype: 'video/mp4' }, { quoted: m })
     await m.react(done);
   } catch (e) {
     return conn.reply(m.chat, '⚠️ Error al enviar el video.', m)
