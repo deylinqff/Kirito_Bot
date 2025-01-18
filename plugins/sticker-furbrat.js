@@ -2,7 +2,7 @@ import fetch from 'node-fetch';
 import { sticker } from '../lib/sticker.js';
 
 const handler = async (m, { conn, args, text, usedPrefix, command }) => {
-  if (!text) throw `🍬 Por favor, ingresa tu nombre para hacer el sticker.`;
+  if (!text) throw `✎ Por favor, ingresa tu nombre ⍰ para hacer el sticker.`;
 
   try {
     const randomStyle = Math.floor(Math.random() * 7);
