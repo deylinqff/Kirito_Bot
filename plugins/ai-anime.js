@@ -39,41 +39,57 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
       const prompt = `${basePrompt}. Responde lo siguiente: ${query}`;
       const response = await luminsesi(query, username, prompt);
 
-      // Botones interactivos de WhatsApp con opciones .owner y .menu
-      const buttons = {
-        "type": "interactive",
-        "interactive": {
-          "type": "button",
-          "header": {
-            "type": "text",
-            "text": "Menú de Opciones"
-          },
-          "body": {
-            "text": response // Respuesta de la IA
-          },
-          "footer": {
-            "text": "Selecciona lo que desees"
-          },
-          "action": {
-            "buttons": [
-              {
-                "type": "reply",
-                "reply": {
-                  "id": ".owner",
-                  "title": ".owner"
-                }
-              },
-              {
-                "type": "reply",
-                "reply": {
-                  "id": ".menu",
-                  "title": ".menu"
-                }
-              }
-            ]
-          }
-        }
-      };
+      const { Client, LocalAuth } = require('whatsapp-web.js');
+
+// Crea un nuevo cliente de WhatsApp
+const client = new Client({
+  authStrategy: new LocalAuth(),
+});
+
+// Se ejecuta cuando el cliente está listo
+client.on('ready', () => {
+    console.log('¡El bot está listo!');
+});
+
+// Envía un mensaje con botones interactivos
+client.on('message', async message => {
+    if (message.body.toLowerCase() === 'boletos') {
+        // Mensaje con botones interactivos
+        const buttons = [
+            {
+                buttonId: 'buy_ticket_1',
+                buttonText: { displayText: 'Comprar Boleto 1' },
+                type: 1
+            },
+            {
+                buttonId: 'buy_ticket_2',
+                buttonText: { displayText: 'Comprar Boleto 2' },
+                type: 1
+            }
+        ];
+
+        const templateMessage = {
+            to: message.from,
+            type: 'buttons',
+            text: '¡Selecciona el boleto que deseas comprar!',
+            footer: 'Bot de Boletos Interactivos',
+            buttons: buttons,
+        };
+
+        client.sendMessage(message.from, templateMessage);
+    }
+});
+
+// Responde cuando un botón es presionado
+client.on('message', async (message) => {
+    if (message.body.startsWith('buy_ticket')) {
+        const selectedTicket = message.body.split('_')[2]; // Obtiene el número del boleto seleccionado
+        client.sendMessage(message.from, `¡Has seleccionado el Boleto ${selectedTicket}!`);
+    }
+});
+
+// Inicia el cliente
+client.initialize();
 
       // Enviar la respuesta de la IA y los botones interactivos
       await conn.reply(m.chat, response, m);
