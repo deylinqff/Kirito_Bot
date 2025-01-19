@@ -5,7 +5,7 @@ import axios from 'axios';
 const { proto, generateWAMessageFromContent, generateWAMessageContent } = (await import('@whiskeysockets/baileys')).default;
 
 let handler = async (m, { conn, text }) => {
-if (!text) { return conn.reply(m.chat, '🍬 Por favor, ingresa el texto de Lo que quieres buscar en Twitter', m, rcanal); }
+if (!text) { return conn.reply(m.chat, '🔎 Por favor, ingresa el texto de Lo que quieres buscar en Twitter', m, rcanal); }
 
 async function createImage(url) {
 const { imageMessage } = await generateWAMessageContent({image: { url }}, { upload: conn.waUploadToServer });
@@ -45,7 +45,7 @@ const msg = generateWAMessageFromContent(m.chat, {viewOnceMessage: {
 message: {
 messageContextInfo: {deviceListMetadata: {},deviceListMetadataVersion: 4},
 interactiveMessage: proto.Message.InteractiveMessage.create({
-body: proto.Message.InteractiveMessage.Body.create({text: `🍬 Resultado de : ${text}\n⪛✰ Tweetposts - Busquedas ✰⪜`}),
+body: proto.Message.InteractiveMessage.Body.create({text: `👑 Resultado de : ${text}\n⪛✰ Tweetposts - Busquedas ✰⪜`}),
 footer: proto.Message.InteractiveMessage.Footer.create({text: null}),
 header: proto.Message.InteractiveMessage.Header.create({hasMediaAttachment: false}),
 carouselMessage: proto.Message.InteractiveMessage.CarouselMessage.create({cards: mini})
