@@ -12,8 +12,8 @@ async function getUserInfo(username) {
 
         return `
  *☁️ Usuario:* ${user.login}
- *🍬 Nombre:* ${user.name ? user.name : 'No disponible'}
- *🍭 Bio:* ${user.bio ? user.bio : 'No disponible'}
+ *🔎 Nombre:* ${user.name ? user.name : 'No disponible'}
+ *👑 Bio:* ${user.bio ? user.bio : 'No disponible'}
  *📍 Ubicación:* ${user.location ? user.location : 'No disponible'}
  *📌 Blog:* ${user.blog ? user.blog : 'No disponible'}
  *👥 Seguidores:* ${user.followers}
@@ -33,7 +33,7 @@ async function getUserRepos(username) {
 
         return repos.map((repo, index) => `
  *☁️ Resultado:* ${1 + index}
- *🍬 Nombre:* ${repo.name}
+ *🔎 Nombre:* ${repo.name}
  *🚩 Creado:* ${formatDate(repo.created_at)}
  *📈 Actualizado:* ${formatDate(repo.updated_at)}
  *🌟 Estrellas:* ${repo.stargazers_count}
