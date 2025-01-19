@@ -9,9 +9,9 @@ let handler = async (m, { conn }) => {
   let mime = (q.msg || q).mimetype || ''
   
   if (!mime.startsWith('image/')) {
-    return m.reply('🍬 Por favor, responda a una *Imagen.*')
+    return m.reply('➥ Por favor, responda a una *Imagen.*')
   }
-  await m.react('🕓')
+  await m.react('✨')
 
   let media = await q.download()
   let formData = new FormData()
