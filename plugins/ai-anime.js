@@ -10,7 +10,7 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
   const username = `${conn.getName(m.sender)}`;
   const basePrompt = `Tu nombre es ${botname} y parece haber sido creada por Deylin. Tu versión actual es 2.1.5, Tú usas el idioma Español. Llamarás a las personas por su nombre ${username}, te gusta ser divertida, y te encanta aprender. Lo más importante es que debes ser amigable con la persona con la que estás hablando. ${username}`;
 
-  // Función adicional: Generar audio con el comando .anime
+  // Comando para generar audio estilo anime
   if (command === 'anime') {
     if (!text) {
       return conn.reply(m.chat, `🚀 Escribe un texto después del comando .anime para generar un audio estilo anime.`, m);
@@ -36,6 +36,44 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
       await m.react(error);
       return conn.reply(m.chat, '✘ Kirito-Bot no pudo generar el audio.', m);
     }
+    return;
+  }
+
+  // Comando para generar audio con efectos usando play.ht
+  if (command === 'tts2') {
+    const [efecto, ...textoArray] = text.split(" ");
+    const texto = textoArray.join("");
+
+    if (!efecto) {
+      let voiceList = await getVoiceList();
+      let responseText = `*〘⌬〙 No haz ingresado un efecto, por favor ingresa un efecto de voz.*\n\n*✎ Elige uno de los siguientes efectos:*\n`;
+
+      for (let i = 0, count = 0; count < 100 && i < voiceList.resultado.length; i++) {
+        const entry = voiceList.resultado[i];
+        if (entry.ID.length <= 20) {
+          responseText += `*◉ ${usedPrefix + command} ${entry.ID} tu-texto-aquí*\n`;
+          count++;
+        }
+      }
+
+      return conn.sendMessage(m.chat, { text: responseText.trim() }, { quoted: m });
+    }
+
+    let efectoValido = false;
+    let voiceList = await getVoiceList();
+    for (const entry of voiceList.resultado) {
+      if (entry.ID === efecto) {
+        efectoValido = true;
+        break;
+      }
+    }
+
+    if (!efectoValido) return conn.sendMessage(m.chat, { text: `*☒ El efecto proporcionado no existe en la lista, utiliza ${usedPrefix + command} para conocer la lista de efectos.*` }, { quoted: m });
+
+    if (!texto) return conn.sendMessage(m.chat, {text: `*✎ Ingresa el texto que quieras convertir a audio.*\n\n*✎ Ejemplo:*\n*◉ ${usedPrefix + command} ${efecto} Hola, este es un ejemplo de uso del comando.*`}, {quoted: m});
+
+    let masivo = await makeTTSRequest(texto, efecto);
+    conn.sendMessage(m.chat, {audio: {url: masivo.resultado}, fileName: 'error.mp3', mimetype: 'audio/mpeg', ptt: true}, {quoted: m});
     return;
   }
 
@@ -77,10 +115,10 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
   }
 };
 
-handler.help = ['anime', 'chatgpt', 'anime'];
+handler.help = ['ia', 'chatgpt', 'anime'];
 handler.tags = ['ai', 'audio'];
 handler.register = true;
-handler.command = ['anime', 'chatgpt', 'anime'];
+handler.command = ['ia', 'chatgpt', 'anime', 'tts2'];
 
 export default handler;
 
@@ -123,3 +161,32 @@ async function luminsesi(q, username, logic) {
     throw error;
   }
 }
+
+async function getVoiceList() {
+  const url = 'https://play.ht/api/v2/voices';
+  const options = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      AUTHORIZATION: `Bearer ${secretKey}`,
+      'X-USER-ID': userId
+    }
+  };
+  try {
+    const response = await fetch(url, options);
+    const responseData = await response.json(); 
+    const uniqueData = responseData.reduce((acc, current) => {
+      if (!acc.some(item => item.id === current.id)) {
+        acc.push(current);
+      }
+      return acc;
+    }, []);
+    const simplifiedList = uniqueData.map(entry => ({
+      ID: entry.id,
+      name: entry.name,
+      lenguaje: entry.language  
+    }));
+    return { resultado: simplifiedList ? simplifiedList : '⚠️ Error, no se obtuvo respuesta de la API.' };
+  } catch (error) {
+    console.error('Error:', error);
+    return { resultado: '⚠️
