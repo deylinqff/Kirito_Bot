@@ -1,74 +1,118 @@
-// Código creado por Deyin
-const { default: makeWASocket, DisconnectReason, useSingleFileAuthState } = require('@adiwajshing/baileys');
-const fs = require('fs');
-const gTTS = require('gtts');
+import axios from 'axios';
+import fetch from 'node-fetch';
+import { exec } from 'child_process';
+import fs from 'fs';
+import { promisify } from 'util';
+const execAsync = promisify(exec);
 
-// Configuración del estado del bot
-const { state, saveState } = useSingleFileAuthState('./session.json');
+let handler = async (m, { conn, usedPrefix, command, text }) => {
+  const isQuotedImage = m.quoted && (m.quoted.msg || m.quoted).mimetype && (m.quoted.msg || m.quoted).mimetype.startsWith('image/');
+  const username = `${conn.getName(m.sender)}`;
+  const basePrompt = `Tu nombre es ${botname} y parece haber sido creada por Deylin. Tu versión actual es 2.1.5, Tú usas el idioma Español. Llamarás a las personas por su nombre ${username}, te gusta ser divertida, y te encanta aprender. Lo más importante es que debes ser amigable con la persona con la que estás hablando. ${username}`;
 
-// Inicia el bot de WhatsApp
-const startBot = () => {
-    const sock = makeWASocket({
-        auth: state,
-    });
+  // Función adicional: Generar audio con el comando .anime
+  if (command === 'anime') {
+    if (!text) {
+      return conn.reply(m.chat, `🚀 Escribe un texto después del comando .anime para generar un audio estilo anime.`, m);
+    }
+    await m.react(rwait);
 
-    // Escucha mensajes entrantes
-    sock.ev.on('messages.upsert', async (msg) => {
-        const message = msg.messages[0];
+    try {
+      const audioPath = `./temp_audio_${Date.now()}.mp3`;
+      await generarAudioAnime(text, audioPath);
 
-        // Ignorar mensajes que no sean de texto o del bot mismo
-        if (!message.message || message.key.fromMe) return;
+      // Enviar el audio generado al chat
+      await conn.sendMessage(m.chat, { audio: { url: audioPath }, mimetype: 'audio/mpeg' }, { quoted: m });
+      fs.unlinkSync(audioPath); // Limpiar archivo temporal
+      await m.react(done);
+    } catch (error) {
+      console.error('⚠️ Error al generar el audio:', error);
+      await m.react(error);
+      return conn.reply(m.chat, '✘ Kirito-Bot no pudo generar el audio.', m);
+    }
+    return;
+  }
 
-        const from = message.key.remoteJid; // ID del remitente
-        const content = message.message.conversation || message.message.extendedTextMessage?.text || '';
-
-        // Verificar si el mensaje comienza con .anime
-        if (content.startsWith('.anime')) {
-            const texto = content.slice(6).trim(); // Extraer el texto después de .anime
-
-            if (texto) {
-                // Generar el audio
-                const audioPath = `./audio_anime.mp3`;
-                const gtts = new gTTS(texto, 'es');
-                gtts.save(audioPath, async (err) => {
-                    if (err) {
-                        console.error('Error al generar el audio:', err);
-                        return;
-                    }
-
-                    // Enviar el audio al usuario
-                    await sock.sendMessage(from, {
-                        audio: { url: audioPath },
-                        mimetype: 'audio/mpeg',
-                    });
-
-                    // Eliminar el archivo después de enviarlo
-                    fs.unlinkSync(audioPath);
-                });
-            } else {
-                // Responder si no hay texto
-                await sock.sendMessage(from, {
-                    text: 'Por favor escribe un texto después del comando .anime.',
-                });
-            }
-        }
-    });
-
-    // Manejar desconexión
-    sock.ev.on('connection.update', (update) => {
-        const { connection, lastDisconnect } = update;
-        if (connection === 'close') {
-            const shouldReconnect = lastDisconnect.error?.output?.statusCode !== DisconnectReason.loggedOut;
-            console.log('Conexión cerrada, intentando reconectar...', shouldReconnect);
-            if (shouldReconnect) {
-                startBot();
-            }
-        } else if (connection === 'open') {
-            console.log('¡Bot conectado con éxito!');
-        }
-    });
-
-    sock.ev.on('creds.update', saveState);
+  if (isQuotedImage) {
+    const q = m.quoted;
+    const img = await q.download?.();
+    if (!img) {
+      console.error('⚠️ Error: No image buffer available');
+      return conn.reply(m.chat, '✘ Kirito-Bot no pudo descargar la imagen.', m, fake);
+    }
+    const content = '👁️‍🗨️ ¿Qué se observa en la imagen?';
+    try {
+      const imageAnalysis = await fetchImageBuffer(content, img);
+      const query = '⚡ Descríbeme la imagen y detalla por qué actúan así. También dime quién eres';
+      const prompt = `${basePrompt}. La imagen que se analiza es: ${imageAnalysis.result}`;
+      const description = await luminsesi(query, username, prompt);
+      await conn.reply(m.chat, description, m, fake);
+    } catch {
+      await m.react(error);
+      await conn.reply(m.chat, '✘ Kirito-Bot no pudo analizar la imagen.', m, fake);
+    }
+  } else {
+    if (!text) {
+      return conn.reply(m.chat, `🚀 Ingrese una petición para que Kirito-Bot lo responda.`, m);
+    }
+    await m.react(rwait);
+    try {
+      const { key } = await conn.sendMessage(m.chat, { text: `💠 Kirito-Bot está procesando tu petición, espera unos segundos.` }, { quoted: m });
+      const query = text;
+      const prompt = `${basePrompt}. Responde lo siguiente: ${query}`;
+      const response = await luminsesi(query, username, prompt);
+      await conn.sendMessage(m.chat, { text: response, edit: key });
+      await m.react(done);
+    } catch {
+      await m.react(error);
+      await conn.reply(m.chat, '✘ Kirito-Bot no puede responder a esa pregunta.', m, fake);
+    }
+  }
 };
 
-startBot();
+handler.help = ['anime', 'chatgpt', 'anime'];
+handler.tags = ['ia', 'audio'];
+handler.register = true;
+handler.command = ['anime', 'chatgpt', 'anime'];
+
+export default handler;
+
+// Función para generar audios estilo anime
+async function generarAudioAnime(texto, audioPath) {
+  const comando = `gtts-cli "${texto}" --lang es --output "${audioPath}"`;
+  await execAsync(comando);
+}
+
+// Función para enviar una imagen y obtener el análisis
+async function fetchImageBuffer(content, imageBuffer) {
+  try {
+    const response = await axios.post('https://Luminai.my.id', {
+      content: content,
+      imageBuffer: imageBuffer,
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
+  }
+}
+
+// Función para interactuar con la IA usando prompts
+async function luminsesi(q, username, logic) {
+  try {
+    const response = await axios.post("https://Luminai.my.id", {
+      content: q,
+      user: username,
+      prompt: logic,
+      webSearchMode: false,
+    });
+    return response.data.result;
+  } catch (error) {
+    console.error('⚠️ Error al obtener:', error);
+    throw error;
+  }
+}
