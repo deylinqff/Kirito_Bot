@@ -8,9 +8,15 @@ export async function before(m, { conn, isAdmin, isBotAdmin }) {
     let bot = global.db.data.settings[this.user.jid] || {};
     if (m.fromMe) return true;
 
-    // Verificar si se menciona el prefijo del creador
-    const creatorPrefix = 'Creador'; // Cambia 'Creador' por el prefijo que desees
-    if (m.text && m.text.includes(creatorPrefix)) {
+    // Define el prefijo y número del creador
+    const creatorPrefix = 'Creador'; // Cambia 'Creador' por el prefijo que prefieras
+    const creatorNumber = '1234567890@s.whatsapp.net'; // Sustituye por el número de tu creador en formato WhatsApp
+
+    // Verificar si el mensaje contiene el prefijo o el número del creador
+    if (
+        (m.text && m.text.includes(creatorPrefix)) ||
+        (m.text && m.text.includes(creatorNumber))
+    ) {
         await conn.sendMessage(m.chat, { text: 'Lo siento, no puedo proporcionar información sobre mi creador.' });
         return;
     }
