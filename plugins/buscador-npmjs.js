@@ -7,12 +7,12 @@ import fetch from 'node-fetch'
 
 let handler = async (m, { text, usedPrefix, command }) => {
 
-if (!text) return conn.reply(m.chat, `🍬 Escribe el nonbre del scraper.\nEjemplo: ${usedPrefix + command} yt-search`, m, rcanal)
+if (!text) return conn.reply(m.chat, `『✎』 Escribe el nonbre del scraper.\nEjemplo: ${usedPrefix + command} yt-search`, m, rcanal)
 
 try {
 
 await m.react(rwait)
-conn.reply(m.chat, '🍭 Buscando el scraper....', m, {
+conn.reply(m.chat, '🔎 Buscando el scraper....', m, {
 contextInfo: { externalAdReply :{ mediaUrl: null, mediaType: 1, showAdAttribution: true,
 title: packname,
 body: dev,
