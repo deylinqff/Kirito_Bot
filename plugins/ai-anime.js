@@ -21,9 +21,15 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
       const audioPath = `./temp_audio_${Date.now()}.mp3`;
       await generarAudioAnime(text, audioPath);
 
-      // Enviar el audio generado al chat
-      await conn.sendMessage(m.chat, { audio: { url: audioPath }, mimetype: 'audio/mpeg' }, { quoted: m });
-      fs.unlinkSync(audioPath); // Limpiar archivo temporal
+      // Leer el archivo generado para enviarlo correctamente
+      const audioFile = fs.createReadStream(audioPath);
+      await conn.sendMessage(m.chat, { audio: audioFile, mimetype: 'audio/mpeg' }, { quoted: m });
+
+      // Limpiar archivo temporal después de enviarlo
+      audioFile.on('end', () => {
+        fs.unlinkSync(audioPath);
+      });
+
       await m.react(done);
     } catch (error) {
       console.error('⚠️ Error al generar el audio:', error);
@@ -33,6 +39,7 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
     return;
   }
 
+  // Código para manejar imágenes y otros comandos...
   if (isQuotedImage) {
     const q = m.quoted;
     const img = await q.download?.();
@@ -71,7 +78,7 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
 };
 
 handler.help = ['anime', 'chatgpt', 'anime'];
-handler.tags = ['ia', 'audio'];
+handler.tags = ['ai', 'audio'];
 handler.register = true;
 handler.command = ['anime', 'chatgpt', 'anime'];
 
