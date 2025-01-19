@@ -1,16 +1,16 @@
 import {webp2mp4} from '../lib/webp2mp4.js';
 import {ffmpeg} from '../lib/converter.js';
 
-const wait = '🍭 Procesando, por favor espere un momento...';
+const wait = '『⇓⇓』 Procesando, por favor espere un momento...';
 
 const handler = async (m, {conn, usedPrefix, command}) => {
   if (!m.quoted) {
-    return conn.reply(m.chat, `🍬 Responda A Un Sticker Que Desee Convertir En Video.`, m);
+    return conn.reply(m.chat, `➥ Responda A Un Sticker Que Desee Convertir En Video.`, m);
   }
   
   const mime = m.quoted.mimetype || '';
   if (!/webp/.test(mime)) {
-    return conn.reply(m.chat, `🍬 Responda A Un Sticker Que Desee Convertir En Video.`, m);
+    return conn.reply(m.chat, `➥ Responda A Un Sticker Que Desee Convertir En Video.`, m);
   }
   
   const media = await m.quoted.download();
@@ -43,7 +43,7 @@ const handler = async (m, {conn, usedPrefix, command}) => {
     ], 'mp3', 'mp4');
   }
   
-  await conn.sendFile(m.chat, out, 'error.mp4', '🍬 Aqui tienes tu *Vídeo* ฅ^•ﻌ•^ฅ.', m, 0, {thumbnail: out});
+  await conn.sendFile(m.chat, out, 'error.mp4', '👑 Aqui tienes tu *Vídeo* ฅ^•ﻌ•^ฅ.', m, 0, {thumbnail: out});
 };
 
 handler.help = ['tovideo'];
