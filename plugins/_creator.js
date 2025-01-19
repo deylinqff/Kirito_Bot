@@ -10,7 +10,7 @@ export async function before(m, { conn, isAdmin, isBotAdmin }) {
 
     // Define el prefijo y número del creador
     const creatorPrefix = 'Creador'; // Cambia 'Creador' por el prefijo que prefieras
-    const creatorNumber = '1234567890@s.whatsapp.net'; // Sustituye por el número de tu creador en formato WhatsApp
+    const creatorNumber = '50488198573@s.whatsapp.net'; // Sustituye por el número de tu creador en formato WhatsApp
 
     // Verificar si el mensaje contiene el prefijo o el número del creador
     if (
