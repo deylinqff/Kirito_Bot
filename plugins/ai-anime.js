@@ -39,7 +39,7 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
       const prompt = `${basePrompt}. Responde lo siguiente: ${query}`;
       const response = await luminsesi(query, username, prompt);
 
-      // Botones interactivos de WhatsApp
+      // Botones interactivos de WhatsApp con opciones .owner y .menu
       const buttons = {
         "type": "interactive",
         "interactive": {
@@ -49,7 +49,7 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
             "text": "Menú de Opciones"
           },
           "body": {
-            "text": "Elige una opción del menú:"
+            "text": response // Respuesta de la IA
           },
           "footer": {
             "text": "Selecciona lo que desees"
@@ -59,43 +59,15 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
               {
                 "type": "reply",
                 "reply": {
-                  "id": "menudedescarga",
-                  "title": "Menú De Descarga"
+                  "id": ".owner",
+                  "title": ".owner"
                 }
               },
               {
                 "type": "reply",
                 "reply": {
-                  "id": "menupremium",
-                  "title": "Menú Premium"
-                }
-              },
-              {
-                "type": "reply",
-                "reply": {
-                  "id": "menuia",
-                  "title": "Menú IA"
-                }
-              },
-              {
-                "type": "reply",
-                "reply": {
-                  "id": "menu+18",
-                  "title": "Menú +18"
-                }
-              },
-              {
-                "type": "reply",
-                "reply": {
-                  "id": "menu2",
-                  "title": "Menú2"
-                }
-              },
-              {
-                "type": "reply",
-                "reply": {
-                  "id": "creador",
-                  "title": "Creador"
+                  "id": ".menu",
+                  "title": ".menu"
                 }
               }
             ]
@@ -103,7 +75,7 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
         }
       };
 
-      // Enviar la respuesta y el menú interactivo
+      // Enviar la respuesta de la IA y los botones interactivos
       await conn.reply(m.chat, response, m);
       await conn.sendMessage(m.chat, buttons);
     } catch (error) {
@@ -113,10 +85,10 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
   }
 };
 
-handler.help = ['chatgpt <texto>', 'anime <texto>'];
+handler.help = ['chatgpt <texto>', 'ia <texto>'];
 handler.tags = ['tools'];
 handler.register = true;
-handler.command = ['ia', 'chatgpt', 'anime', 'chat', 'gpt'];
+handler.command = ['ia', 'chatgpt', 'ai', 'chat', 'gpt'];
 
 export default handler;
 
