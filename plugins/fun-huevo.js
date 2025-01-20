@@ -9,7 +9,7 @@ const handler = async (m, { conn, usedPrefix, command, text }) => {
     who = text ? text.replace(/[^0-9]/g, '') + '@s.whatsapp.net' : m.chat;
   }
 
-  if (!who) return m.reply(`🍬 Por favor, menciona aun usuario.`);
+  if (!who) return m.reply(`➥ Por favor, menciona aun usuario.`);
 
   let pp = './src/avatar_contact.png';
   try {
