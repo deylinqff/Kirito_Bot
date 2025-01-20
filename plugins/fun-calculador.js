@@ -1,5 +1,5 @@
 const handler = async (m, { conn, command, text, usedPrefix }) => {
-  if (!text) return conn.reply(m.chat, `🍬 Por favor, mensiona a un Usuario para comprobar su test.`, m, rcanal, );
+  if (!text) return conn.reply(m.chat, `➥ Por favor, mensiona a un Usuario para comprobar su test.`, m, rcanal, );
   const percentages = (500).getRandom();
   let emoji = '';
   let description = '';
