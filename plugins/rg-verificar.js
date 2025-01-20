@@ -8,7 +8,7 @@ let handler = async function (m, { conn, text, usedPrefix, command }) {
     let user = global.db.data.users[m.sender];
     let name2 = conn.getName(m.sender);
     let perfil = await conn.profilePictureUrl(m.sender, 'image').catch(_ => 'https://files.catbox.moe/22mlg6.jpg');
-    let pp = await conn.profilePictureUrl(m.sender, 'image').catch((_) => 'https://files.catbox.moe/xkukw4.jpg);
+    let pp = await conn.profilePictureUrl(m.sender, 'image').catch((_) => 'https://files.catbox.moe/22mlg6.jpg);
     let bio = 0, fechaBio;
     let sinDefinir = '😿 Es privada';
     let biografia = await conn.fetchStatus(m.sender).catch(() => null);
