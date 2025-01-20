@@ -8,7 +8,7 @@ async function loadCharacters() {
         const data = await fs.readFile(charactersFilePath, 'utf-8');
         return JSON.parse(data);
     } catch (error) {
-        throw new Error('❀ No se pudo cargar el archivo characters.json.');
+        throw new Error('⚡ No se pudo cargar el archivo characters.json.');
     }
 }
 
@@ -38,7 +38,7 @@ let handler = async (m, { conn, args }) => {
         const userCharacters = characters.filter(character => character.user === userId);
 
         if (userCharacters.length === 0) {
-            await conn.reply(m.chat, '❀ No tiene personajes reclamados en tu harem.', m);
+            await conn.reply(m.chat, '👑 No tiene personajes reclamados en tu harem.', m);
             return;
         }
 
@@ -50,11 +50,11 @@ let handler = async (m, { conn, args }) => {
         const endIndex = Math.min(startIndex + charactersPerPage, totalCharacters);
 
         if (page < 1 || page > totalPages) {
-            await conn.reply(m.chat, `❀ Página no válida. Hay un total de *${totalPages}* páginas.`, m);
+            await conn.reply(m.chat, `⚡ Página no válida. Hay un total de *${totalPages}* páginas.`, m);
             return;
         }
 
-        let message = `✿ Personajes reclamados ✿\n`;
+        let message = `👑 Personajes reclamados ✿\n`;
         message += `⌦ Usuario: @${userId.split('@')[0]}\n`;
         message += `♡ Personajes: *(${totalCharacters}):*\n\n`;
 
