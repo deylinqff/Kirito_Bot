@@ -2,26 +2,26 @@ const ro = 3000;
 const handler = async (m, {conn, usedPrefix, command}) => {
   const time = global.db.data.users[m.sender].lastrob + 7200000;
   if (new Date - global.db.data.users[m.sender].lastrob < 7200000) {
-  conn.reply(m.chat, `🍬 Debes esperar ${msToTime(time - new Date())} para usar #robxp de nuevo.`, m, rcanal);
+  conn.reply(m.chat, `⏳ Debes esperar ${msToTime(time - new Date())} para usar #robxp de nuevo.`, m, rcanal);
   return;
   }
   let who;
   if (m.isGroup) who = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : false;
   else who = m.chat;
   if (!who) {
-  conn.reply(m.chat, `*🍬 Debes mencionar a alguien para intentar robarle XP.`, m, rcanal)
+  conn.reply(m.chat, `*➥ Debes mencionar a alguien para intentar robarle XP.`, m, rcanal)
   return;
     };
   if (!(who in global.db.data.users)) { 
-  conn.reply(m.chat, `🍭 El usuario no se encuentra en mi base de datos.`, m, rcanal)
+  conn.reply(m.chat, `⍰ El usuario no se encuentra en mi base de datos.`, m, rcanal)
 return;
   }
   const users = global.db.data.users[who];
   const rob = Math.floor(Math.random() * ro);
-  if (users.exp < rob) return conn.reply(m.chat, `🍭 @${who.split`@`[0]} no tiene suficiente *${ro} XP* como para que valga la pena intentar robar.":`, m, {mentions: [who]});
+  if (users.exp < rob) return conn.reply(m.chat, `⍰ @${who.split`@`[0]} no tiene suficiente *${ro} XP* como para que valga la pena intentar robar.":`, m, {mentions: [who]});
   global.db.data.users[m.sender].exp += rob;
   global.db.data.users[who].exp -= rob;
-  conn.reply(m.chat, `*🍬 Le robaste ${rob} XP a @${who.split`@`[0]}*`, m, {mentions: [who]});
+  conn.reply(m.chat, `*☣ Le robaste ${rob} XP a @${who.split`@`[0]}*`, m, {mentions: [who]});
   global.db.data.users[m.sender].lastrob = new Date * 1;
 };
 handler.help = ['rob'];
