@@ -2,7 +2,7 @@ import fetch from 'node-fetch'
 
 let handler = async(m, { conn, text }) => {
 if (!text) {
-return conn.reply(m.chat, `🍬 Ingresa un texto para hablar con gifted`, m)
+return conn.reply(m.chat, `✎ Ingresa un texto para hablar con gifted`, m)
 }
     
 try {
@@ -17,7 +17,7 @@ await conn.sendMessage(m.chat, {
         externalAdReply: {
             showAdAttribution: true,
             containsAutoReply: true,
-            title: `❀ gі𝖿𝗍ᥱძ - іᥒ𝗍ᥱᥣіgᥱᥒᥴіᥲ`,
+            title: `⌨ gі𝖿𝗍ᥱძ - іᥒ𝗍ᥱᥣіgᥱᥒᥴіᥲ`,
             body: dev,
             previewType: "PHOTO",
             thumbnailUrl: 'https://files.catbox.moe/bjmjxd.jpeg', 
