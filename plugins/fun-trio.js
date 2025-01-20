@@ -17,7 +17,7 @@ Y ${name2} y ${name3} tienen un *${Math.floor(Math.random() * 100)}%* de compati
 
         conn.sendMessage(m.chat, { image: { url: pp }, caption: trio, mentions: [person1, person2, m.sender] }, { quoted: m });
     } else {
-        conn.reply(m.chat, '🍬 Menciona a 2 usuarios mas, para calcular la compatibilidad.', m);
+        conn.reply(m.chat, '➥ Menciona a 2 usuarios mas, para calcular la compatibilidad.', m);
     }
 }
 
