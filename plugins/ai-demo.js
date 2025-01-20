@@ -3,7 +3,7 @@ import { randomBytes } from "crypto"
 import axios from "axios"
 
 let handler = async (m, { conn, text }) => {
-    if (!text) throw '🍬 ¿Cómo puedo ayudarte hoy?';
+    if (!text) throw '⍰ ¿Cómo puedo ayudarte hoy?';
     try {
         conn.reply(m.chat, m);
         let data = await chatGpt(text)
@@ -15,7 +15,7 @@ await conn.sendMessage(m.chat, {
         externalAdReply: {
             showAdAttribution: true,
             containsAutoReply: true,
-            title: `[ ❀ ძᥱm᥆ - іᥒ𝗍ᥱᥣіgᥱᥒᥴіᥲ ]`,
+            title: `[ ⌨ ძᥱm᥆ - іᥒ𝗍ᥱᥣіgᥱᥒᥴіᥲ ]`,
             body: dev,
             previewType: "PHOTO",
             thumbnailUrl: 'https://tinyurl.com/2awg2bch', 
