@@ -7,8 +7,8 @@ let Reg = /\|?(.*)([.|] *?)([0-9]*)$/i;
 let handler = async function (m, { conn, text, usedPrefix, command }) {
     let user = global.db.data.users[m.sender];
     let name2 = conn.getName(m.sender);
-    let perfil = await conn.profilePictureUrl(m.sender, 'image').catch(_ => 'https://tinyurl.com/23zdhl3h');
-    let pp = await conn.profilePictureUrl(m.sender, 'image').catch((_) => 'https://tinyurl.com/2d47ep6n');
+    let perfil = await conn.profilePictureUrl(m.sender, 'image').catch(_ => 'https://qu.ax/xwmzM.jpg');
+    let pp = await conn.profilePictureUrl(m.sender, 'image').catch((_) => 'https://qu.ax/ktODx.jpg');
     let bio = 0, fechaBio;
     let sinDefinir = '😿 Es privada';
     let biografia = await conn.fetchStatus(m.sender).catch(() => null);
