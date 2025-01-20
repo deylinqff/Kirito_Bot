@@ -107,12 +107,12 @@ global.fake = { contextInfo: { isForwarded: true, forwardedNewsletterMessageInfo
 }}, { quoted: m }
 
 global.icono = [ 
-'https://tinyurl.com/23eerp54',
-'https://tinyurl.com/24lolo7n',
-'https://tinyurl.com/28q9fn74',
-'https://tinyurl.com/27j5ns64',
-'https://tinyurl.com/2a6fqsrc',
-'https://tinyurl.com/23myvbwo'
+'https://qu.ax/xwmzM.jpg',
+'https://qu.ax/JyWBD.jpg',
+'https://qu.ax/ktODx.jpg',
+'https://qu.ax/plaEy.jpg',
+'https://qu.ax/zfsKt.jpg',
+'https://qu.ax/CjdFM.jpg'
 ].getRandom()
 
 global.rcanal = { contextInfo: { isForwarded: true, forwardedNewsletterMessageInfo: { newsletterJid: channelRD.id, serverMessageId: 100, newsletterName: channelRD.name, }, externalAdReply: { showAdAttribution: true, title: packname, body: dev, mediaUrl: null, description: null, previewType: "PHOTO", thumbnailUrl: icono, sourceUrl: redes, mediaType: 1, renderLargerThumbnail: false }, }, }}
