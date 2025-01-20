@@ -18,7 +18,7 @@ var handler = async (m, { conn, text }) => {
         who = m.chat;
     }
 
-    if (!who) return conn.reply(m.chat, '🍬 Por favor, ingrese el tag de algún usuario o responda a un mensaje.', m);
+    if (!who) return conn.reply(m.chat, '✎ Por favor, ingrese el tag de algún usuario o responda a un mensaje.', m);
 
     if (!userName) {
         userName = text || 'Usuario desconocido';
