@@ -21,7 +21,7 @@ let name2 = conn.getName(m.sender)
   fechaBio = biografia[0].setAt ? new Date(biografia[0].setAt).toLocaleDateString("es-ES", { day: "2-digit", month: "2-digit", year: "numeric", }) : "Fecha no disponible"
   }
 if (user.registered === true) {
-  return m.reply(`🧑‍💻 *YA ESTÁS REGISTRADO.*\n\n*¿QUIERES HACERLO DE NUEVO?*\n\nUsa este comando para eliminar tu registro:\n*${usedPrefix}unreg*`)
+  return m.reply(`『 ✎ 』 *YA ESTÁS REGISTRADO.*\n\n*¿QUIERES HACERLO DE NUEVO?*\n\n> Usa este comando para eliminar tu registro:\n*${usedPrefix}unreg*`)
 }
 if (!Reg.test(text)) throw `*『✦』El comando ingresado es incorrecto, úsalo de la siguiente manera:*\n\n#reg *Nombre.edad*\n\n\`\`\`Ejemplo:\`\`\`\n#reg *${name2}.10000*`
 let [_, name, splitter, age] = text.match(Reg)
