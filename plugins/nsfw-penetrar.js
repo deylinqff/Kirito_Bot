@@ -2,7 +2,7 @@
 
 let handler = async (m, { conn, command, text }) => {
 if (!db.data.chats[m.chat].nsfw && m.isGroup) {
-    return m.reply('🍬 El contenido *NSFW* está desactivado en este grupo.\n> Un administrador puede activarlo con el comando » *#nsfw*');
+    return m.reply('⚡ El contenido *NSFW* está desactivado en este grupo.\n> Un administrador puede activarlo con el comando » *#enable nsfw*');
     }
     
     let user = m.mentionedJid[0] || (m.quoted ? m.quoted.sender : m.sender);
@@ -15,7 +15,7 @@ if (!db.data.chats[m.chat].nsfw && m.isGroup) {
 *Le ha metido el pene a* \`${text || userName}\` *con todo y condón hasta quedar seco, has dicho "por favor más duroooooo!, ahhhhhhh, ahhhhhh, hazme un hijo que sea igual de pitudo que tú!" mientras te penetraba y luego te ha dejado en silla de ruedas!*
 
 \`${text || userName}\` 
-✿ *YA TE HAN PENETRADO!*`;
+🍆 *YA TE HAN PENETRADO!*`;
 
     conn.reply(m.chat, responseMessage, null, { mentions: [user] });
 }
