@@ -13,7 +13,7 @@ let handler = async (m, { conn, text }) => {
   }
 
   const groupId = match[1];
-  const message = "〔🚀 *TECNO-BOT* 🚀〕\n\n*Enlace recibido correctamente.*";
+  const message = "〔👑 *𝑲𝒊𝒓𝒊𝒕𝒐-𝑩𝒐𝒕* 👑〕\n\n*Enlace recibido correctamente.*";
 
   try {
     // Acepta la invitación al grupo
