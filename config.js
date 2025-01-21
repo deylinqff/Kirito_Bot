@@ -56,7 +56,7 @@ global.textbot = '𝑲𝒊𝒓𝒊𝒕𝒐-𝑩𝒐𝒕 • Powered By 𝑫𝒆�
 global.moneda = 'Yenes'
 global.welcom1 = 'Edita Con #setwelcome'
 global.welcom2 = 'Edita Con #setbye'
-global.banner = 'https://tinyurl.com/2y5swnfc'
+global.banner = 'https://tinyurl.com/25md9gsv'
 global.catalogo = 'https://qu.ax/MuAQA.jpg'
 
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
