@@ -1,28 +1,19 @@
 import fetch from 'node-fetch'
 
 let handler  = async (m, { conn, usedPrefix, command }) => {
-let img = await (await fetch(`https://files.catbox.moe/wkvi52.jpg`)).buffer()
+let img = await (await fetch(`https://files.catbox.moe/qzmn89.jpg`)).buffer()
 const more = String.fromCharCode(8206)
 const readMore = more.repeat(4001)
-let txt = `*Hola!, te invito a unirte a los grupos oficiales de Kirito-Bot para convivir con la comunidad*
+let txt = `*Hola!, te invito a unirte a los grupos oficiales de TECNO-BOT para convivir con la comunidad :D*
 
-- ${namegrupo}
-*👑* ${gp1}
+*✰* ${group}
 
-- ${namecomu}
-*⚡* ${comunidad1}
+*─ׄ─ׅ─ׄ⭒─ׄ─ׅ─ׄ⭒─ׄ─ׅ─ׄ⭒─ׄ─ׅ─ׄ⭒─ׄ─ׅ─ׄ⭒─ׄ─ׅ─ׄ*
 
-*ׄ─ׄ⭒─ׄ─ׅ─ׄ⭒─ׄ─ׅ─ׄ⭒─ׄ─ׅ─ׄ⭒─ׄ─ׅ─ׄ⭒─ׄ*
+➠ Enlace anulado? entre aquí! 
 
-⚘ Enlace anulado? entre aquí! 
-
-- ${namechannel}
-*👑* ${channel}
-
-- ᬊ᭄𝑲𝒊𝒓𝒊𝒕𝒐-𝑩𝒐𝒕࿐ཽ༵
-*⚡* ${channel2}
-
-> ${dev}`
+Canal :
+*✰* ${canal}
 
 > 🚩 ${textbot}`
 await conn.sendFile(m.chat, img, "Thumbnail.jpg", txt, m, null, rcanal)
