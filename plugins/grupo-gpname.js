@@ -1,6 +1,6 @@
 import Presence from '@whiskeysockets/baileys';
 const handler = async (m, {conn, args, text}) => {
-  if (!text) throw `🍬 Por favor, ingresé el nuevo nombre qué desea ponerle al grupo.`;
+  if (!text) throw `⚡ Por favor, ingresé el nuevo nombre qué desea ponerle al grupo.`;
   try {
     const text = args.join` `;
     if (!args || !args[0]) {
