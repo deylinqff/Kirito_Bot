@@ -20,15 +20,17 @@ let name2 = conn.getName(m.sender)
   bio = biografia[0].status || sinDefinir
   fechaBio = biografia[0].setAt ? new Date(biografia[0].setAt).toLocaleDateString("es-ES", { day: "2-digit", month: "2-digit", year: "numeric", }) : "Fecha no disponible"
   }
-if (user.registered === true) throw `*『✦』Ya estas registrado, para volver a registrarte, usa el comando: #unreg*`
-if (!Reg.test(text)) throw `*『✦』El comando ingresado es incorrecto, uselo de la siguiente manera:*\n\n#reg *Nombre.edad*\n\n\`\`\`Ejemplo:\`\`\`\n#reg *${name2}.10000*`
+if (user.registered === true) {
+  return m.reply(`🧑‍💻 *YA ESTÁS REGISTRADO.*\n\n*¿QUIERES HACERLO DE NUEVO?*\n\nUsa este comando para eliminar tu registro:\n*${usedPrefix}unreg*`)
+}
+if (!Reg.test(text)) throw `*『✦』El comando ingresado es incorrecto, úsalo de la siguiente manera:*\n\n#reg *Nombre.edad*\n\n\`\`\`Ejemplo:\`\`\`\n#reg *${name2}.10000*`
 let [_, name, splitter, age] = text.match(Reg)
 if (!name) throw '*『✦』No puedes registrarte sin nombre, el nombre es obligatorio. Inténtelo de nuevo.*'
 if (!age) throw '*『✦』No puedes registrarte sin la edad, la edad es opcional. Inténtelo de nuevo.*'
-if (name.length >= 30) throw '*『✦』El nombre no debe de tener mas de 30 caracteres.*' 
+if (name.length >= 30) throw '*『✦』El nombre no debe de tener más de 30 caracteres.*' 
 age = parseInt(age)
 if (age > 10000) throw '*『😏』Viejo/a Sabroso/a*'
-if (age < 5) throw '*『🍼』Ven aquí, te adoptare!!*'
+if (age < 5) throw '*『🍼』Ven aquí, ¡te adoptaré!*'
 user.name = name.trim()
 user.age = age
 user.descripcion = bio
@@ -64,7 +66,7 @@ let chtxt = `
 🗂 *𝚅𝚎𝚛𝚒𝚏𝚒𝚌𝚊𝚌𝚒𝚘́𝚗* » ${user.name}
 ⭐️ *𝙴𝚍𝚊𝚍* » ${user.age} años
 👀 *𝙳𝚎𝚜𝚌𝚛𝚒𝚙𝚌𝚒𝚘𝚗* » ${user.descripcion} 
-⏳ *𝚄𝚕𝚝𝚒𝚖𝚊 𝙼𝚘𝚍𝚒𝚏𝚒𝚌𝚊𝚝𝚒𝚘𝚗* » ${fechaBio}
+⏳ *𝚄𝚕𝚝𝚒𝚖𝚊 𝙼𝚘𝚍𝚒𝚏𝚒𝚌𝚊𝚌𝚒𝚘𝚗* » ${fechaBio}
 📆 *𝙵𝚎𝚌𝚑𝚊* » ${moment.tz('America/Bogota').format('DD/MM/YY')}
 ⚡ *𝙽𝚞𝚖𝚎𝚛𝚘 𝚍𝚎 𝚛𝚎𝚐𝚒𝚜𝚝𝚛𝚘* »
 ⤷ ${sn}
