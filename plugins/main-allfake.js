@@ -31,12 +31,12 @@ console.log(`Error : ${e}`)
 global.creador = 'Wa.me/50488198573'
 global.ofcbot = `${conn.user.jid.split('@')[0]}`
 global.asistencia = 'Wa.me/50488198573'
-global.namechannel = '࿋ོ༙𝐊𝐢𝐫𝐢𝐭𝐨-𝐁𝐨𝐲 𝐂𝐡𝐚𝐧𝐧𝐞𝐥࿐ཽ༵'
+global.namechannel = '࿋ོ༙𝐊𝐢𝐫𝐢𝐭𝐨-𝑩𝒐𝒕 𝐂𝐡𝐚𝐧𝐧𝐞𝐥࿐ཽ༵'
 global.namechannel2 = '᭄𝐊𝐢𝐫𝐢𝐭𝐨-𝐁𝐨𝐭ᬊᬁ"'
 global.namegrupo = '𝑲𝒊𝒓𝒊𝒕𝒐-𝑩𝒐𝒕'
 global.namecomu = 'ᬊ𝑲𝒊𝒓𝒊𝒕𝒐 𝑩𝒐𝒕 𝑪𝒐𝒎𝒖𝒏𝒊𝒕𝒚ᬊ᭄'
 global.listo = '⚡ *Aquí tienes ฅ^•ﻌ•^ฅ*'
-global.fotoperfil = await conn.profilePictureUrl(m.sender, 'image').catch(_ => 'https://files.catbox.moe/jsxpqp.jpg')
+global.fotoperfil = await conn.profilePictureUrl(m.sender, 'image').catch(_ => 'https://files.catbox.moe/wkvi52.jpg')
 
 //Ids channel
 global.idchannel = '120363372653753296@newsletter'
