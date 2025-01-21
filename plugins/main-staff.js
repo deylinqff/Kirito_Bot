@@ -13,8 +13,8 @@ await conn.sendMessage(m.chat, {
       externalAdReply: {
         title: `📢 Notificación del Staff`,
         body: "Staff no disponible",
-        thumbnailUrl: "https://qu.ax/OZHvF.jpg", // Cambia la URL a la imagen que prefieras
-        sourceUrl: "https://example.com", // Cambia el enlace a donde quieras redirigir
+        thumbnailUrl: "https://qu.ax/CfNcZ.jpg", // Cambia la URL a la imagen que prefieras
+        sourceUrl: "https://whatsapp.com/channel/0029VawF8fBBvvsktcInIz3m", // Cambia el enlace a donde quieras redirigir
         mediaType: 1,
         showAdAttribution: true,
         renderLargerThumbnail: true
