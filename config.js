@@ -42,7 +42,7 @@ global.kiritoJadibts = true
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
 
 global.packsticker =`°.⎯⃘̶⎯̸⎯ܴ⎯̶᳞͇ࠝ⎯⃘̶⎯̸⎯ܴ⎯̶᳞͇ࠝ⎯⃘̶⎯̸.°\n✦ Bσƚ:\n✦ Pɾσριҽƚαɾισ:\n✦ Fҽƈԋα ԃҽ Cɾҽαƈιóɳ:\n✦ Hσɾα ԃҽ Cɾҽαƈιóɳ:\n♾━━━━━━━━`
-global.packsticker2 = `━━━━━━━━♾\n⪛✰ ᬊ𝐊𝐢𝐫𝐢𝐭𝐨-𝐁𝐨𝐭ᬊᬁ ✰⪜\n𝐃𝐞𝐲𝐥𝐢𝐧\n⇝ ${moment.tz('America/Los_Angeles').format('DD/MM/YY')}\n⇝ ${moment.tz('America/Los_Angeles').format('HH:mm:ss')} \n°.⎯⃘̶⎯̸⎯ܴ⎯̶᳞͇ࠝ⎯⃘̶⎯̸⎯ܴ⎯̶᳞͇ࠝ⎯⃘̶⎯̸.°\n\nѕτιϲκєя ϐγ: Yυƙι-Sυσυ-Bσƚ`
+global.packsticker2 = `━━━━━━━━♾\n⪛✰ ᬊ𝐊𝐢𝐫𝐢𝐭𝐨-𝐁𝐨𝐭ᬊᬁ ✰⪜\n𝐃𝐞𝐲𝐥𝐢𝐧\n⇝ ${moment.tz('America/Los_Angeles').format('DD/MM/YY')}\n⇝ ${moment.tz('America/Los_Angeles').format('HH:mm:ss')} \n°.⎯⃘̶⎯̸⎯ܴ⎯̶᳞͇ࠝ⎯⃘̶⎯̸⎯ܴ⎯̶᳞͇ࠝ⎯⃘̶⎯̸.°\n\nѕτιϲκєя ϐγ: Kirito-Bot`
 
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
 
@@ -51,13 +51,13 @@ global.botname = 'ᬊᬁ𝐊𝐢𝐫𝐢𝐭𝐨-𝐁𝐨𝐭࿐'
 global.wm = '๖ۣ•҉𝐊𝐢𝐫𝐢𝐭𝐨-𝐁𝐨𝐭᭄'
 global.author = 'Made By 𝑫𝒆𝒚𝒍𝒊𝒏'
 global.dev = '© ⍴᥆ᥕᥱrᥱძ ᑲᥡ 𝑫𝒆𝒚𝒍𝒊𝒏'
-global.textbot = 'Yυƙι-Sυσυ-Bσƚ • Powered By 𝑫𝒆𝒚𝒍𝒊𝒏'
+global.textbot = '𝑲𝒊𝒓𝒊𝒕𝒐-𝑩𝒐𝒕 • Powered By 𝑫𝒆𝒚𝒍𝒊𝒏'
 
 global.moneda = 'Yenes'
 global.welcom1 = 'Edita Con #setwelcome'
 global.welcom2 = 'Edita Con #setbye'
 global.banner = 'https://tinyurl.com/2y5swnfc'
-global.catalogo = 'https://files.catbox.moe/yuhztz.jpg'
+global.catalogo = 'https://qu.ax/MuAQA.jpg'
 
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
 
