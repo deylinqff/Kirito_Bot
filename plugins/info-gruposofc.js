@@ -1,8 +1,7 @@
 import fetch from 'node-fetch'
 
-let handler  = async (m, { conn, usedPrefix, command }) => {
-
-let grupos = `*Hola!, te invito a unirte a los grupos oficiales del Bot para convivir con la comunidad.....*
+let handler = async (m, { conn, usedPrefix, command }) => {
+    let grupos = `*Hola!, te invito a unirte a los grupos oficiales del Bot para convivir con la comunidad.....*
 
 - ${namegrupo}
 *👑* ${gp1}
@@ -22,12 +21,15 @@ let grupos = `*Hola!, te invito a unirte a los grupos oficiales del Bot para con
 
 > ${dev}`
 
-await conn.sendFile(m.chat, miniurl, "https://files.catbox.moe/xr2m6u.jpg", grupos, m, null, rcanal)
+    const nuevaImagen = 'https://files.catbox.moe/xr2m6u.jpg';
 
-await m.react(emojis)
+    await conn.sendFile(m.chat, nuevaImagen, "kirito.jpg", grupos, m, null, rcanal);
 
-}
-handler.help = ['grupos']
-handler.tags = ['info']
-handler.command = ['grupos', 'links', 'groups']
-export default handler
+    await m.react(emojis);
+};
+
+handler.help = ['grupos'];
+handler.tags = ['info'];
+handler.command = ['grupos', 'links', 'groups'];
+
+export default handler;
