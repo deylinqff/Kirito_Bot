@@ -21,59 +21,59 @@ let Styles = (text, style = 1) => {
   return output.join('');
 };
 let tags = {
-  'anime': 'ANIME',
-  'main': 'INFO',
-  'search': 'SEARCH',
-  'game': 'GAME',
-  'serbot': 'SUB BOTS',
-  'rpg': 'RPG',
-  'rg': 'REGISTRO',
-  'sticker': 'STICKER',
-  'img': 'IMAGE',
-  'group': 'GROUPS',
+  'anime': '🧧 ANIME 🎐',
+  'main': '❗ INFO ❕',
+  'search': '🔎 SEARCH 🔍',
+  'game': '🕹️ GAME 🎮',
+  'serbot': '⚙️ SUB BOTS 🤖',
+  'rpg': '🌐 RPG 🥇',
+  'rg': '🎑 REGISTRO 🎟️',
+  'sticker': '💟 STICKER 🏷️',
+  'img': '🖼️ IMAGE 🎇',
+  'group': '👥 GROUPS 📢',
 //  'logo': 'MAKER',
-  'nable': 'ON / OFF', 
-  'premium': 'PREMIUM',
-  'downloader': 'DOWNLOAD',
-  'tools': 'TOOLS',
-  'fun': 'FUN',
-  'nsfw': 'NSFW', 
-  'cmd': 'DATABASE',
-  'owner': 'OWNER', 
-  'audio': 'AUDIOS', 
-  'advanced': 'ADVANCED',
+  'nable': '🎛️ ON / OFF 🔌', 
+  'premium': '💎 PREMIUM 👑',
+  'downloader': '📥 DOWNLOAD 📤',
+  'tools': '🔧 TOOLS 🛠️',
+  'fun': '🎉 FUN 🎊',
+  'nsfw': '🔞 NSFW 📛', 
+  'cmd': '🧮 DATABASE 🖥️',
+  'owner': '👤 OWNER 👁️', 
+  'audio': '📣 AUDIOS 🔊', 
+  'advanced': '🗝️ ADVANCED 📍',
+  'frefire':  '🎮frefire 🎮',
 }
 
 const defaultMenu = {
-  before:  `*⌬━━━━━▣━━◤⌬◢━━▣━━━━━━⌬*
+  before:  `*─ׄ─ׅ─⭒─ׄ─ׄ─⭒─ׅ─ׄ─⭒─ׄ─ׄ─⭒─ׄ─ׄ─*
 
-Hola *%name* soy *Kirito-Bot*
+Hola *%name* soy *August-Ai*
 
-╔════⌬══◤𝑪𝑹𝑬𝑨𝑫𝑶𝑹◢
-║  ♛ 𝑫𝒆𝒚𝒍𝒊𝒏
-╚════⌬══◤✰✰✰✰✰◢
+╔══════ •『 𝑪𝑹𝑬𝑨𝑫𝑶𝑹 』
+║  🖥️ Agust
+╚═════ ♢.✰.♢ ══════
+╔══════ •『 𝑰𝑵𝑭𝑶-𝑩𝑶𝑻 』
+║  👤 Cliente: %name
+║  ⭐ Exp: %exp
+║  ⚡ Nivel: %level
+╚═════ ♢.✰.♢ ═══════
 
-╔══════⌬『 𝑰𝑵𝑭𝑶-𝑩𝑶𝑻 』
-║ ✎ 〘Cliente: %name
-║ ✎ 〘Exp: %exp
-║ ✎ 〘Nivel: %level
-╚══════ ♢.✰.♢ ══════
+╔══════ •『 𝑰𝑵𝑭𝑶-𝑼𝑺𝑬𝑹』
+║  🤖 Bot: ©Bot-Agust-Ai®
+║  💎 Modo Público
+║  💨 Baileys: Multi Device
+║  🪄 Tiempo Activo: %muptime
+║  🎩 Usuarios: %totalreg 
+╚═════ ♢.✰.♢ ════════
 
-╔═══════⌬『 𝑰𝑵𝑭𝑶-𝑼𝑺𝑬𝑹 』
-║ ✎ 〘Bot: ©Tecno-Bot-Plus®
-║ ✎ 〘Modo Público
-║ ✎ 〘Baileys: Multi Device
-║ ✎ 〘Tiempo Activo: %muptime
-║ ✎ 〘Usuarios: %totalreg 
-╚══════ ♢.✰.♢ ══════
-
-*◤━━━━━ ☆. ⌬ .☆ ━━━━━◥*
+*─ׄ─ׄ─⭒─ׄ─ׅ─ׄ⭒─ׄ─ׄ─⭒─ׄ─ׄ─⭒─ׄ─ׅ─*
  %readmore
-\t\t\t⚙_*𝑳𝑰𝑺𝑻𝑨 𝑫𝑬 𝑪𝑶𝑴𝑨𝑵𝑫𝑶𝑺*_ 
+\t\t\t⚙️_*𝐋𝐈𝐒𝐓𝐀 𝐃𝐄 𝐂𝐎𝐌𝐀𝐍𝐃𝐎𝐒*_ 🚀
 `.trimStart(),
-  header: '*┏━━━━▣━━⌬〘 %category 〙*',
-  body: '┃✎›〘 %cmd %islimit %isPremium\n',
-  footer: '*┗━━━▣━━⌬⌨⌬━━▣━━━━⌬*',
+  header: '*╭╍╍╍╍❖【 *%category* 】',
+  body: '┋💎›【 %cmd %islimit %isPremium\n',
+  footer: '*╰╍╍╍╍❖•ೋ° °ೋ•❖╍╍╍╍╯*',
   after: `© ${textbot}`,
 }
 
@@ -196,9 +196,9 @@ let handler = async (m, { conn, usedPrefix: _p, __dirname }) => {
     let pp13 = 'https://i.ibb.co/Cs6Tt9V/Sylph.jpg'
     let pp14 = 'https://i.ibb.co/JmcS3kv/Sylph.jpg'
     let pp15 = 'https://i.ibb.co/Cs6Tt9V/Sylph.jpg'
-    let img = 'https://qu.ax/fUEzP.jpg'
-    let img2 = 'https://qu.ax/xcAXs.jpg'
-    await m.react('👑')
+    let img = 'https://qu.ax/OQNSn.jpg'
+    let img2 =
+    await m.react('⚡')
    // await conn.sendMessage(m.chat, { video: { url: [pp, pp2, pp3, pp4, pp5, pp6, pp7, pp8, pp9, pp10, pp11, pp12, pp13, pp14, pp15].getRandom() }, gifPlayback: true, caption: text.trim(), mentions: [m.sender] }, { quoted: estilo })
     await conn.sendFile(m.chat, img, 'thumbnail.jpg', text.trim(), m, null, rcanal)
    //await conn.sendAi(m.chat, botname, textbot, text.trim(), img, img, canal, estilo)
