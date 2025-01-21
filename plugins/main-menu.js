@@ -54,10 +54,10 @@ let menu = `𔓕꯭  ꯭ 𓏲꯭֟፝੭   ☆   𝐊𝐢𝐫𝐢𝐭𝐨-
 ┏─━─━≪✠≫━─━─
 │`💥ᴅᴇsᴄᴀʀɢᴀs💥`
 ┗─━─━≪✠≫━─━─
-┊❏ `.fb <link>`
-┊❏ `.fb *<link>*`
-┊❏ `.gptfb <link>`
-┊❏ `.mediafire`
+┊❏ .fb <link>
+┊❏ .fb *<link>*
+┊❏ .gptfb <link>
+┊❏ .mediafire
 ┊❏ `.soundcloud <txt>`
 ┊❏ `.music <texto>`
 ┊❏ `.apk <texto>`
