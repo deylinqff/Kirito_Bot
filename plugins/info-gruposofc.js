@@ -1,8 +1,10 @@
 import fetch from 'node-fetch'
 
 let handler  = async (m, { conn, usedPrefix, command }) => {
-
-let grupos = `*Hola!, te invito a unirte a los grupos oficiales del Bot para convivir con la comunidad.....*
+let img = await (await fetch(`https://files.catbox.moe/wkvi52.jpg`)).buffer()
+const more = String.fromCharCode(8206)
+const readMore = more.repeat(4001)
+let txt = `*Hola!, te invito a unirte a los grupos oficiales de TECNO-BOT para convivir con la comunidad :D*
 
 - ${namegrupo}
 *👑* ${gp1}
