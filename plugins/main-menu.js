@@ -30,7 +30,7 @@ let perfil = await conn.profilePictureUrl(who, 'image').catch(_ => 'https://file
 let taguser = '@' + m.sender.split("@s.whatsapp.net")[0]
 const vid = ['https://qu.ax/ZVSSA.mp4', 'https://qu.ax/tfvrZ.mp4', 'https://qu.ax/FHVQP.mp4']
 
-let menu = `❖ ── ✰ ──『   𝐊𝐢𝐫𝐢𝐭𝐨-𝐁𝐨𝐭  』── ✰ ── ❖
+let menu = `❖──✰──『   𝐊𝐢𝐫𝐢𝐭𝐨-𝐁𝐨𝐭  』──✰──❖
 
 👑 ¡𝐇𝐨𝐥𝐚! 𝐂𝐨𝐦𝐨 𝐄𝐬𝐭𝐚𝐬 𝐄𝐥 𝐃𝐢𝐚 𝐃𝐞 𝐇𝐨𝐲 *${taguser}* 𝐒𝐨𝐲 𝐊𝐢𝐫𝐢𝐭𝐨-𝐁𝐨𝐭 ${saludo}. 
 
