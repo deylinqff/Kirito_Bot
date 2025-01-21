@@ -33,8 +33,8 @@ global.baileys = 'V 6.7.9'
 global.languaje = 'Español'
 global.vs = '2.1.5'
 global.vsJB = '5.0'
-global.nameqr = '𝑲𝒊𝒓𝒊𝒕𝒐-𝑩𝒐𝒕'
-global.namebot = '💠◟𝑲𝒊𝒓𝒊𝒕𝒐-𝑩𝒐𝒕◞💠'
+global.nameqr = '࿋ོ༙𝑲𝒊𝒓𝒊𝒕𝒐-𝑩𝒐𝒕࿐'
+global.namebot = '᭄𝑲𝒊𝒓𝒊𝒕𝒐-𝑩𝒐𝒕࿐ཽ༵'
 global.sessions = 'Sessions'
 global.jadi = 'JadiBots' 
 global.kiritoJadibts = true
@@ -42,13 +42,13 @@ global.kiritoJadibts = true
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
 
 global.packsticker =`°.⎯⃘̶⎯̸⎯ܴ⎯̶᳞͇ࠝ⎯⃘̶⎯̸⎯ܴ⎯̶᳞͇ࠝ⎯⃘̶⎯̸.°\n✦ Bσƚ:\n✦ Pɾσριҽƚαɾισ:\n✦ Fҽƈԋα ԃҽ Cɾҽαƈιóɳ:\n✦ Hσɾα ԃҽ Cɾҽαƈιóɳ:\n♾━━━━━━━━`
-global.packsticker2 = `━━━━━━━━♾\n⪛✰ 𝐊𝐢𝐫𝐢𝐭𝐨-𝐁𝐨𝐭 ✰⪜\n𝐃𝐞𝐲𝐥𝐢𝐧\n⇝ ${moment.tz('America/Los_Angeles').format('DD/MM/YY')}\n⇝ ${moment.tz('America/Los_Angeles').format('HH:mm:ss')} \n°.⎯⃘̶⎯̸⎯ܴ⎯̶᳞͇ࠝ⎯⃘̶⎯̸⎯ܴ⎯̶᳞͇ࠝ⎯⃘̶⎯̸.°\n\nѕτιϲκєя ϐγ: Yυƙι-Sυσυ-Bσƚ`
+global.packsticker2 = `━━━━━━━━♾\n⪛✰ ᬊ𝐊𝐢𝐫𝐢𝐭𝐨-𝐁𝐨𝐭ᬊᬁ ✰⪜\n𝐃𝐞𝐲𝐥𝐢𝐧\n⇝ ${moment.tz('America/Los_Angeles').format('DD/MM/YY')}\n⇝ ${moment.tz('America/Los_Angeles').format('HH:mm:ss')} \n°.⎯⃘̶⎯̸⎯ܴ⎯̶᳞͇ࠝ⎯⃘̶⎯̸⎯ܴ⎯̶᳞͇ࠝ⎯⃘̶⎯̸.°\n\nѕτιϲκєя ϐγ: Yυƙι-Sυσυ-Bσƚ`
 
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
 
-global.packname = `𝐊𝐢𝐫𝐢𝐭𝐨-𝐁𝐨𝐭`
-global.botname = '𝐊𝐢𝐫𝐢𝐭𝐨-𝐁𝐨𝐭'
-global.wm = '𝐊𝐢𝐫𝐢𝐭𝐨-𝐁𝐨𝐭'
+global.packname = `✰ཽ𝐊𝐢𝐫𝐢𝐭𝐨-𝐁𝐨𝐭ཉ`
+global.botname = 'ᬊᬁ𝐊𝐢𝐫𝐢𝐭𝐨-𝐁𝐨𝐭࿐'
+global.wm = '๖ۣ•҉𝐊𝐢𝐫𝐢𝐭𝐨-𝐁𝐨𝐭᭄'
 global.author = 'Made By 𝑫𝒆𝒚𝒍𝒊𝒏'
 global.dev = '© ⍴᥆ᥕᥱrᥱძ ᑲᥡ 𝑫𝒆𝒚𝒍𝒊𝒏'
 global.textbot = 'Yυƙι-Sυσυ-Bσƚ • Powered By 𝑫𝒆𝒚𝒍𝒊𝒏'
