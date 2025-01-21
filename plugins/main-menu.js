@@ -1,257 +1,517 @@
-import { promises } from 'fs'
-import { join } from 'path'
+import fs from 'fs'
 import fetch from 'node-fetch'
 import { xpRange } from '../lib/levelling.js'
-let Styles = (text, style = 1) => {
-  var xStr = 'abcdefghijklmnopqrstuvwxyz1234567890'.split('');
-  var yStr = Object.freeze({
-    1: 'ᴀʙᴄᴅᴇꜰɢʜɪᴊᴋʟᴍɴᴏᴘqʀꜱᴛᴜᴠᴡxʏᴢ1234567890'
-  });
-  var replacer = [];
-  xStr.map((v, i) => replacer.push({
-    original: v,
-    convert: yStr[style].split('')[i]
-  }));
-  var str = text.toLowerCase().split('');
-  var output = [];
-  str.map(v => {
-    const find = replacer.find(x => x.original == v);
-    find ? output.push(find.convert) : output.push(v);
-  });
-  return output.join('');
-};
-let tags = {
-  'anime': '🧧 ANIME 🎐',
-  'main': '❗ INFO ❕',
-  'search': '🔎 SEARCH 🔍',
-  'game': '🕹️ GAME 🎮',
-  'serbot': '⚙️ SUB BOTS 🤖',
-  'rpg': '🌐 RPG 🥇',
-  'rg': '🎑 REGISTRO 🎟️',
-  'sticker': '💟 STICKER 🏷️',
-  'img': '🖼️ IMAGE 🎇',
-  'group': '👥 GROUPS 📢',
-//  'logo': 'MAKER',
-  'nable': '🎛️ ON / OFF 🔌', 
-  'premium': '💎 PREMIUM 👑',
-  'downloader': '📥 DOWNLOAD 📤',
-  'tools': '🔧 TOOLS 🛠️',
-  'fun': '🎉 FUN 🎊',
-  'nsfw': '🔞 NSFW 📛', 
-  'cmd': '🧮 DATABASE 🖥️',
-  'owner': '👤 OWNER 👁️', 
-  'audio': '📣 AUDIOS 🔊', 
-  'advanced': '🗝️ ADVANCED 📍',
-  'frefire':  '🎮frefire 🎮',
+const { levelling } = '../lib/levelling.js'
+import { promises } from 'fs'
+import { join } from 'path'
+let handler = async (m, { conn, usedPrefix, usedPrefix: _p, __dirname, text, command }) => {
+try {        
+/*let _package = JSON.parse(await promises.readFile(join(__dirname, '../package.json')).catch(_ => ({}))) || {}*/
+let { exp, dragones, level, role } = global.db.data.users[m.sender]
+let { min, xp, max } = xpRange(level, global.multiplier)
+let name = await conn.getName(m.sender)
+let _uptime = process.uptime() * 1000
+let _muptime
+if (process.send) {
+process.send('uptime')
+_muptime = await new Promise(resolve => {
+process.once('message', resolve)
+setTimeout(resolve, 1000)
+}) * 1000
 }
+let user = global.db.data.users[m.sender]
+let muptime = clockString(_muptime)
+let uptime = clockString(_uptime)
+let totalreg = Object.keys(global.db.data.users).length
+let rtotalreg = Object.values(global.db.data.users).filter(user => user.registered == true).length
+let who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? conn.user.jid : m.sender
+let mentionedJid = [who]
+let perfil = await conn.profilePictureUrl(who, 'image').catch(_ => 'https://files.catbox.moe/va19q6.jpg')
+let taguser = '@' + m.sender.split("@s.whatsapp.net")[0]
+const vid = ['https://qu.ax/ZVSSA.mp4', 'https://qu.ax/tfvrZ.mp4', 'https://qu.ax/FHVQP.mp4']
 
-const defaultMenu = {
-  before:  `*─ׄ─ׅ─⭒─ׄ─ׄ─⭒─ׅ─ׄ─⭒─ׄ─ׄ─⭒─ׄ─ׄ─*
+let menu = `𔓕꯭  ꯭ 𓏲꯭֟፝੭   ☆   𝐊𝐢𝐫𝐢𝐭𝐨-𝐁𝐨𝐭  ☆   𓏲꯭֟፝੭ ꯭  ꯭𔓕
 
-Hola *%name* soy *August-Ai*
+👑 ¡𝐇𝐨𝐥𝐚! 𝐂𝐨𝐦𝐨 𝐄𝐬𝐭𝐚𝐬 𝐄𝐥 𝐃𝐢𝐚 𝐃𝐞 𝐇𝐨𝐲 *${taguser}* 𝐒𝐨𝐲 𝐊𝐢𝐫𝐢𝐭𝐨-𝐁𝐨𝐭 ${saludo}. 
 
-╔══════ •『 𝑪𝑹𝑬𝑨𝑫𝑶𝑹 』
-║  🖥️ Agust
-╚═════ ♢.✰.♢ ══════
-╔══════ •『 𝑰𝑵𝑭𝑶-𝑩𝑶𝑻 』
-║  👤 Cliente: %name
-║  ⭐ Exp: %exp
-║  ⚡ Nivel: %level
-╚═════ ♢.✰.♢ ═══════
+┏━━⌬「 𝐈𝐍𝐅𝐎 𝐂𝐑𝐄𝐀𝐃𝐎𝐑ᚐ 」⪨
+┃❂ ⧼👑⧽ *Creador:* 𝑫𝒆𝒚𝒍𝒊𝒏
+┃❂ ⧼🔱⧽ *Modo:* Publico
+┃❂ ⧼🌠⧽ *Baileys:* Multi Device
+┃❂ ⧼🤖⧽ *Bot:* ${(conn.user.jid == global.conn.user.jid ? 'Oficial' : 'Sub-Bot')}
+┃❂ ⧼⏱️⧽ *Activado:* ${uptime}
+┃❂ ⧼👥⧽ *Usuarios:* ${totalreg}
+┗━━━━━━━━━━━━━━━━━⌬
+‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎
+‎┏━━⌬「 𝐈𝐍𝐅𝐎 𝐃𝐄 𝐔𝐒𝐔𝐀𝐑𝐈𝐎 」
+┃❂ ⧼👤⧽ *Cliente:* ${name}
+┃❂ ⧼✨⧽ *Exp:* ${exp}
+┃❂ ⧼💠⧽ *Dragones:* ${dragones}
+┃❂ ⧼⚜️⧽ *Rango:* ${role}
+┗━━━━━━━━━━━━━━━━━⌬
 
-╔══════ •『 𝑰𝑵𝑭𝑶-𝑼𝑺𝑬𝑹』
-║  🤖 Bot: ©Bot-Agust-Ai®
-║  💎 Modo Público
-║  💨 Baileys: Multi Device
-║  🪄 Tiempo Activo: %muptime
-║  🎩 Usuarios: %totalreg 
-╚═════ ♢.✰.♢ ════════
+*─ׄ─ׄ─⭒─ׄ─ׅ─ׄ⭒─ׄ─ׄ─⭒─ׄ─ׄ─⭒─ׄ─ׅ──ׄ*
+ *【𝕷 𝖎 𝖘 𝖙 𝖆 - 𝕯𝖊 - 𝕮 𝖔 𝖒 𝖆 𝖓 𝖉 𝖔 𝖘】* 
+֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙
+┏━━❃「 𝐈𝐧𝐟𝐨 𝐁𝐨𝐭 」❃
+┃❀ .botreglas
+┃❀ .menu
+┃❀ .menujuegos
+┃❀ .menuanime
+┃❀ .menuhorny 
+┃❀ .menuaudios 
+┃❀ .runtime
+┃❀ .script
+┃❀ .staff
+┃❀ .blocklist
+┗━━━━━━━━━━━━━━━━━⪩
+┏━━❃「 𝐈𝐧𝐟𝐨𝐫𝐦𝐚𝐜𝐢𝐨́𝐧ᚐ 」❃
+┃✿ .creador
+┃✿ .editautoresponder
+┃✿ .owner
+┃✿ .dash
+┃✿ .dashboard
+┃✿ .views
+┃✿ .database
+┃✿ .usuarios
+┃✿ .user
+┃✿ .ds
+┃✿ .listprem
+┃✿ .status
+┃✿ .solicitud *<mensaje>*
+┃✿ .sug *<mensaje>*
+┃✿ .horario
+┃✿ .skyplus
+┃✿ .infobot
+┃✿ .ping
+┃✿ .reportar
+┃✿ .sistema
+┃✿ .speed
+┃✿ .speedtest
+┃✿ .reportar
+┗━━━━━━━━━━━━━━━━━⪩
+┏━━❃「 𝐑𝐞𝐠𝐢𝐬𝐭𝐫𝐨 」❃
+┃❋ .reg
+┃❋ .unreg
+┃❋ .profile
+┃❋ .marry
+┃❋ .setgenre
+┃❋ .delgenre
+┃❋ .setbirth
+┃❋ .delbirth
+┃❋ .setdescription
+┃❋ .deldescription
+┗━━━━━━━━━━━━━━━━━⪩
+┏━━⪩「 𝐃𝐢𝐯𝐞𝐫𝐬𝐢𝐨𝐧 」⪨
+┃☬ .amistad
+┃☬ .gay <@tag> | <nombre>
+┃☬ .lesbiana <@tag> | <nombre>
+┃☬ .pajero <@tag> | <nombre>
+┃☬ .pajera <@tag> | <nombre>
+┃☬ .puto <@tag> | <nombre>
+┃☬ .puta <@tag> | <nombre>
+┃☬ .manco <@tag> | <nombre>
+┃☬ .manca <@tag> | <nombre>
+┃☬ .revelargenero *<texto>*
+┃☬ .rata <@tag> | <nombre>
+┃☬ .prostituta <@tag> | <nombre>
+┃☬ .prostituto <@tag> | <nombre> 
+┃☬ .consejo
+┃☬ .divorce
+┃☬ .doxear
+┃☬ .doxxing <nombre> | <@tag>
+┃☬ .formarpareja
+┃☬ .formarpareja5
+┃☬ .horny
+┃☬ .hornycard
+┃☬ .huevo @user
+┃☬ .iqtest
+┃☬ .marica
+┃☬ .meme
+┃☬ .aplauso
+┃☬ .marron
+┃☬ .suicide
+┃☬ .chupalo
+┃☬ .minovia @user
+┃☬ .morse *<encode|decode>*
+┃☬ .nombreninja *<texto>*
+┃☬ .pajeame
+┃☬ .personalidad
+┃☬ .piropo
+┃☬ .pokedex *<pokemon>*
+┃☬ .pregunta
+┃☬ .ship
+┃☬ .love
+┃☬ .simpcard
+┃☬ .sorteo
+┃☬ .itssostupid
+┃☬ .estupido
+┃☬ .stupid
+┃☬ .top *<texto>*
+┃☬ .formartrio @usuario1 @usuario2
+┃☬ .waste @user
+┃☬ .zodiac *2002 02 25*
+┗━━━━━━━━━━━━━━━━━⪩
+┏━━⪩「 𝐉𝐮𝐞𝐠𝐨𝐬ᚐ 」⪨
+┃✧ .cancion
+┃✧ .pista
+┃✧ .ttt nueva sala 
+┃✧ .ahorcado
+┃✧ .math <mode>
+┃✧ .ppt
+┃✧ .pvp @user
+┃✧ .reto
+┃✧ .sopa
+┃✧ .verdad
+┗━━━━━━━━━━━━━━━━━⪩
+┏━━⪩「 𝐄𝐦𝐨𝐱-𝐀𝐧𝐢𝐦𝐞」⪨
+┃✥ .angry/enojado @tag
+┃✥ .bath/bañarse @tag
+┃✥ .bite/morder @tag
+┃✥ .bleh/lengua @tag
+┃✥ .blush/sonrojarse @tag
+┃✥ .bored/aburrido @tag
+┃✥ .coffe/cafe @tag
+┃✥ .cry/llorar @tag
+┃✥ .cuddle/acurrucarse @tag
+┃✥ .dance/bailar @tag
+┃✥ .drunk/borracho @tag
+┃✥ .eat/comer @tag
+┃✥ .facepalm/palmada @tag
+┃✥ .grop/manosear @tag
+┃✥ .happy/feliz @tag
+┃✥ .hello/hola @tag
+┃✥ .hug/abrazar @tag
+┃✥ .kill/matar @tag
+┃✥ .kiss/besar @tag
+┃✥ .kiss2/besar2 @tag
+┃✥ .laugh/reirse @tag
+┃✥ .lick/lamer @tag
+┃✥ .love2/enamorada @tag
+┃✥ .patt/acariciar @tag
+┃✥ .poke/picar @tag
+┃✥ .pout/pucheros @tag
+┃✥ .preg/embarazar @tag
+┃✥ .punch/golpear @tag
+┃✥ .run/correr @tag
+┃✥ .sad/triste @tag
+┃✥ .scared/asustada @tag
+┃✥ .seduce/seducir @tag
+┃✥ .shy/timida @tag
+┃✥ .slap/bofetada @tag
+┃✥ .sleep/dormir @tag
+┃✥ .smoke/fumar @tag
+┃✥ .think/pensando @tag
+┃✥ .undress/encuerar @tag
+┗━━━━━━━━━━━━━━━━━⪩
+┏━━⪩「 𝐇𝐨𝐫𝐧𝐲ᚐ 」⪨
+┃✤ .sixnine/69 @tag
+┃✤ .anal/culiar @tag
+┃✤ .blowjob/mamada @tag
+┃✤ .boobjob/rusa @tag
+┃✤ .cum/leche @tag
+┃✤ .fap/paja @tag
+┃✤ .follar @tag
+┃✤ .footjob/pies @tag
+┃✤ .fuck/coger @tag
+┃✤ .fuck2/coger2 @tag
+┃✤ .grabboobs/agarrartetas @tag
+┃✤ .penetrar @user
+┃✤ .lickpussy/coño @tag
+┃✤ .sexo/sex @tag
+┃✤ .spank/nalgada @tag
+┃✤ .suckboobs/chupartetas @tag
+┃✤ .violar/perra @tag
+┃✤ .lesbianas/tijeras @tag
+┃✤ .rule34 <personaje>
+┗━━━━━━━━━━━━━━━━━⪩
+┏━━⪩「 𝐑𝐨𝐥𝐥𝐰𝐚𝐢𝐟𝐮𝐬 」⪨
+┃✦ .character
+┃✦ .darrw
+┃✦ .obtenidos
+┃✦ .c
+┃✦ .robarpersonaje
+┃✦ .rw
+┃✦ .toprw
+┗━━━━━━━━━━━━━━━━━⪩
+┏━━⪩「 𝐄𝐜𝐨𝐧𝐨𝐦𝐢𝐚ᚐ 」⪨
+┃✱ .apostar 
+┃✱ .bal
+┃✱ .bank
+┃✱ .dragones
+┃✱ .prestar
+┃✱ .deuda
+┃✱ .pagar
+┃✱ .apostar *<cantidad>*
+┃✱ .cf
+┃✱ .crimen
+┃✱ .depositar
+┃✱ .minar
+┃✱ .retirar
+┃✱ .rob2
+┃✱ .rob
+┃✱ .ruleta *<cantidad> <color>*
+┃✱ .Buy
+┃✱ .Buyall
+┃✱ .slot <apuesta>
+┃✱ .slut
+┃✱ .trabajar
+┃✱ .transfer [tipo] [cantidad] [@tag]
+┗━━━━━━━━━━━━━━━━━⪩
+┏━━⪩「 𝐑-𝐏-𝐆ᚐ 」⪨
+┃♤ .adventure
+┃♤ .annual
+┃♤ .cofre
+┃♤ .daily
+┃♤ .claim
+┃♤ .cazar
+┃♤ .halloween
+┃♤ .heal
+┃♤ .lb
+┃♤ .levelup
+┃♤ .inventario 
+┃♤ .mazmorra
+┃♤ .monthly
+┃♤ .navidad
+┃♤ .addprem [@user] <days>
+┃♤ .weekly
+┗━━━━━━━━━━━━━━━━━⪩
+┏━━⪩「 𝐒𝐞𝐫𝐛𝐨𝐭/𝐂𝐨𝐝𝐞 」⪨
+┃✾ .jadibot 
+┃✾ .deletebot
+┃✾ .bots
+┃✾ .stop
+┃✾ .serbot
+┃✾ .serbot --code 
+┃✾ .token
+┃✾ .rentbot
+┗━━━━━━━━━━━━━━━━━⪩
+┏━━⪩「 𝐁𝐮𝐬𝐜𝐚𝐝𝐨𝐫𝐞𝐬ᚐ 」⪨
+┃❖ .animesearch
+┃❖ .appstore
+┃❖ .bingsearch
+┃❖ .cuevana
+┃❖ .githubsearch
+┃❖ .gimage
+┃❖ .gnula
+┃❖ .googlesearch *<texto>*
+┃❖ .npmjs
+┃❖ .steam
+┃❖ .twitterstalk <username>
+┃❖ .tiktoksearch <txt>
+┃❖ .tweetposts *<búsqueda>*
+┃❖ .wikis
+┃❖ .xnxxsearch <query>
+┃❖ .ytsearch
+┃❖ .imagen <query>
+┃❖ .infoanime
+┃❖ .animelink
+┗━━━━━━━━━━━━━━━━━⪩
+┏━━⪩「 𝐃𝐞𝐬𝐜𝐚𝐫𝐠𝐚𝐬 」⪨
+┃Ѽ .animedl
+┃Ѽ .animeinfo
+┃Ѽ .apk2
+┃Ѽ .apkmod
+┃Ѽ .facebook
+┃Ѽ .fb
+┃Ѽ .gdrive
+┃Ѽ .gitclone *<url git>*
+┃Ѽ .instagram2
+┃Ѽ .ig2
+┃Ѽ .imagen <query>
+┃Ѽ .mangad <nombre del manga> <número del capítulo>
+┃Ѽ .mediafire
+┃Ѽ .mega
+┃Ѽ .npmdl
+┃Ѽ .aptoide
+┃Ѽ .pinterest
+┃Ѽ .pinvid
+┃Ѽ .play
+┃Ѽ .play2
+┃Ѽ .play3
+┃Ѽ .play4
+┃Ѽ .playdoc
+┃Ѽ .playdoc2
+┃Ѽ .mp3
+┃Ѽ .mp4
+┃Ѽ .tiktokrandom
+┃Ѽ .spotify
+┃Ѽ .tiktokimg <url>
+┃Ѽ .tiktokmp3 *<link>*
+┃Ѽ .tiktok
+┃Ѽ .tiktok2 *<link>*
+┃Ѽ .wallpaper <query>
+┃Ѽ .tw
+┃Ѽ .ss2
+┃Ѽ .ssvid
+┗━━━━━━━━━━━━━━━━━⪩
+┏━━⪩「 𝐀𝐢/𝐈𝐚 」⪨
+┃☫ .demo
+┃☫ .gemini
+┃☫ .goku
+┃☫ .bot
+┗━━━━━━━━━━━━━━━━━⪩
+┏━━⪩「 𝐆𝐫𝐮𝐩𝐨𝐬 」⪨
+┃♕ .add
+┃♕ admins <texto>
+┃♕ .bienvenidos/nuevos
+┃♕ .nights/noches
+┃♕ .dias/days
+┃♕ .grupotime *<open/close>* *<número>*
+┃♕ .grupo abrir / cerrar
+┃♕ .delete
+┃♕ .demote
+┃♕ .encuesta <text|text2>
+┃♕ .hidetag
+┃♕ .infogrupo
+┃♕ .invite *<numero>*
+┃♕ .kick
+┃♕ .listonline
+┃♕ .link
+┃♕ .listadv
+┃♕ .promote
+┃♕ .rentar
+┃♕ .rentar2 *<link>*
+┃♕ .revoke
+┃♕ .setbye <text>
+┃♕ .Setdesc <text>
+┃♕ .setname <text>
+┃♕ .setppgrup
+┃♕ .setwelcome <text>
+┃♕ .tagall *<mesaje>*
+┃♕ .invocar *<mesaje>*
+┗━━━━━━━━━━━━━━━━━⪩
+┏━━⪩「 𝐇𝐞𝐫𝐫𝐚𝐦𝐢𝐞𝐧𝐭𝐚𝐬 」⪨
+┃✰ .cal *<ecuacion>*
+┃✰ .clima *<lugar>*
+┃✰ .fake
+┃✰ .getbio *@tag*
+┃✰ .getname *@tag*
+┃✰ .remini
+┃✰ .hd
+┃✰ .enhance
+┃✰ .nuevafotochannel
+┃✰ .nosilenciarcanal
+┃✰ .silenciarcanal
+┃✰ .noseguircanal
+┃✰ .seguircanal
+┃✰ .avisoschannel
+┃✰ .resiviravisos
+┃✰ .inspect
+┃✰ .inspeccionar
+┃✰ .eliminarfotochannel
+┃✰ .reactioneschannel
+┃✰ .reaccioneschannel
+┃✰ .nuevonombrecanal
+┃✰ .nuevadescchannel
+┃✰ .IPdoxx
+┃✰ .photo <query>
+┃✰ .readmore *<teks>|<teks>*
+┃✰ .ver
+┃✰ .reenviar
+┃✰ .spamwa <number>|<mesage>|<no of messages>
+┃✰ .ssweb
+┃✰ .ss
+┃✰ .tamaño *<cantidad>*
+┃✰ .document *<audio/video>*
+┗━━━━━━━━━━━━━━━━━⪩
+┏━━⪩「 𝐂𝐨𝐧𝐯𝐞𝐫𝐭𝐢𝐝𝐨𝐫𝐞𝐬ᚐ 」⪨
+┃ꕥ .ibb
+┃ꕥ .paste nombre txt
+┃ꕥ .to <reply image>
+┃ꕥ .toanime
+┃ꕥ .togifaud
+┃ꕥ .tourl
+┃ꕥ .tovideo
+┃ꕥ .tts <lang> <teks>
+┃ꕥ .tts2
+┃ꕥ .tourl2
+┗━━━━━━━━━━━━━━━━━⪩
+┏━━⪩「 𝐒𝐭𝐢𝐜𝐤𝐞𝐫𝐬 」⪨
+┃☠︎︎ .emojimix *<emoji+emoji>*
+┃☠︎︎ .pfp
+┃☠︎︎ .qc
+┃☠︎︎ .stiker <img>
+┃☠︎︎ .sticker <url>
+┃☠︎︎ .toimg (reply)
+┃☠︎︎ .take *<nombre>|<autor>*
+┗━━━━━━━━━━━━━━━━━⪩
+┏━━⪩「 𝐂𝐨𝐧𝐟𝐢𝐠𝐮𝐫𝐚𝐜𝐢𝐨́𝐧 」⪨
+┃⚘ .enable <option>
+┃⚘ .disable <option>
+┃⚘ .autoadmin
+┃⚘ .banchat
+┃⚘ .banuser <@tag> <razón>
+┃⚘ .grupocrear <nombre>
+┃⚘ .join <link>
+┃⚘ .unbanchat
+┃⚘ .unbanuser <@tag>
+┗━━━━━━━━━━━━━━━━━⪩
+┏━━⪩「 𝐂𝐫𝐞𝐚𝐝𝐨𝐫/𝐎𝐰𝐧𝐞𝐫 」⪨
+┃🜲 .listafk
+┃🜲 .expired *<días>*
+┃🜲 .addyenes *<@user>*
+┃🜲 .addprem [@user] <days>
+┃🜲 .copia
+┃🜲 .broadcast
+┃🜲 .bc
+┃🜲 .broadcastgroup
+┃🜲 .bcgc
+┃🜲 .bcgc2
+┃🜲 .cleanfiles
+┃🜲 .cleartmp
+┃🜲 .setcmd *<texto>*
+┃🜲 .deletefile
+┃🜲 .delexpired
+┃🜲 .delvn <text>
+┃🜲 .delmsg <text>
+┃🜲 .delimg <text>
+┃🜲 .delsticker <text>
+┃🜲 .delprem <@user>
+┃🜲 .reunion *<texto>*
+┃🜲 .removeowner @user
+┃🜲 .dsowner
+┃🜲 $
+┃🜲 .fetch
+┃🜲 .get
+┃🜲 .getplugin *<nombre>*
+┃🜲 .groups
+┃🜲 .grouplist
+┃🜲 .kickall @user
+┃🜲 .nuevabiobot <teks>
+┃🜲 .nuevafotobot *<imagen>*
+┃🜲 .nuevonombrebot <teks>
+┃🜲 .prefix [prefix]
+┃🜲 .resetpersonajes
+┃🜲 .resetprefix
+┃🜲 .restart
+┃🜲 .saveplugin nombre
+┃🜲 .update
+┃🜲 .actualizar
+┃🜲 >
+┃🜲 =>
+┗━━━━━━━━━━━━━━━━━⪨
+> © 𝐏𝐨𝐰𝐞𝐫𝐞𝐝 𝐁𝐲 ☆𝑫𝒆𝒚𝒍𝒊𝒏☆`.trim()
 
-*─ׄ─ׄ─⭒─ׄ─ׅ─ׄ⭒─ׄ─ׄ─⭒─ׄ─ׄ─⭒─ׄ─ׅ─*
- %readmore
-\t\t\t⚙️_*𝐋𝐈𝐒𝐓𝐀 𝐃𝐄 𝐂𝐎𝐌𝐀𝐍𝐃𝐎𝐒*_ 🚀
-`.trimStart(),
-  header: '*╭╍╍╍╍❖【 *%category* 】',
-  body: '┋💎›【 %cmd %islimit %isPremium\n',
-  footer: '*╰╍╍╍╍❖•ೋ° °ೋ•❖╍╍╍╍╯*',
-  after: `© ${textbot}`,
-}
+await conn.sendMessage(m.chat, { video: { url: vid.getRandom() }, caption: menu, contextInfo: { mentionedJid: [m.sender], isForwarded: true, forwardedNewsletterMessageInfo: { newsletterJid: channelRD.id, newsletterName: channelRD.name, serverMessageId: -1, }, forwardingScore: 999, externalAdReply: { title: '𝑲𝒊𝒓𝒊𝒕𝒐-𝑩𝒐𝒕', body: dev, thumbnailUrl: perfil, sourceUrl: redes, mediaType: 1, renderLargerThumbnail: false,
+}, }, gifPlayback: true, gifAttribution: 0 }, { quoted: null })
+await m.react(emojis)    
 
-let handler = async (m, { conn, usedPrefix: _p, __dirname }) => {
-  try {
-     let tag = `@${m.sender.split("@")[0]}`
-    let mode = global.opts["self"] ? "Privado" : "Publico"
-    let _package = JSON.parse(await promises.readFile(join(__dirname, '../package.json')).catch(_ => ({}))) || {}
-    let { exp, limit, level } = global.db.data.users[m.sender]
-    let { min, xp, max } = xpRange(level, global.multiplier)
-    let name = await conn.getName(m.sender)
-    let d = new Date(new Date + 3600000)
-    let locale = 'es'
-    let weton = ['Pahing', 'Pon', 'Wage', 'Kliwon', 'Legi'][Math.floor(d / 84600000) % 5]
-    let week = d.toLocaleDateString(locale, { weekday: 'long' })
-    let date = d.toLocaleDateString(locale, {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric'
-    })
-    let dateIslamic = Intl.DateTimeFormat(locale + '-TN-u-ca-islamic', {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric'
-    }).format(d)
-    let time = d.toLocaleTimeString(locale, {
-      hour: 'numeric',
-      minute: 'numeric',
-      second: 'numeric'
-    })
-    let _uptime = process.uptime() * 1000
-    let _muptime
-    if (process.send) {
-      process.send('uptime')
-      _muptime = await new Promise(resolve => {
-        process.once('message', resolve)
-        setTimeout(resolve, 1000)
-      }) * 1000
-    }
-    let muptime = clockString(_muptime)
-    let uptime = clockString(_uptime)
-    let totalreg = Object.keys(global.db.data.users).length
-    let rtotalreg = Object.values(global.db.data.users).filter(user => user.registered == true).length
-    let help = Object.values(global.plugins).filter(plugin => !plugin.disabled).map(plugin => {
-      return {
-        help: Array.isArray(plugin.tags) ? plugin.help : [plugin.help],
-        tags: Array.isArray(plugin.tags) ? plugin.tags : [plugin.tags],
-        prefix: 'customPrefix' in plugin,
-        limit: plugin.limit,
-        premium: plugin.premium,
-        enabled: !plugin.disabled,
-      }
-    })
-    for (let plugin of help)
-      if (plugin && 'tags' in plugin)
-        for (let tag of plugin.tags)
-          if (!(tag in tags) && tag) tags[tag] = tag
-    conn.menu = conn.menu ? conn.menu : {}
-    let before = conn.menu.before || defaultMenu.before
-    let header = conn.menu.header || defaultMenu.header
-    let body = conn.menu.body || defaultMenu.body
-    let footer = conn.menu.footer || defaultMenu.footer
-    let after = conn.menu.after || (conn.user.jid == global.conn.user.jid ? '' : ``) + defaultMenu.after
-    let _text = [
-      before,
-      ...Object.keys(tags).map(tag => {
-        return header.replace(/%category/g, tags[tag]) + '\n' + [
-          ...help.filter(menu => menu.tags && menu.tags.includes(tag) && menu.help).map(menu => {
-            return menu.help.map(help => {
-              return body.replace(/%cmd/g, menu.prefix ? help : '%p' + help)
-                .replace(/%islimit/g, menu.limit ? '◜⭐◞' : '')
-                .replace(/%isPremium/g, menu.premium ? '◜🪪◞' : '')
-                .trim()
-            }).join('\n')
-          }),
-          footer
-        ].join('\n')
-      }),
-      after
-    ].join('\n')
-    let text = typeof conn.menu == 'string' ? conn.menu : typeof conn.menu == 'object' ? _text : ''
-   let replace = {
- "%": "%",
- p: _p,
- uptime,
- muptime,
- me: conn.getName(conn.user.jid),
- npmname: _package.name,
- npmdesc: _package.description,
- version: _package.version,
- exp: exp - min,
- maxexp: xp,
- totalexp: exp,
- xp4levelup: max - exp,
- github: _package.homepage ? _package.homepage.url || _package.homepage : "[unknown github url]",
- mode,
- _p,
- tag,
- name,
- level,
- limit,
- name,
- totalreg,
- readmore: readMore
-   }
-    text = text.replace(new RegExp(`%(${Object.keys(replace).sort((a, b) => b.length - a.length).join`|`})`, 'g'), (_, name) => '' + replace[name])
+} catch (e) {
+await m.reply(`✘ Ocurrió un error al enviar el menú\n\n${e}`)
+await m.react(error)
+}}
 
-    let pp = 'https://i.ibb.co/CPVcnqH/file.jpg'
-    let pp2 = 'https://i.ibb.co/9WrytGt/file.jpg'
-    let pp3 = 'https://i.ibb.co/CPVcnqH/file.jpg'
-    let pp4 = 'https://i.ibb.co/9WrytGt/file.jpg'
-    let pp5 = 'https://i.ibb.co/CPVcnqH/file.jpg'
-    let pp6 = 'https://i.ibb.co/9WrytGt/file.jpg'
-    let pp7 = 'https://i.ibb.co/CPVcnqH/file.jpg'
-    let pp8 = 'https://i.ibb.co/9WrytGt/file.jpg'
-    let pp9 = 'https://i.ibb.co/JmcS3kv/Sylph.jpg'
-    let pp10 = 'https://i.ibb.co/CPVcnqH/file.jpg'
-    let pp11 = 'https://i.ibb.co/JmcS3kv/Sylph.jpg'
-    let pp12 = 'https://i.ibb.co/CPVcnqH/file.jpg'
-    let pp13 = 'https://i.ibb.co/Cs6Tt9V/Sylph.jpg'
-    let pp14 = 'https://i.ibb.co/JmcS3kv/Sylph.jpg'
-    let pp15 = 'https://i.ibb.co/Cs6Tt9V/Sylph.jpg'
-    let img = 'https://qu.ax/xcAXs.jpg'
-    let img2 ='https://qu.ax/fUEzP.jpg'
-    await m.react('⚡')
-   // await conn.sendMessage(m.chat, { video: { url: [pp, pp2, pp3, pp4, pp5, pp6, pp7, pp8, pp9, pp10, pp11, pp12, pp13, pp14, pp15].getRandom() }, gifPlayback: true, caption: text.trim(), mentions: [m.sender] }, { quoted: estilo })
-    await conn.sendFile(m.chat, img, 'thumbnail.jpg', text.trim(), m, null, rcanal)
-   //await conn.sendAi(m.chat, botname, textbot, text.trim(), img, img, canal, estilo)
-
-  } catch (e) {
-    conn.reply(m.chat, '❎ Lo sentimos, el menú tiene un error.', m)
-    throw e
-  }
-}
-
-handler.help = ['allmenu']
+handler.help = ['menu']
 handler.tags = ['main']
-handler.command = ['allmenu', 'menucompleto', 'menúcompleto', 'menú', 'menu'] 
-handler.register = true 
+handler.command = ['menu', 'help', 'menú', 'allmenú', 'allmenu', 'menucompleto'] 
+handler.register = true
 export default handler
-
 
 const more = String.fromCharCode(8206)
 const readMore = more.repeat(4001)
-
 function clockString(ms) {
-  let h = isNaN(ms) ? '--' : Math.floor(ms / 3600000)
-  let m = isNaN(ms) ? '--' : Math.floor(ms / 60000) % 60
-  let s = isNaN(ms) ? '--' : Math.floor(ms / 1000) % 60
-  return [h, m, s].map(v => v.toString().padStart(2, 0)).join(':')
-}
-
-  var ase = new Date();
-  var hour = ase.getHours();
-switch(hour){
-  case 0: hour = 'una linda noche 🌙'; break;
-  case 1: hour = 'una linda noche 💤'; break;
-  case 2: hour = 'una linda noche 🦉'; break;
-  case 3: hour = 'una linda mañana ✨'; break;
-  case 4: hour = 'una linda mañana 💫'; break;
-  case 5: hour = 'una linda mañana 🌅'; break;
-  case 6: hour = 'una linda mañana 🌄'; break;
-  case 7: hour = 'una linda mañana 🌅'; break;
-  case 8: hour = 'una linda mañana 💫'; break;
-  case 9: hour = 'una linda mañana ✨'; break;
-  case 10: hour = 'un lindo dia 🌞'; break;
-  case 11: hour = 'un lindo dia 🌨'; break;
-  case 12: hour = 'un lindo dia ❄'; break;
-  case 13: hour = 'un lindo dia 🌤'; break;
-  case 14: hour = 'una linda tarde 🌇'; break;
-  case 15: hour = 'una linda tarde 🥀'; break;
-  case 16: hour = 'una linda tarde 🌹'; break;
-  case 17: hour = 'una linda tarde 🌆'; break;
-  case 18: hour = 'una linda noche 🌙'; break;
-  case 19: hour = 'una linda noche 🌃'; break;
-  case 20: hour = 'una linda noche 🌌'; break;
-  case 21: hour = 'una linda noche 🌃'; break;
-  case 22: hour = 'una linda noche 🌙'; break;
-  case 23: hour = 'una linda noche 🌃'; break;
-}
-  var greeting = "espero que tengas " + hour;
+let h = isNaN(ms) ? '--' : Math.floor(ms / 3600000)
+let m = isNaN(ms) ? '--' : Math.floor(ms / 60000) % 60
+let s = isNaN(ms) ? '--' : Math.floor(ms / 1000) % 60
+return [h, m, s].map(v => v.toString().padStart(2, 0)).join(':')}
