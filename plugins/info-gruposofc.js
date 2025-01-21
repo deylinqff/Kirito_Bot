@@ -5,24 +5,24 @@ let handler  = async (m, { conn, usedPrefix, command }) => {
 let grupos = `*Hola!, te invito a unirte a los grupos oficiales del Bot para convivir con la comunidad.....*
 
 - ${namegrupo}
-*❀* ${gp1}
+*👑* ${gp1}
 
 - ${namecomu}
-*❀* ${comunidad1}
+*⚡* ${comunidad1}
 
 *ׄ─ׄ⭒─ׄ─ׅ─ׄ⭒─ׄ─ׅ─ׄ⭒─ׄ─ׅ─ׄ⭒─ׄ─ׅ─ׄ⭒─ׄ*
 
 ⚘ Enlace anulado? entre aquí! 
 
 - ${namechannel}
-*❀* ${channel}
+*👑* ${channel}
 
-- ✧┊┋◟𝐘𝐮𝐤𝐢 𝐒𝐮𝐨𝐮 𝐓𝐞𝐬𝐭◞┊┋✧
-*❀* ${channel2}
+- ᬊ᭄𝑲𝒊𝒓𝒊𝒕𝒐-𝑩𝒐𝒕࿐ཽ༵
+*⚡* ${channel2}
 
 > ${dev}`
 
-await conn.sendFile(m.chat, miniurl, "yuki.jpg", grupos, m, null, rcanal)
+await conn.sendFile(m.chat, miniurl, "Kirito.jpg", grupos, m, null, rcanal)
 
 await m.react(emojis)
 
