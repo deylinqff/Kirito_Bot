@@ -23,7 +23,7 @@ let handler = async (m, { conn, usedPrefix, command }) => {
 
     const nuevaImagen = 'https://files.catbox.moe/xr2m6u.jpg';
 
-    await conn.sendFile(m.chat, nuevaImagen, "kirito.jpg", grupos, m, null, rcanal);
+    await conn.sendFile(m.chat, nuevaImagen, "", grupos, m, null, rcanal);
 
     await m.react(emojis);
 };
