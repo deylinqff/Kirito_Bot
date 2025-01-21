@@ -14,7 +14,7 @@ const handler = async (m, { conn, text, command, args, usedPrefix }) => {
     }
 };
 
-handler.help = ['Kirito', 'bot'];
+handler.help = ['kirito', 'bot'];
 handler.tags = ['ai'];
 handler.register = true;
 handler.command = ['bot', 'Kirito'];
