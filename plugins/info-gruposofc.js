@@ -22,7 +22,7 @@ let grupos = `*Hola!, te invito a unirte a los grupos oficiales del Bot para con
 
 > ${dev}`
 
-await conn.sendFile(m.chat, miniurl, "yuki.jpg", grupos, m, null, rcanal)
+await conn.sendFile(m.chat, miniurl, "https://files.catbox.moe/xr2m6u.jpg", grupos, m, null, rcanal)
 
 await m.react(emojis)
 
