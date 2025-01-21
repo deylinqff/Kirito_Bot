@@ -85,10 +85,10 @@ global.photoSity = [imagen8, imagen1, imagen4, imagen6]
 
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
 
-global.gp4 = 'https://chat.whatsapp.com/Ecz881bBgqPIWjDOaKkp7E'
-global.gp1 = 'https://chat.whatsapp.com/DouO0ZzbGyC3yqbeqpbVIp' 
-global.gp2 = 'https://chat.whatsapp.com/Ecz881bBgqPIWjDOaKkp7E'
-global.comunidad1 = 'https://chat.whatsapp.com/EwrwcGvpLf1BnMhP3B4axD'
+global.gp4 = 'https://chat.whatsapp.com/F8KwM3rVqkS9HhR5msoRqQ'
+global.gp1 = 'https://chat.whatsapp.com/F8KwM3rVqkS9HhR5msoRqQ' 
+global.gp2 = 'https://chat.whatsapp.com/F8KwM3rVqkS9HhR5msoRqQ'
+global.comunidad1 = 'https://chat.whatsapp.com/F8KwM3rVqkS9HhR5msoRqQ'
 global.channel = 'https://whatsapp.com/channel/0029VawF8fBBvvsktcInIz3m'
 global.channel2 = 'https://whatsapp.com/channel/0029VayQwPsFnSzESZJ9Us3z'
 global.md = 'https://github.com/deylinqff/Kirito_Bot'
