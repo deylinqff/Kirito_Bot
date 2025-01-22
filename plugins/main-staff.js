@@ -11,12 +11,11 @@ let handler = async (m, { conn }) => {
 
 🛠️ *ayudantes:*  
 
-  ⚡ Emma Violets  
-  📞 *WhatsApp:* wa.me/0987654321
+  ⚡ Davidius⁩ 
+  📞 *WhatsApp:* wa.me/+595975677765
   
-  🍍 Niño Piña  
-  🔗 [GitHub](https://github.com/WillZek)  
-  📞 *WhatsApp:* wa.me/1122334455
+  🚀   
+  📞 *WhatsApp:* wa.me/+56945882459
   
   
 ⚙️ *Información Técnica:*  
