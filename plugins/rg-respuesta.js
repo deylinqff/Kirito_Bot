@@ -1,11 +1,11 @@
 let handler = async (m, { conn, text, usedPrefix, command }) => {
-    if (!text) throw m.reply(`*🍬 Ejemplo:*\n\n${usedPrefix + command} <id> <mensaje>\n\n*🍭 Uso:* ${usedPrefix + command} 1234 Gracias por tu confesión.`);
+    if (!text) throw m.reply(`*👑 Ejemplo:*\n\n${usedPrefix + command} <id> <mensaje>\n\n*⚡ Uso:* ${usedPrefix + command} 1234 Gracias por tu confesión.`);
     
     let split = text.trim().split(/ (.+)/); 
     let id = split[0]; 
     let pesan = split[1]; 
 
-    if (!id || !pesan) throw m.reply(`*🍬 Ejemplo:*\n\n${usedPrefix + command} <id> <mensaje>\n\n*🍭 Uso:* ${usedPrefix + command} 1234 Gracias por tu confesión.`);
+    if (!id || !pesan) throw m.reply(`*👑 Ejemplo:*\n\n${usedPrefix + command} <id> <mensaje>\n\n*⚡ Uso:* ${usedPrefix + command} 1234 Gracias por tu confesión.`);
     
     id = id.trim();
     pesan = pesan.trim();
@@ -19,7 +19,7 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
     
     let { dari, penerima } = conn.menfess[id];
     
-    if (m.sender !== penerima) throw m.reply('🍭 No tienes permiso para responder a este mensaje.');
+    if (m.sender !== penerima) throw m.reply('⚡ No tienes permiso para responder a este mensaje.');
     
     let teks = `*Hola, recibiste una respuesta a tu mensaje anónimo.*\n\n*\`ID:\`* *${id}*\n*\`RESPUESTA:\`* \n\n${pesan}`.trim();
     
@@ -41,7 +41,7 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
         });
         
         if (sentMessage) {
-           return conn.reply(m.chat, '*🍬 Respuesta enviada con éxito.*\n*IDENTIFICADOR:*' + ` *${id}*`, m, fake);
+           return conn.reply(m.chat, '*⚡ Respuesta enviada con éxito.*\n*IDENTIFICADOR:*' + ` *${id}*`, m, fake);
             
             
             conn.menfess[id].status = true;
