@@ -1,31 +1,49 @@
 import moment from 'moment-timezone';
 
-let handler = async (m, { conn, args }) => {
+let handler = async (m, { conn }) => {
+  let staff = `
+🌌 *EQUIPO DE DESARROLLO - KIRITO BOT* 🌌
+  
+👑 *Dueño y Fundador:*  
+  ☁️ Deylin  
+  📞 *WhatsApp:* wa.me/1234567890
+  🔗 [GitHub](https://github.com/deylinqff)   
 
-let staff = `
-🔔 El staff no está disponible en este momento.  
-👨‍💻 Si necesitas ayuda, por favor deja tu mensaje y nos pondremos en contacto contigo lo antes posible.
-`.trim();
+🛠️ *ayudantes:*  
 
-await conn.sendMessage(m.chat, { 
+  ⚡ Emma Violets  
+  📞 *WhatsApp:* wa.me/0987654321
+  
+  🍍 Niño Piña  
+  🔗 [GitHub](https://github.com/WillZek)  
+  📞 *WhatsApp:* wa.me/1122334455
+  
+  
+⚙️ *Información Técnica:*  
+  🔖 *Versión:* ${vs}  
+  📚 *Librería:* ${libreria} ${baileys}  
+  🤖 *Bot:* ${botname}
+
+✨ Gracias por confiar en nosotros. ¡Estamos aquí para mejorar tu experiencia!
+  `.trim();
+
+  await conn.sendMessage(m.chat, { 
     text: staff,
     contextInfo: {
       externalAdReply: {
-        title: `📢 Notificación del Staff`,
-        body: "Staff no disponible",
-        thumbnailUrl: "https://qu.ax/CfNcZ.jpg", // Cambia la URL a la imagen que prefieras
-        sourceUrl: "https://whatsapp.com/channel/0029VawF8fBBvvsktcInIz3m", // Cambia el enlace a donde quieras redirigir
+        title: `🌌 Equipo de Desarrollo 🌌`,
+        body: `Kirito Bot - Siempre contigo.`,
+        thumbnailUrl: 'https://avatars.githubusercontent.com/u/9919?s=200&v=4', // Cambia esto por tu URL de imagen
         mediaType: 1,
         showAdAttribution: true,
-        renderLargerThumbnail: true
-      }
-    }
-  }, { quoted: m })
+        renderLargerThumbnail: true,
+      },
+    },
+  }, { quoted: m });
 };
 
-handler.help = ['staff']
-handler.command = ['colaboradores', 'staff']
-handler.register = true
-handler.tags = ['main']
+handler.help = ['staff'];
+handler.tags = ['main'];
+handler.command = ['ayudantes', 'colaboradores', 'staff'];
 
 export default handler;
