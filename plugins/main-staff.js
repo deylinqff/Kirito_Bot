@@ -31,7 +31,7 @@ let handler = async (m, { conn }) => {
       externalAdReply: {
         title: `🌌 Equipo de Desarrollo 🌌`,
         body: `Kirito Bot - Siempre contigo.`,
-        thumbnailUrl: 'https://avatars.githubusercontent.com/u/9919?s=200&v=4', // Cambia esto por tu URL de imagen
+        thumbnailUrl: 'https://files.catbox.moe/jsxpqp.jpg', 
         mediaType: 1,
         showAdAttribution: true,
         renderLargerThumbnail: true,
