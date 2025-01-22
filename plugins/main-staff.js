@@ -5,16 +5,16 @@ let handler = async (m, { conn }) => {
 🌌 *EQUIPO DE DESARROLLO - KIRITO BOT* 🌌
   
 👑 *Dueño y Fundador:*  
-  ☁️ Deylin  
+  ☁️ *Deylin*  
   📞 *WhatsApp:* wa.me/1234567890
   🔗 [GitHub](https://github.com/deylinqff)   
 
 🛠️ *ayudantes:*  
 
-  ⚡ Davidius⁩ 
+  ⚡ *Davidius⁩*
   📞 *WhatsApp:* wa.me/+595975677765
   
-  🚀   
+  🚀 *Zoe* 
   📞 *WhatsApp:* wa.me/+56945882459
   
   
