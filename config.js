@@ -93,7 +93,7 @@ global.channel = 'https://whatsapp.com/channel/0029VawF8fBBvvsktcInIz3m'
 global.channel2 = 'https://whatsapp.com/channel/0029VayQwPsFnSzESZJ9Us3z'
 global.md = 'https://github.com/deylinqff/Kirito_Bot'
 global.correo = 'thekingdestroy507@gmail.com'
-global.cn ='https://whatsapp.com/channel/0029VapSIvR5EjxsD1B7hU3T';
+global.cn ='https://whatsapp.com/channel/0029VawF8fBBvvsktcInIz3m';
 
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
 
