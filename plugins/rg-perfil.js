@@ -34,28 +34,28 @@ let handler = async (m, { conn, args }) => {
     let coins = user.coin || 0;
     let bankCoins = user.bank || 0;
 
-    let perfil = await conn.profilePictureUrl(userId, 'image').catch(_ => 'https://files.catbox.moe/xr2m6u.jpg');
+    let perfil = await conn.profilePictureUrl(userId, 'image').catch(_ => 'https://files.catbox.moe/oue13b.jpg');
 
     let isMarried = userId in global.db.data.marriages;
     let partner = isMarried ? global.db.data.marriages[userId] : null;
     let partnerName = partner ? conn.getName(partner) : 'Nadie';
 
     let profileText = `
-「✿」 *Perfil* ◢@${userId.split('@')[0]}◤
+「👑」 *Perfil* ✰@${userId.split('@')[0]}✰
 ${description}
 
-✦ Edad » ${user.age || 'Desconocida'}
-♛ *Cumpleaños* » ${cumpleanos}
-⚥ *Género* » ${genero}
-♡ Casado con » ${isMarried ? partnerName : 'Nadie'}
+✎ Edad » ${user.age || 'Desconocida'}
+✎ *Cumpleaños* » ${cumpleanos}
+✎ *Género* » ${genero}
+✎ Casado con » ${isMarried ? partnerName : 'Nadie'}
 
-☆ *Experiencia* » ${exp.toLocaleString()}
-❖ *Nivel* » ${nivel}
-✎ Rango » ${role}
+♛ *Experiencia* » ${exp.toLocaleString()}
+♛ *Nivel* » ${nivel}
+♛ Rango » ${role}
 
 ⛁ *Coins Cartera* » ${coins.toLocaleString()} ${moneda}
 ⛃ *Coins Banco* » ${bankCoins.toLocaleString()} ${moneda}
-❁ *Premium* » ${user.premium ? '✅' : '❌'}
+✰ *Premium* » ${user.premium ? '✅' : '❌'}
   `.trim();
 
     await conn.sendMessage(m.chat, { 
@@ -63,7 +63,7 @@ ${description}
         contextInfo: {
             mentionedJid: [userId],
             externalAdReply: {
-                title: '✧ Perfil de Usuario ✧',
+                title: '✰ Perfil de Usuario ✰',
                 body: dev,
                 thumbnailUrl: perfil,
                 mediaType: 1,
