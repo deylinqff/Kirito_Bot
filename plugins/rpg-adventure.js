@@ -3,7 +3,7 @@ import fetch from 'node-fetch';
 let handler = async (m, { conn }) => {
     let user = global.db.data.users[m.sender];
     if (!user) {
-        return conn.reply(m.chat, '🍬 El usuario no se encuentra en la base de Datos.', m);
+        return conn.reply(m.chat, '👑 El usuario no se encuentra en la base de Datos.', m);
     }
     if (user.health < 80) {
         return conn.reply(m.chat, '💔 No tienes suficiente salud para aventurarte. Usa el comando .heal para curarte.', m);
