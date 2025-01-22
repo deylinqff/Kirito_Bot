@@ -2,7 +2,7 @@ import moment from 'moment-timezone';
 
 let handler = async (m, { conn }) => {
   let staff = `
-👑 *EQUIPO DE DESARROLLO* 👑 
+👑 *EQUIPO DE DESARROLLO*
 
 👑 *Dueño y Fundador:*  
 ☁️ *Deylin*  
@@ -29,9 +29,9 @@ let handler = async (m, { conn }) => {
     text: staff,
     contextInfo: {
       externalAdReply: {
-        title: `👑 Equipo de Desarrollo 👑`,
-        body: `https://chat.whatsapp.com/DQLT8n8IghUHYdkD2YLLnz.`,
-        thumbnailUrl: 'https://files.catbox.moe/jsxpqp.jpg', 
+        title: `🌌 Equipo de Desarrollo 🌌`,
+        body: `Kirito Bot - Siempre contigo.`,
+        thumbnailUrl: 'Logo7.jpg', // Cambia esto por tu URL de imagen
         mediaType: 1,
         showAdAttribution: true,
         renderLargerThumbnail: true,
