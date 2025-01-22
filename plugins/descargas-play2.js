@@ -131,7 +131,7 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
             thumbnail: thumb
           }, { quoted: m });
         } else {
-          return m.reply(`🍭 *No se pudo descargar el video:* No se encontró un enlace de descarga válido.`);
+          return m.reply(`⚡ *No se pudo descargar el video:* No se encontró un enlace de descarga válido.`);
         }
       } catch (error) {
         console.error('Error al obtener las URL de descarga:', error);
