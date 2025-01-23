@@ -7,7 +7,7 @@ import { fileTypeFromBuffer } from "file-type";
 
 let handler = async (m, { conn, isRowner }) => {
 
-  if (!m.quoted || !/image/.test(m.quoted.mimetype)) return m.reply('🍬 Por favor, responde a una imagen con el comando *setcatalogo* para actualizar la foto del catalogo.');
+  if (!m.quoted || !/image/.test(m.quoted.mimetype)) return m.reply('⚡ Por favor, responde a una imagen con el comando *setcatalogo* para actualizar la foto del catalogo.');
 
   try {
 
@@ -15,12 +15,12 @@ let handler = async (m, { conn, isRowner }) => {
     let link = await catbox(media);
     
     if (!isImageValid(media)) {
-      return m.reply('🍭 El archivo enviado no es una imagen válida.');
+      return m.reply('⚡ El archivo enviado no es una imagen válida.');
     }
 
     global.catalogo = `${link}`;  
 
-    await conn.sendFile(m.chat, media, 'banner.jpg', '🍬 Catalogo actualizado.', m);
+    await conn.sendFile(m.chat, media, 'banner.jpg', '👑 Catalogo actualizado.', m);
 
   } catch (error) {
     console.error(error);
