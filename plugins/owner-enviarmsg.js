@@ -17,7 +17,7 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
     let pp2 = 'https://qu.ax/zdEhG.jpg'
 
     if (!text && !m.quoted) {
-        return m.reply(`*👑 Por favor, escribe tu solicitud.*\n\n> *⚡ Elige una categoría:*\n\na). Sugerencia 💡\nb). Propuesta 📝\nc). Publicidad 📢\nd). Opinión 💬\ne). Pregunta 🚀\nf). Eventos 🎉\ng). Frases ✨\nh). Confesión anónima 🕵\n\n> 🌹 Ejemplo: ${usedPrefix + command} c Texto`);
+        return m.reply(`*👑 Por favor, escribe tu solicitud.*\n\n> *⚡ Elige una categoría:*\n\na). Sugerencia 💡\nb). Propuesta 📝\nc). Publicidad 📢\nd). Opinión 💬\ne). Pregunta 🚀\nf). Eventos 🎉\ng). Frases ✨\nh). Confesión anónima 🕵\n\n> 👑 Ejemplo: ${usedPrefix + command} c Texto`);
     }
 
     let [categoryChoice, ...rest] = text.split(' ');
