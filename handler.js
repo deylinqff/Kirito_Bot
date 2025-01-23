@@ -738,15 +738,15 @@ console.error(e)
 
 global.dfail = (type, m, conn) => {
 const msg = {
-rowner: '「👑」 *Esta función solo puede ser usada por mi creador*\n\n> Deylin.', 
-owner: '「⚜️」 *Esta función solo puede ser usada por mi desarrollador.*', 
-mods: '「⚜️」 *Esta función solo puede ser usada por mis desarrolladores.*', 
-premium: '「☁️」 *Esta función solo es para usuarios Premium.*', 
-group: '「⚡」 *Esta funcion solo puede ser ejecutada en grupos.*', 
-private: '「⚡」 *Esta función solo puede ser usada en chat privado.*', 
-admin: '「👑」 *Este comando solo puede ser usado por admins.*', 
-botAdmin: '「👑」 *Para usar esta función debo ser admin.*', 
-unreg: '「⚡」 *¡Hey! no estas registrado, registrese para usar esta función*\n\n*/reg nombre.edad*\n\n*_‼️ Ejemplo_* : */reg Deyli.15*',
+rowner: '「👑」 *𝑬𝒔𝒕𝒂 𝒇𝒖𝒏𝒄𝒊𝒐𝒏 𝒔𝒐𝒍𝒐 𝒑𝒖𝒆𝒅𝒆 𝒔𝒆𝒓 𝒖𝒔𝒂𝒅𝒂 𝒑𝒐𝒓 𝒎𝒊 𝒄𝒓𝒆𝒂𝒅𝒐𝒓*\n\n> 𝐃𝐞𝐲𝐥𝐢𝐧.', 
+owner: '「⚜️」 *𝐄𝐬𝐭𝐚 𝒇𝒖𝒏𝒄𝒊𝒐𝒏 𝒔𝒐𝒍𝒐 𝒑𝒖𝒆𝒅𝒆 𝒔𝒆𝒓 𝒖𝒔𝒂𝒅𝒂 𝒑𝒐𝒓 𝒎𝒊 𝐝𝐞𝐬𝐚𝐫𝐫𝐨𝐥𝐥𝐚𝐝𝐨𝐫.*', 
+mods: '「⚜️」 *𝐄𝐬𝐭𝐚 𝒇𝒖𝒏𝒄𝒊𝒐𝒏 𝒔𝒐𝒍𝒐 𝒑𝒖𝒆𝒅𝒆 𝒔𝒆𝒓 𝒖𝒔𝒂𝒅𝒂 𝒑𝒐𝒓 𝒎𝒊s 𝐝𝐞𝐬𝐚𝐫𝐫𝐨𝐥𝐥𝐚𝐝𝐨𝐫𝐞𝐬.*', 
+premium: '「⚡」 *𝑬𝒔𝒕𝒂 𝒇𝒖𝒏𝒄𝒊𝒐𝒏 𝒔𝒐𝒍𝒐 𝒆𝒔 𝒑𝒂𝒓𝒂 𝒖𝒔𝒖𝒂𝒓𝒊𝒐𝒔 𝑷𝒓𝒆𝒎𝒊𝒖𝒎.*', 
+group: '「⚡」 *𝑬𝒔𝒕𝒂 𝒇𝒖𝒏𝒄𝒊𝒐𝒏 𝒔𝒐𝒍𝒐 𝒑𝒖𝒆𝒅𝒆 𝒔𝒆𝒓 𝒆𝒋𝒆𝒄𝒖𝒕𝒂𝒅𝒂 𝒆𝒏 𝒈𝒓𝒖𝒑𝒐𝒔.*', 
+private: '「⚡」 *𝑬𝒔𝒕𝒂 𝒇𝒖𝒏𝒄𝒊𝒐𝒏 𝒔𝒐𝒍𝒐 𝒑𝒖𝒆𝒅𝒆 𝒔𝒆𝒓 𝒖𝒔𝒂𝒅𝒂 𝒆𝒏 𝒄𝒉𝒂𝒕 𝒑𝒓𝒊𝒗𝒂𝒅𝒐.*', 
+admin: '「👑」 *𝑬𝒔𝒕𝒂 𝒇𝒖𝒏𝒄𝒊𝒐𝒏 𝒔𝒐𝒍𝒐 𝒑𝒖𝒆𝒅𝒆 𝒔𝒆𝒓 𝒖𝒔𝒂𝒅𝒂 𝒑𝒐𝒓 𝒂𝒅𝒎𝒊𝒏𝒔.*', 
+botAdmin: '「👑」 *𝑷𝒂𝒓𝒂 𝒖𝒔𝒂𝒓 𝒆𝒔𝒕𝒂 𝒇𝒖𝒏𝒄𝒊𝒐𝒏 𝒅𝒆𝒃𝒐 𝒔𝒆𝒓 𝒂𝒅𝒎𝒊𝒏.*', 
+unreg: '「⚡」 *¡𝑯𝒆𝒚! 𝒏𝒐 𝒆𝒔𝒕𝒂𝒔 𝒓𝒆strado, registrese para usar esta función*\n\n*/reg nombre.edad*\n\n*_‼️ Ejemplo_* : */reg Deyli.15*',
 restrict: '「🚀」 *Esta característica esta desactivada.*'
 }[type];
 if (msg) return conn.reply(m.chat, msg, m, rcanal).then(_ => m.react('✖️'))}
