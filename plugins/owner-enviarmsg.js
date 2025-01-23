@@ -89,7 +89,7 @@ handler.before = async (response) => {
 
 if (action === 'si') {
 await conn.sendMessage(idgroup, { react: { text: "✅", key: response.key } });
-let approvedText = `${suggestionText || '🍬 Desconocido'}`;
+let approvedText = `${suggestionText || '⚡ Desconocido'}`;
 let title, body, foto;
 
 switch (category) {
