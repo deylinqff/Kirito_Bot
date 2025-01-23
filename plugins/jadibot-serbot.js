@@ -1,3 +1,16 @@
+/*⚠ PROHIBIDO EDITAR ⚠
+Este codigo fue modificado, adaptado y mejorado por
+- ReyEndymion >> https://github.com/ReyEndymion
+El codigo de este archivo esta inspirado en el codigo original de:
+- Aiden_NotLogic >> https://github.com/ferhacks
+*El archivo original del MysticBot-MD fue liberado en mayo del 2024 aceptando su liberacion*
+El codigo de este archivo fue parchado en su momento por:
+- BrunoSobrino >> https://github.com/BrunoSobrino
+Contenido adaptado por:
+- GataNina-Li >> https://github.com/GataNina-Li
+- elrebelde21 >> https://github.com/elrebelde21
+*/
+
 const { useMultiFileAuthState, DisconnectReason, makeCacheableSignalKeyStore, fetchLatestBaileysVersion} = (await import("@whiskeysockets/baileys"));
 import qrcode from "qrcode"
 import NodeCache from "node-cache"
@@ -17,20 +30,20 @@ let crm3 = "SBpbmZvLWRvbmFyLmpz"
 let crm4 = "IF9hdXRvcmVzcG9uZGVyLmpzIGluZm8tYm90Lmpz"
 let drm1 = ""
 let drm2 = ""
-let rtx = "*𝐊𝐢𝐫𝐢𝐭𝐨-𝐁𝐨𝐭*\n\n👑 Cσɳҽxισɳ SυႦ-Bσƚ Mσԃҽ QR\n\n✰ Con otro celular o en la PC escanea este QR para convertirte en un *Sub-Bot* Temporal.\n\n\`1\` » Haga clic en los tres puntos en la esquina superior derecha\n\n\`2\` » Toque dispositivos vinculados\n\n\`3\` » Escanee este codigo QR para iniciar sesion con el bot\n\n✧ ¡Este código QR expira en 45 segundos!."
-let rtx2 = "*𝐊𝐢𝐫𝐢𝐭𝐨-𝐁𝐨𝐭*\n\n⚡ Cσɳҽxισɳ SυႦ-Bσƚ Mσԃҽ Cσԃҽ\n\n✰ Usa este Código para convertirte en un *Sub-Bot* Temporal.\n\n\`1\` » Haga clic en los tres puntos en la esquina superior derecha\n\n\`2\` » Toque dispositivos vinculados\n\n\`3\` » Selecciona Vincular con el número de teléfono\n\n\`4\` » Escriba el Código para iniciar sesion con el bot\n\n✧ No es recomendable usar tu cuenta principal."
+let rtx = "*⪛✰ ↫ Yυƙι  -  Sυσυ  -  Bσƚ ↬ ✰⪜*\n\n✐ Cσɳҽxισɳ SυႦ-Bσƚ Mσԃҽ QR\n\n✰ Con otro celular o en la PC escanea este QR para convertirte en un *Sub-Bot* Temporal.\n\n\`1\` » Haga clic en los tres puntos en la esquina superior derecha\n\n\`2\` » Toque dispositivos vinculados\n\n\`3\` » Escanee este codigo QR para iniciar sesion con el bot\n\n✧ ¡Este código QR expira en 45 segundos!."
+let rtx2 = "*⪛✰ ↫ Yυƙι  -  Sυσυ  -  Bσƚ ↬ ✰⪜*\n\n✐ Cσɳҽxισɳ SυႦ-Bσƚ Mσԃҽ Cσԃҽ\n\n✰ Usa este Código para convertirte en un *Sub-Bot* Temporal.\n\n\`1\` » Haga clic en los tres puntos en la esquina superior derecha\n\n\`2\` » Toque dispositivos vinculados\n\n\`3\` » Selecciona Vincular con el número de teléfono\n\n\`4\` » Escriba el Código para iniciar sesion con el bot\n\n✧ No es recomendable usar tu cuenta principal."
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
-const kiritoJBOptions = {}
+const yukiJBOptions = {}
 if (global.conns instanceof Array) console.log()
 else global.conns = []
 let handler = async (m, { conn, args, usedPrefix, command, isOwner }) => {
 //if (!globalThis.db.data.settings[conn.user.jid].jadibotmd) return m.reply(`♡ Comando desactivado temporalmente.`)
 let time = global.db.data.users[m.sender].Subs + 120000
-if (new Date - global.db.data.users[m.sender].Subs < 120000) return conn.reply(m.chat, `⚡ Debes esperar ${msToTime(time - new Date())} para volver a vincular un *Sub-Bot.*`, m)
+if (new Date - global.db.data.users[m.sender].Subs < 120000) return conn.reply(m.chat, `🍬 Debes esperar ${msToTime(time - new Date())} para volver a vincular un *Sub-Bot.*`, m)
 if (Object.values(global.conns).length === 30) {
-return m.reply('⚡ No se han encontrado espacios para *Sub-Bots* disponibles.')
+return m.reply('🍭 No se han encontrado espacios para *Sub-Bots* disponibles.')
 }
 let who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? conn.user.jid : m.sender
 let id = `${who.split`@`[0]}`  //conn.getName(who)
@@ -67,7 +80,7 @@ fs.mkdirSync(pathYukiJadiBot, { recursive: true })}
 try {
 args[0] && args[0] != undefined ? fs.writeFileSync(pathCreds, JSON.stringify(JSON.parse(Buffer.from(args[0], "base64").toString("utf-8")), null, '\t')) : ""
 } catch {
-conn.reply(m.chat, `⚡ Use correctamente el comando » ${usedPrefix + command} code`, m)
+conn.reply(m.chat, `🍬 Use correctamente el comando » ${usedPrefix + command} code`, m)
 return
 }
 
