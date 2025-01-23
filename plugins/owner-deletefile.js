@@ -10,10 +10,10 @@ import {
 } from 'fs'
 
 let handler = async (m, { conn, usedPrefix: _p, __dirname, args, text }) => {
-    if (!text) return conn.reply(m.chat, `🍬 Ingresa la ruta y el nombre del archivo que deseas eliminar.`, m, rcanal)
+    if (!text) return conn.reply(m.chat, `⚡ Ingresa la ruta y el nombre del archivo que deseas eliminar.`, m, rcanal)
     
     const file = text.trim()
-    if (!existsSync(file)) return conn.reply(m.chat, `🍭 Archivo no encontrado.`, m, rcanal)
+    if (!existsSync(file)) return conn.reply(m.chat, `👑 Archivo no encontrado.`, m, rcanal)
     
     unlinkSync(file)
     conn.reply(m.chat, `✅ El archivo *${file}* ha sido eliminado con éxito.`, m, rcanal)
