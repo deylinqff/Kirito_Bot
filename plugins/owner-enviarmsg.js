@@ -9,7 +9,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 let suggestionQueue = {};
-const idgroup = "120363342503310354@g.us";
+const idgroup = "120363365864927734@g.us";
 
 let handler = async (m, { conn, text, usedPrefix, command }) => {
     let who = m.mentionedJid && m.mentionedJid.length > 0 ? m.mentionedJid[0] : (m.fromMe ? conn.user.jid : m.sender);
@@ -24,7 +24,7 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
     let suggestionText = rest.join(' ');
 
     if (!suggestionText) {
-        return m.reply(`🍬 Debes agregar un texto después de seleccionar la categoría.\nEjemplo: ${usedPrefix + command} a Mi solicitud es...`);
+        return m.reply(`⚡ Debes agregar un texto después de seleccionar la categoría.\nEjemplo: ${usedPrefix + command} a Mi solicitud es...`);
     }
 
     let categories = {
@@ -40,10 +40,10 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
 
     let category = categories[categoryChoice];
     if (!category) {
-        return m.reply('🍭 Opción inválida. Elige una categoría correcta: a, b, c o d.');
+        return m.reply('👑 Opción inválida. Elige una categoría correcta: a, b, c o d.');
     }
 
-    m.reply(`🍬 Tu Publicación ha sido enviada a los administradores para su revisión.`);
+    m.reply(`⚡ Tu Publicación ha sido enviada a los administradores para su revisión.`);
 
     let groupMetadata = await conn.groupMetadata(idgroup);
     let groupAdmins = groupMetadata.participants.filter(p => p.admin);
@@ -57,7 +57,7 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
         suggestionText, category, sender: m.sender, senderName: m.pushName, pp, pp2, suggestionId
     };
 
-    let confirmMessage = `👤 El usuario @${m.sender.split('@')[0]} ha enviado una solicitud!\n\n*${category.charAt(0).toUpperCase() + category.slice(1)}:* ${suggestionText || 'Sin texto'}\n\n_Escriba "si ${suggestionId}" para aceptar_\n_Escriba "no ${suggestionId}" para rechazar._\n\n> *🌹 ID de la publicación:* ${suggestionId}`;
+    let confirmMessage = `👤 El usuario @${m.sender.split('@')[0]} ha enviado una solicitud!\n\n*${category.charAt(0).toUpperCase() + category.slice(1)}:* ${suggestionText || 'Sin texto'}\n\n_Escriba "si ${suggestionId}" para aceptar_\n_Escriba "no ${suggestionId}" para rechazar._\n\n> *👑 ID de la publicación:* ${suggestionId}`;
 
         await conn.sendMessage(idgroup, { text: confirmMessage, mentions: [m.sender] }, { quoted: m });
 };
@@ -95,17 +95,17 @@ let title, body, foto;
 switch (category) {
 case 'sugerencia': 
 title = `【 🔔 𝗡𝗨𝗘𝗩𝗔 𝗦𝗨𝗚𝗘𝗥𝗘𝗡𝗖𝗜𝗔 🔔 】`;
-body = `🍬 Nueva sugerencia`;
+body = `👑 Nueva sugerencia`;
 foto = `${pp}`;
 break;
 case 'eventos':
 title = `【 ⭐️ 𝗡𝗨𝗘𝗩𝗢 𝗘𝗩𝗘𝗡𝗧𝗢 ⭐️ 】`;
-body = `🍨 Nueva sugerencia de un evento`;
+body = `⚡ Nueva sugerencia de un evento`;
 foto = `${pp}`;
 break;
 case 'opinión':
 title = `【 😃 𝗡𝗨𝗘𝗩𝗔 𝗢𝗣𝗜𝗡𝗜𝗢𝗡 😃 】`;
-body = `🍭 Nueva opinion`;
+body = `⚡ Nueva opinion`;
 foto = `${pp}`;
 break;
 case 'propuesta':
@@ -115,7 +115,7 @@ foto = `${pp}`;
 break;
 case 'frases':
 title = `【 ✍️ 𝗙𝗥𝗔𝗦𝗘 𝗖𝗢𝗠𝗣𝗔𝗥𝗧𝗜𝗗𝗔 ✍️ 】`;
-body = `🍧 Nueva frase compartida`;
+body = `👑 Nueva frase compartida`;
 foto = `${pp}`;
 break;
 case 'confesión':
@@ -124,12 +124,12 @@ body = `🕵‍♂️ Confesión anónima`;
 foto = `${pp2}`;
 break;
 case 'pregunta': 
-title = `【 🪐 𝗣𝗥𝗘𝗚𝗨𝗡𝗧𝗔 🪐 】`;
+title = `【 ⁉️ 𝗣𝗥𝗘𝗚𝗨𝗡𝗧𝗔 ⁉️ 】`;
 body = `💡 Una pregunta de un usuario`;
 foto = `${pp}`;
 break;
 case 'publicidad': 
-title = `【 🍄 𝗣𝗨𝗕𝗟𝗜𝗖𝗜𝗗𝗔𝗗 🍄 】`;
+title = `【 ⛱️ 𝗣𝗨𝗕𝗟𝗜𝗖𝗜𝗗𝗔𝗗 ⛱️ 】`;
 body = `🪧 Nueva publicidad`;
 foto = `${pp}`;
 break;
@@ -146,7 +146,7 @@ renderLargerThumbnail: false
 
 await conn.sendMessage(idchannel, { text: approvedText, contextInfo: options.contextInfo }, { quoted: null });
 
-await conn.reply(sender, `🍬 Solicitud aceptada, Grupo:\n${gp4}`);
+await conn.reply(sender, `👑 Solicitud aceptada, Grupo:\n${gp4}`);
 delete suggestionQueue[suggestionId];
 }};
 handler.command = ['sugerencia', 'enviarmensaje', 'solicitud', 'enviarsolicitud'];
