@@ -13,19 +13,7 @@ export async function before(m, { conn, isAdmin, isBotAdmin }) {
 
     // Verificar si el mensaje menciona al creador
     if (m.mentionedJid && m.mentionedJid.includes(creatorNumber)) {
-        await conn.sendMessage(m.chat, {
-            image: { url: 'https://files.catbox.moe/li13c2.jpg' }, // Cambia el enlace por el de tu imagen
-            caption: `✨ *Kirito-Bot* ✨\n\n⚙️ _powered by Deylin_\n\nLo siento, no puedo proporcionar información sobre mi creador.`,
-            footer: 'github.com',
-            buttons: [
-                {
-                    buttonId: 'id-ver-canal',
-                    buttonText: { displayText: '🌐 Ver canal' },
-                    type: 1,
-                },
-            ],
-            headerType: 4, // Tipo de mensaje con imagen
-        });
+        await conn.sendMessage(m.chat, { text: 'Lo siento, no puedo proporcionar información sobre mi creador.' });
         return;
     }
 
