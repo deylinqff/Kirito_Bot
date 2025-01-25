@@ -62,7 +62,7 @@ Hola *%name* soy *Kirito-Bot*
 ╚══════ ♢.✰.♢ ══════
 
 ╔═══════⌬『 𝑰𝑵𝑭𝑶-𝑼𝑺𝑬𝑹 』
-║ ⚡ 〘Bot: Kirito-Bot
+║ ⚡ 〘Bot: ${botname}
 ║ ⚡ 〘Modo Público
 ║ ⚡ 〘Baileys: Multi Device
 ║ ⚡ 〘Tiempo Activo: %muptime
