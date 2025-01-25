@@ -21,27 +21,27 @@ let Styles = (text, style = 1) => {
   return output.join('');
 };
 let tags = {
-  'anime': '🧧 ANIME 🎐',
-  'main': '❗ INFO ❕',
-  'search': '🔎 SEARCH 🔍',
-  'game': '🕹️ GAME 🎮',
-  'serbot': '⚙️ SUB BOTS 🤖',
-  'rpg': '🌐 RPG 🥇',
-  'rg': '🎑 REGISTRO 🎟️',
-  'sticker': '💟 STICKER 🏷️',
-  'img': '🖼️ IMAGE 🎇',
-  'group': '👥 GROUPS 📢',
+  'anime': 'ANIME',
+  'main': 'INFO',
+  'search': 'SEARCH',
+  'game': 'GAME',
+  'serbot': 'SUB BOTS',
+  'rpg': 'RPG',
+  'rg': 'REGISTRO',
+  'sticker': 'STICKER',
+  'img': 'IMAGE',
+  'group': 'GROUPS',
 //  'logo': 'MAKER',
-  'nable': '🎛️ ON / OFF 🔌', 
-  'premium': '💎 PREMIUM 👑',
-  'downloader': '📥 DOWNLOAD 📤',
-  'tools': '🔧 TOOLS 🛠️',
-  'fun': '🎉 FUN 🎊',
-  'nsfw': '🔞 NSFW 📛', 
-  'cmd': '🧮 DATABASE 🖥️',
-  'owner': '👤 OWNER 👁️', 
-  'audio': '📣 AUDIOS 🔊', 
-  'advanced': '🗝️ ADVANCED 🎮',
+  'nable': 'ON / OFF', 
+  'premium': 'PREMIUM',
+  'downloader': 'DOWNLOAD',
+  'tools': 'TOOLS',
+  'fun': 'FUN',
+  'nsfw': 'NSFW', 
+  'cmd': 'DATABASE',
+  'owner': 'OWNER', 
+  'audio': 'AUDIOS', 
+  'advanced': 'ADVANCED',
 }
 
 const vid = ['https://qu.ax/tfvrZ.mp4', 'https://qu.ax/ZVSSA.mp4', 'https://qu.ax/FHVQP.mp4']
@@ -49,24 +49,24 @@ const vid = ['https://qu.ax/tfvrZ.mp4', 'https://qu.ax/ZVSSA.mp4', 'https://qu.a
 const defaultMenu = {
   before:  `*⌬━━━━━▣━━◤⌬◢━━▣━━━━━━⌬*
 
-Hola *%name* soy *TECNO*
+Hola *%name* soy *Kirito-Bot*
 
 ╔════⌬══◤𝑪𝑹𝑬𝑨𝑫𝑶𝑹◢
-║  ♛ 𝑫𝒆𝒚𝒍𝒊𝒏
+║  👑 𝑫𝒆𝒚𝒍𝒊𝒏
 ╚════⌬══◤✰✰✰✰✰◢
 
 ╔══════⌬『 𝑰𝑵𝑭𝑶-𝑩𝑶𝑻 』
-║ ✎ 〘Cliente: %name
-║ ✎ 〘Exp: %exp
-║ ✎ 〘Nivel: %level
+║ 🚀 〘Cliente: %name
+║ 🚀 〘Exp: %exp
+║ 🚀 〘Nivel: %level
 ╚══════ ♢.✰.♢ ══════
 
 ╔═══════⌬『 𝑰𝑵𝑭𝑶-𝑼𝑺𝑬𝑹 』
-║ ✎ 〘Bot: ©Tecno-Bot-Plus®
-║ ✎ 〘Modo Público
-║ ✎ 〘Baileys: Multi Device
-║ ✎ 〘Tiempo Activo: %muptime
-║ ✎ 〘Usuarios: %totalreg 
+║ ⚡ 〘Bot: ©Tecno-Bot-Plus®
+║ ⚡ 〘Modo Público
+║ ⚡ 〘Baileys: Multi Device
+║ ⚡ 〘Tiempo Activo: %muptime
+║ ⚡ 〘Usuarios: %totalreg 
 ╚══════ ♢.✰.♢ ══════
 
 *◤━━━━━ ☆. ⌬ .☆ ━━━━━◥*
@@ -74,7 +74,7 @@ Hola *%name* soy *TECNO*
 \t\t\t⚙_*𝑳𝑰𝑺𝑻𝑨 𝑫𝑬 𝑪𝑶𝑴𝑨𝑵𝑫𝑶𝑺*_ 
 `.trimStart(),
   header: '*┏━━━━▣━━⌬〘 %category 〙*',
-  body: '┃✎›〘 %cmd %islimit %isPremium\n',
+  body: '┃👑›〘 %cmd %islimit %isPremium\n',
   footer: '*┗━━━▣━━⌬⌨⌬━━▣━━━━⌬*',
   after: `© ${textbot}`,
 }
