@@ -26,9 +26,9 @@
 <img src="https://github.com/AnderMendoza/AnderMendoza/raw/main/assets/line-neon.gif" width="100%">
 
 
-<a href="https://github.com/WillZek"><img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&duration=4000&pause=1000&color=C88EFF&width=435&lines=CLONA+EL+REPOSITORIO+MODIFICALO" alt="Typing SVG" /></a> 
+<a href="https://github.com/deylinqff"><img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&duration=4000&pause=1000&color=C88EFF&width=435&lines=CLONA+EL+REPOSITORIO+MODIFICALO" alt="Typing SVG" /></a> 
 **`PORFAVOR DEJAR CREDITOS`** 
-[**Aqui**](https://github.com/WillZek/CrowBot-Ai/fork)
+[**Aqui**](https://github.com/deylinqff/Kirito_Bot/fork)
 
 <!-- RAINBOW LINE BOT -->
 <img src="https://github.com/AnderMendoza/AnderMendoza/raw/main/assets/line-neon.gif" width="100%">
