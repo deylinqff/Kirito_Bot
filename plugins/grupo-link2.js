@@ -35,5 +35,5 @@ Object.defineProperty(handler, 'alwaysOn', {
 
 handler.help = ['link2']
 handler.tags = ['owner'];
-handler.command = ['.link2', 'plugin'];
+handler.command = ['.link2', 'owner'];
 handler.rowner = true;
