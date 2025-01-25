@@ -181,22 +181,10 @@ let handler = async (m, { conn, usedPrefix: _p, __dirname }) => {
    }
     text = text.replace(new RegExp(`%(${Object.keys(replace).sort((a, b) => b.length - a.length).join`|`})`, 'g'), (_, name) => '' + replace[name])
 
-    let pp = 'https://i.ibb.co/CPVcnqH/file.jpg'
-    let pp2 = 'https://i.ibb.co/9WrytGt/file.jpg'
-    let pp3 = 'https://i.ibb.co/CPVcnqH/file.jpg'
-    let pp4 = 'https://i.ibb.co/9WrytGt/file.jpg'
-    let pp5 = 'https://i.ibb.co/CPVcnqH/file.jpg'
-    let pp6 = 'https://i.ibb.co/9WrytGt/file.jpg'
-    let pp7 = 'https://i.ibb.co/CPVcnqH/file.jpg'
-    let pp8 = 'https://i.ibb.co/9WrytGt/file.jpg'
-    let pp9 = 'https://i.ibb.co/JmcS3kv/Sylph.jpg'
-    let pp10 = 'https://i.ibb.co/CPVcnqH/file.jpg'
-    let pp11 = 'https://i.ibb.co/JmcS3kv/Sylph.jpg'
-    let pp12 = 'https://i.ibb.co/CPVcnqH/file.jpg'
-    let pp13 = 'https://i.ibb.co/Cs6Tt9V/Sylph.jpg'
-    let pp14 = 'https://i.ibb.co/JmcS3kv/Sylph.jpg'
-    let pp15 = 'https://i.ibb.co/Cs6Tt9V/Sylph.jpg'
-    let img = 'https://files.catbox.moe/pz9ba0.jpg'
+    let perfil = await conn.profilePictureUrl(who, 'image').catch(_ => 'https://files.catbox.moe/va19q6.jpg')
+let taguser = '@' + m.sender.split("@s.whatsapp.net")[0]
+const vid = ['https://qu.ax/ZVSSA.mp4', 'https://qu.ax/tfvrZ.mp4', 'https://qu.ax/FHVQP.mp4']
+
     await m.react('🚀')
    // await conn.sendMessage(m.chat, { video: { url: [pp, pp2, pp3, pp4, pp5, pp6, pp7, pp8, pp9, pp10, pp11, pp12, pp13, pp14, pp15].getRandom() }, gifPlayback: true, caption: text.trim(), mentions: [m.sender] }, { quoted: estilo })
     await conn.sendFile(m.chat, img, 'thumbnail.jpg', text.trim(), m, null, rcanal)
