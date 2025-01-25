@@ -11,7 +11,7 @@ const img = await q.download?.()
 if (!img) {
 console.error('⚠️ Error: No image buffer available')
 return conn.reply(m.chat, '✘ ChatGpT no pudo descargar la imagen.', m, fake)}
-const content = '👁️‍🗨️ ¿Qué se observa en la imagen?'
+const content = '⚡ ¿Qué se observa en la imagen?'
 try {
 const imageAnalysis = await fetchImageBuffer(content, img)
 const query = '⚡ Descríbeme la imagen y detalla por qué actúan así. También dime quién eres'
@@ -22,10 +22,10 @@ await conn.reply(m.chat, description, m, fake)
 await m.react(error)
 await conn.reply(m.chat, '✘ ChatGpT no pudo analizar la imagen.', m, fake)}
 } else {
-if (!text) { return conn.reply(m.chat, `🚀 Ingrese una petición para que Kirito-Bot lo responda.`, m)}
+if (!text) { return conn.reply(m.chat, `⚡ Ingrese una petición para que el ChatGpT lo responda.`, m)}
 await m.react(rwait)
 try {
-const { key } = await conn.sendMessage(m.chat, {text: `💠 Kirito-Bot está procesando tu petición, espera unos segundos.`}, {quoted: m})
+const { key } = await conn.sendMessage(m.chat, {text: `⚡ ChatGPT está procesando tu petición, espera unos segundos.`}, {quoted: m})
 const query = text
 const prompt = `${basePrompt}. Responde lo siguiente: ${query}`
 const response = await luminsesi(query, username, prompt)
@@ -39,6 +39,7 @@ handler.help = ['ia', 'chatgpt']
 handler.tags = ['ai']
 handler.register = true
 handler.command = ['ia', 'chatgpt']
+handler.group = true
 
 export default handler
 
