@@ -13,9 +13,7 @@ export async function before(m, { conn, isAdmin, isBotAdmin }) {
 
     // Verificar si el mensaje menciona al creador
     if (m.mentionedJid && m.mentionedJid.includes(creatorNumber)) {
-        await conn.sendMessage(m.chat, { text: 'Lo siento, no puedo compartir información sobre mi creador. Él ha decidido mantener su identidad privada para garantizar su tranquilidad y seguridad. Agradezco tu comprensión y respeto hacia su decisión.
-
-.' });
+        await conn.sendMessage(m.chat, { text: 'Lo siento, no puedo compartir información sobre mi creador. Él ha decidido mantener su identidad privada para garantizar su tranquilidad y seguridad. Agradezco tu comprensión y respeto hacia su decisión.' });
         return;
     }
 
