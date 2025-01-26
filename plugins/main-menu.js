@@ -44,7 +44,7 @@ let tags = {
   'advanced': 'ADVANCED',
 }
 
-const vid = ['https://qu.ax/tfvrZ.mp4', 'https://qu.ax/ZVSSA.mp4', 'https://qu.ax/FHVQP.mp4']
+const vid = ['https://qu.ax/tfvrZ.mp4', 'https://qu.ax/ZVSSA.mp4', 'https://qu.ax/FHVQP.mp4', 'https://files.catbox.moe/0kv1om.mp4']
 
 const defaultMenu = {
   before:  `*⌬━━━━━▣━━◤⌬◢━━▣━━━━━━⌬*
