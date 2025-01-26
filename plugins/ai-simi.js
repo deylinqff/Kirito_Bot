@@ -1,4 +1,4 @@
-import translate from '@vitalets/google-translate-api';
+import translate from 'https://apis-starlights-team.koyeb.app/starlight/gemini?text=${text}';
 import axios from 'axios';
 import fetch from 'node-fetch';
 
