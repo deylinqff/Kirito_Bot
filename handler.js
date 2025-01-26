@@ -368,8 +368,8 @@ if (!['grupo-unbanchat.js'].includes(name) && chat && chat.isBanned && !isROwner
 if (name != 'grupo-unbanchat.js' && name != 'owner-exec.js' && name != 'owner-exec2.js' && name != 'grupo-delete.js' && chat?.isBanned && !isROwner) return 
 if (m.text && user.banned && !isROwner) {
 if (user.antispam > 2) return
-m.reply(`🍭 Estas baneado/a, no puedes usar comandos en este bot!\n\n${user.bannedReason ? `\n📝 *Motivo:* 
-${user.bannedReason}` : '📄 *Motivo:* Sin Especificar'}\n\n🍧 Si quieres que seas desbaneado en este bot escribe a: Wa.me/584120346669`)
+m.reply(`⚡ Estas baneado/a, no puedes usar comandos en este bot!\n\n${user.bannedReason ? `\n📝 *Motivo:* 
+${user.bannedReason}` : '📄 *Motivo:* Sin Especificar'}\n\n⚡ Si quieres que seas desbaneado en este bot escribe a: Wa.me/50488198573`)
 user.antispam++        
 return
 }
@@ -438,7 +438,7 @@ m.reply('chirrido -_-')
 else
 m.exp += xp
 if (!isPrems && plugin.coin && global.db.data.users[m.sender].coin < plugin.coin * 1) {
-conn.reply(m.chat, `🍬 Se agotaron tus ${global.moneda}`, m)
+conn.reply(m.chat, `⚡ Se agotaron tus ${global.moneda}`, m)
 continue
 }
 let extra = {
