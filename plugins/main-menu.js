@@ -312,7 +312,7 @@ Hola *%name* soy *Kirito-Bot*
 ┃☫ .demo
 ┃☫ .fux
 ┃☫ .gemini
-┃☫ .yuki
+┃☫ .kirito
 ┃☫ .bot
 ┗━━━━━━━━━━━━━━━━━⪩
 ┏━━⪩「 ♡⃝𝕲𝖗𝖚𝖕𝖔𝖘ᚐ҉ᚐ 」⪨
@@ -438,7 +438,7 @@ Hola *%name* soy *Kirito-Bot*
 ┗━━━━━━━━━━━━━━━━━⪨
 > © 𝒫𝑜𝓌𝑒𝓇𝑒𝒹 𝐵𝓎 𝓓𝓮𝔂𝓵𝓲𝓷`.trim()
 
-await conn.sendMessage(m.chat, { video: { url: vid.getRandom() }, caption: menu, contextInfo: { mentionedJid: [m.sender], isForwarded: true, forwardedNewsletterMessageInfo: { newsletterJid: channelRD.id, newsletterName: channelRD.name, serverMessageId: -1, }, forwardingScore: 999, externalAdReply: { title: '♡⃝🚀𝑻𝒆𝒄𝒏𝒐-𝑩𝒐𝒕ᚐ҉ᚐ', body: dev, thumbnailUrl: perfil, sourceUrl: redes, mediaType: 1, renderLargerThumbnail: false,
+await conn.sendMessage(m.chat, { video: { url: vid.getRandom() }, caption: menu, contextInfo: { mentionedJid: [m.sender], isForwarded: true, forwardedNewsletterMessageInfo: { newsletterJid: channelRD.id, newsletterName: channelRD.name, serverMessageId: -1, }, forwardingScore: 999, externalAdReply: { title: '࿋ོ༙𝑲𝒊𝒓𝒊𝒕𝒐-𝑩𝒐𝒚࿐༵, body: dev, thumbnailUrl: perfil, sourceUrl: redes, mediaType: 1, renderLargerThumbnail: false,
 }, }, gifPlayback: true, gifAttribution: 0 }, { quoted: null })
 await m.react(emojis)    
 
