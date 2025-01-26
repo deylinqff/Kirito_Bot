@@ -6,8 +6,8 @@ import { promises } from 'fs'
 import { join } from 'path'
 let handler = async (m, { conn, usedPrefix, usedPrefix: _p, __dirname, text, command }) => {
 try {        
-let _package = JSON.parse(await promises.readFile(join(__dirname, '../package.json')).catch(_ => ({}))) || {}
-let { exp, yenes, level, role } = global.db.data.users[m.sender]
+/*let _package = JSON.parse(await promises.readFile(join(__dirname, '../package.json')).catch(_ => ({}))) || {}*/
+let { exp, dragones, level, role } = global.db.data.users[m.sender]
 let { min, xp, max } = xpRange(level, global.multiplier)
 let name = await conn.getName(m.sender)
 let _uptime = process.uptime() * 1000
@@ -26,9 +26,10 @@ let totalreg = Object.keys(global.db.data.users).length
 let rtotalreg = Object.values(global.db.data.users).filter(user => user.registered == true).length
 let who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? conn.user.jid : m.sender
 let mentionedJid = [who]
-let perfil = await conn.profilePictureUrl(who, 'image').catch(_ => 'https://qu.ax/QGAVS.jpg')
+let perfil = await conn.profilePictureUrl(who, 'image').catch(_ => 'https://files.catbox.moe/va19q6.jpg')
 let taguser = '@' + m.sender.split("@s.whatsapp.net")[0]
 const vid = ['https://qu.ax/tfvrZ.mp4', 'https://qu.ax/ZVSSA.mp4', 'https://qu.ax/FHVQP.mp4', 'https://files.catbox.moe/0kv1om.mp4']
+
 let menu = `*⌬━━━━━▣━━◤⌬◢━━▣━━━━━━⌬*
 
 Hola *%name* soy *Kirito-Bot*
@@ -53,37 +54,49 @@ Hola *%name* soy *Kirito-Bot*
 
 *◤━━━━━ ☆. ⌬ .☆ ━━━━━◥*
  *【𝕷 𝖎 𝖘 𝖙 𝖆 - 𝕯𝖊 - 𝕮 𝖔 𝖒 𝖆 𝖓 𝖉 𝖔 𝖘】* 
-
-┏━━⪩「 ♡⃝𝕴𝖓𝖋𝖔𝖗𝖒𝖆𝖈𝖎ó𝖓ᚐ҉ᚐ 」⪨
+֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙֙
+┏━━❃「 𝐈𝐧𝐟𝐨 𝐁𝐨𝐭 」❃
+┃❀ .botreglas
 ┃❀ .menu
+┃❀ .menujuegos
+┃❀ .menuanime
+┃❀ .menuhorny 
+┃❀ .menuaudios 
 ┃❀ .runtime
 ┃❀ .script
 ┃❀ .staff
 ┃❀ .blocklist
-┃❀ .creador
-┃❀ .editautoresponder
-┃❀ .owner
-┃❀ .database
-┃❀ .usuarios
-┃❀ .ds
-┃❀ .listprem
-┃❀ .status
-┃❀ .solicitud *<mensaje>*
-┃❀ .sug *<mensaje>*
-┃❀ .skyplus
-┃❀ .infobot
-┃❀ .ping
-┃❀ .reportar
-┃❀ .sistema
-┃❀ .reportar
 ┗━━━━━━━━━━━━━━━━━⪩
-┏━━⪩「 ♡⃝𝕽𝖊𝖌𝖎𝖘𝖙𝖗𝖔ᚐ҉ᚐ 」⪨
+┏━━❃「 𝐈𝐧𝐟𝐨𝐫𝐦𝐚𝐜𝐢𝐨́𝐧ᚐ 」❃
+┃✿ .creador
+┃✿ .editautoresponder
+┃✿ .owner
+┃✿ .dash
+┃✿ .dashboard
+┃✿ .views
+┃✿ .database
+┃✿ .usuarios
+┃✿ .user
+┃✿ .ds
+┃✿ .listprem
+┃✿ .status
+┃✿ .solicitud *<mensaje>*
+┃✿ .sug *<mensaje>*
+┃✿ .horario
+┃✿ .skyplus
+┃✿ .infobot
+┃✿ .ping
+┃✿ .reportar
+┃✿ .sistema
+┃✿ .speed
+┃✿ .speedtest
+┃✿ .reportar
+┗━━━━━━━━━━━━━━━━━⪩
+┏━━❃「 𝐑𝐞𝐠𝐢𝐬𝐭𝐫𝐨 」❃
 ┃❋ .reg
 ┃❋ .unreg
 ┃❋ .profile
 ┃❋ .marry
-┃❋ .divorce
-┃❋ .confesar
 ┃❋ .setgenre
 ┃❋ .delgenre
 ┃❋ .setbirth
@@ -91,7 +104,7 @@ Hola *%name* soy *Kirito-Bot*
 ┃❋ .setdescription
 ┃❋ .deldescription
 ┗━━━━━━━━━━━━━━━━━⪩
-┏━━⪩「 ♡⃝𝕯𝖎𝖛𝖊𝖗𝖘𝖎ó𝖓ᚐ҉ᚐ 」⪨
+┏━━⪩「 𝐃𝐢𝐯𝐞𝐫𝐬𝐢𝐨𝐧 」⪨
 ┃☬ .amistad
 ┃☬ .gay <@tag> | <nombre>
 ┃☬ .lesbiana <@tag> | <nombre>
@@ -106,9 +119,13 @@ Hola *%name* soy *Kirito-Bot*
 ┃☬ .prostituta <@tag> | <nombre>
 ┃☬ .prostituto <@tag> | <nombre> 
 ┃☬ .consejo
+┃☬ .divorce
 ┃☬ .doxear
 ┃☬ .doxxing <nombre> | <@tag>
+┃☬ .formarpareja
 ┃☬ .formarpareja5
+┃☬ .horny
+┃☬ .hornycard
 ┃☬ .huevo @user
 ┃☬ .iqtest
 ┃☬ .marica
@@ -117,18 +134,29 @@ Hola *%name* soy *Kirito-Bot*
 ┃☬ .marron
 ┃☬ .suicide
 ┃☬ .chupalo
+┃☬ .minovia @user
+┃☬ .morse *<encode|decode>*
 ┃☬ .nombreninja *<texto>*
 ┃☬ .pajeame
-┃☬ .ppcouple
 ┃☬ .personalidad
 ┃☬ .piropo
 ┃☬ .pokedex *<pokemon>*
 ┃☬ .pregunta
 ┃☬ .ship
+┃☬ .love
+┃☬ .simpcard
 ┃☬ .sorteo
+┃☬ .itssostupid
+┃☬ .estupido
+┃☬ .stupid
 ┃☬ .top *<texto>*
+┃☬ .formartrio @usuario1 @usuario2
+┃☬ .waste @user
+┃☬ .zodiac *2002 02 25*
 ┗━━━━━━━━━━━━━━━━━⪩
-┏━━⪩「 ♡⃝𝕵𝖚𝖊𝖌𝖔𝖘ᚐ҉ᚐ 」⪨
+┏━━⪩「 𝐉𝐮𝐞𝐠𝐨𝐬ᚐ 」⪨
+┃✧ .cancion
+┃✧ .pista
 ┃✧ .ttt nueva sala 
 ┃✧ .ahorcado
 ┃✧ .math <mode>
@@ -138,7 +166,7 @@ Hola *%name* soy *Kirito-Bot*
 ┃✧ .sopa
 ┃✧ .verdad
 ┗━━━━━━━━━━━━━━━━━⪩
-┏━━⪩「 ♡⃝𝕰𝖒𝖔𝖏𝖎-𝕬𝖓𝖎𝖒𝖊ᚐ҉ᚐ 」⪨
+┏━━⪩「 𝐄𝐦𝐨𝐱-𝐀𝐧𝐢𝐦𝐞」⪨
 ┃✥ .angry/enojado @tag
 ┃✥ .bath/bañarse @tag
 ┃✥ .bite/morder @tag
@@ -178,7 +206,7 @@ Hola *%name* soy *Kirito-Bot*
 ┃✥ .think/pensando @tag
 ┃✥ .undress/encuerar @tag
 ┗━━━━━━━━━━━━━━━━━⪩
-┏━━⪩「 ♡⃝𝕹𝕾𝕱𝖂ᚐ҉ᚐ 」⪨
+┏━━⪩「 𝐇𝐨𝐫𝐧𝐲ᚐ 」⪨
 ┃✤ .sixnine/69 @tag
 ┃✤ .anal/culiar @tag
 ┃✤ .blowjob/mamada @tag
@@ -199,14 +227,20 @@ Hola *%name* soy *Kirito-Bot*
 ┃✤ .lesbianas/tijeras @tag
 ┃✤ .rule34 <personaje>
 ┗━━━━━━━━━━━━━━━━━⪩
-┏━━⪩「 ♡⃝𝕽𝖔𝖑𝖑𝖜𝖆𝖎𝖋𝖚𝖘ᚐ҉ᚐ 」⪨
-┃✦ .No disponible por el momento :v
+┏━━⪩「 𝐑𝐨𝐥𝐥𝐰𝐚𝐢𝐟𝐮𝐬 」⪨
+┃✦ .character
+┃✦ .darrw
+┃✦ .obtenidos
+┃✦ .c
+┃✦ .robarpersonaje
+┃✦ .rw
+┃✦ .toprw
 ┗━━━━━━━━━━━━━━━━━⪩
-┏━━⪩「 ♡⃝𝕰𝖈𝖔𝖓𝖔𝖒í𝖆ᚐ҉ᚐ 」⪨
+┏━━⪩「 𝐄𝐜𝐨𝐧𝐨𝐦𝐢𝐚ᚐ 」⪨
 ┃✱ .apostar 
 ┃✱ .bal
 ┃✱ .bank
-┃✱ .yenes
+┃✱ .dragones
 ┃✱ .prestar
 ┃✱ .deuda
 ┃✱ .pagar
@@ -226,7 +260,7 @@ Hola *%name* soy *Kirito-Bot*
 ┃✱ .trabajar
 ┃✱ .transfer [tipo] [cantidad] [@tag]
 ┗━━━━━━━━━━━━━━━━━⪩
-┏━━⪩「 ♡⃝×𝕽×𝕻×𝕲×ᚐ҉ᚐ 」⪨
+┏━━⪩「 𝐑-𝐏-𝐆ᚐ 」⪨
 ┃♤ .adventure
 ┃♤ .annual
 ┃♤ .cofre
@@ -244,7 +278,7 @@ Hola *%name* soy *Kirito-Bot*
 ┃♤ .addprem [@user] <days>
 ┃♤ .weekly
 ┗━━━━━━━━━━━━━━━━━⪩
-┏━━⪩「 ♡⃝𝕾𝖊𝖗𝖇𝖔𝖙/𝕮𝖔𝖉𝖊ᚐ҉ᚐ 」⪨
+┏━━⪩「 𝐒𝐞𝐫𝐛𝐨𝐭/𝐂𝐨𝐝𝐞 」⪨
 ┃✾ .jadibot 
 ┃✾ .deletebot
 ┃✾ .bots
@@ -254,15 +288,20 @@ Hola *%name* soy *Kirito-Bot*
 ┃✾ .token
 ┃✾ .rentbot
 ┗━━━━━━━━━━━━━━━━━⪩
-┏━━⪩「 ♡⃝𝕭𝖚𝖘𝖈𝖆𝖉𝖔𝖗𝖊𝖘ᚐ҉ᚐ 」⪨
+┏━━⪩「 𝐁𝐮𝐬𝐜𝐚𝐝𝐨𝐫𝐞𝐬ᚐ 」⪨
 ┃❖ .animesearch
+┃❖ .appstore
+┃❖ .bingsearch
 ┃❖ .cuevana
 ┃❖ .githubsearch
+┃❖ .gimage
 ┃❖ .gnula
 ┃❖ .googlesearch *<texto>*
 ┃❖ .npmjs
 ┃❖ .steam
+┃❖ .twitterstalk <username>
 ┃❖ .tiktoksearch <txt>
+┃❖ .tweetposts *<búsqueda>*
 ┃❖ .wikis
 ┃❖ .xnxxsearch <query>
 ┃❖ .ytsearch
@@ -270,10 +309,10 @@ Hola *%name* soy *Kirito-Bot*
 ┃❖ .infoanime
 ┃❖ .animelink
 ┗━━━━━━━━━━━━━━━━━⪩
-┏━━⪩「 ♡⃝𝕯𝖊𝖘𝖈𝖆𝖗𝖌𝖆𝖘ᚐ҉ᚐ 」⪨
+┏━━⪩「 𝐃𝐞𝐬𝐜𝐚𝐫𝐠𝐚𝐬 」⪨
 ┃Ѽ .animedl
 ┃Ѽ .animeinfo
-┃Ѽ .apk
+┃Ѽ .apk2
 ┃Ѽ .apkmod
 ┃Ѽ .facebook
 ┃Ѽ .fb
@@ -282,40 +321,39 @@ Hola *%name* soy *Kirito-Bot*
 ┃Ѽ .instagram2
 ┃Ѽ .ig2
 ┃Ѽ .imagen <query>
-┃Ѽ .mangad <manga> <capítulo>
+┃Ѽ .mangad <nombre del manga> <número del capítulo>
 ┃Ѽ .mediafire
 ┃Ѽ .mega
 ┃Ѽ .npmdl
-┃Ѽ .ytdl *<link>*
 ┃Ѽ .aptoide
 ┃Ѽ .pinterest
 ┃Ѽ .pinvid
 ┃Ѽ .play
 ┃Ѽ .play2
+┃Ѽ .play3
+┃Ѽ .play4
 ┃Ѽ .playdoc
 ┃Ѽ .playdoc2
-┃Ѽ .ytmp3 *<link>*
-┃Ѽ .ytpm4 *<link>*
-┃Ѽ .ytmp3doc *<link>*
-┃Ѽ .ytmp4doc *<link>*
-┃Ѽ .terabox 
+┃Ѽ .mp3
+┃Ѽ .mp4
+┃Ѽ .tiktokrandom
 ┃Ѽ .spotify
 ┃Ѽ .tiktokimg <url>
 ┃Ѽ .tiktokmp3 *<link>*
 ┃Ѽ .tiktok
 ┃Ѽ .tiktok2 *<link>*
+┃Ѽ .wallpaper <query>
 ┃Ѽ .tw
 ┃Ѽ .ss2
 ┃Ѽ .ssvid
 ┗━━━━━━━━━━━━━━━━━⪩
-┏━━⪩「 ♡⃝×𝕬×𝕴×ᚐ҉ᚐ 」⪨
+┏━━⪩「 𝐀𝐢/𝐈𝐚 」⪨
 ┃☫ .demo
-┃☫ .fux
 ┃☫ .gemini
 ┃☫ .kirito
 ┃☫ .bot
 ┗━━━━━━━━━━━━━━━━━⪩
-┏━━⪩「 ♡⃝𝕲𝖗𝖚𝖕𝖔𝖘ᚐ҉ᚐ 」⪨
+┏━━⪩「 𝐆𝐫𝐮𝐩𝐨𝐬 」⪨
 ┃♕ .add
 ┃♕ .admins <texto>
 ┃♕ .bienvenidos/nuevos
@@ -327,26 +365,33 @@ Hola *%name* soy *Kirito-Bot*
 ┃♕ .demote
 ┃♕ .encuesta <text|text2>
 ┃♕ .hidetag
-┃♕ .inactivos
 ┃♕ .infogrupo
 ┃♕ .invite *<numero>*
 ┃♕ .kick
 ┃♕ .listonline
 ┃♕ .link
+┃♕ .listadv
 ┃♕ .promote
 ┃♕ .rentar
 ┃♕ .rentar2 *<link>*
 ┃♕ .revoke
+┃♕ .setbye <text>
+┃♕ .Setdesc <text>
 ┃♕ .setname <text>
+┃♕ .setppgrup
+┃♕ .setwelcome <text>
 ┃♕ .tagall *<mesaje>*
 ┃♕ .invocar *<mesaje>*
 ┗━━━━━━━━━━━━━━━━━⪩
-┏━━⪩「 ♡⃝𝕳𝖊𝖗𝖗𝖆𝖒𝖎𝖊𝖓𝖙𝖆𝖘 」⪨
+┏━━⪩「 𝐇𝐞𝐫𝐫𝐚𝐦𝐢𝐞𝐧𝐭𝐚𝐬 」⪨
 ┃✰ .cal *<ecuacion>*
-┃✰ .horario
 ┃✰ .clima *<lugar>*
 ┃✰ .fake
+┃✰ .getbio *@tag*
+┃✰ .getname *@tag*
+┃✰ .remini
 ┃✰ .hd
+┃✰ .enhance
 ┃✰ .nuevafotochannel
 ┃✰ .nosilenciarcanal
 ┃✰ .silenciarcanal
@@ -361,16 +406,21 @@ Hola *%name* soy *Kirito-Bot*
 ┃✰ .reaccioneschannel
 ┃✰ .nuevonombrecanal
 ┃✰ .nuevadescchannel
+┃✰ .IPdoxx
+┃✰ .photo <query>
 ┃✰ .readmore *<teks>|<teks>*
+┃✰ .ver
 ┃✰ .reenviar
 ┃✰ .spamwa <number>|<mesage>|<no of messages>
 ┃✰ .ssweb
 ┃✰ .ss
+┃✰ .tamaño *<cantidad>*
 ┃✰ .document *<audio/video>*
 ┗━━━━━━━━━━━━━━━━━⪩
-┏━━⪩「 ♡⃝𝕮𝖔𝖓𝖛𝖊𝖗𝖙𝖎𝖉𝖔𝖗𝖊𝖘ᚐ҉ᚐ 」⪨
+┏━━⪩「 𝐂𝐨𝐧𝐯𝐞𝐫𝐭𝐢𝐝𝐨𝐫𝐞𝐬ᚐ 」⪨
 ┃ꕥ .ibb
 ┃ꕥ .paste nombre txt
+┃ꕥ .to <reply image>
 ┃ꕥ .toanime
 ┃ꕥ .togifaud
 ┃ꕥ .tourl
@@ -379,7 +429,7 @@ Hola *%name* soy *Kirito-Bot*
 ┃ꕥ .tts2
 ┃ꕥ .tourl2
 ┗━━━━━━━━━━━━━━━━━⪩
-┏━━⪩「 ♡⃝𝕾𝖙𝖎𝖈𝖐𝖊𝖗𝖘ᚐ҉ᚐ 」⪨
+┏━━⪩「 𝐒𝐭𝐢𝐜𝐤𝐞𝐫𝐬 」⪨
 ┃☠︎︎ .emojimix *<emoji+emoji>*
 ┃☠︎︎ .pfp
 ┃☠︎︎ .qc
@@ -388,7 +438,7 @@ Hola *%name* soy *Kirito-Bot*
 ┃☠︎︎ .toimg (reply)
 ┃☠︎︎ .take *<nombre>|<autor>*
 ┗━━━━━━━━━━━━━━━━━⪩
-┏━━⪩「 ♡⃝𝕮𝖔𝖓𝖋𝖎𝖌𝖚𝖗𝖆𝖈𝖎ó𝖓ᚐ҉ᚐ 」⪨
+┏━━⪩「 𝐂𝐨𝐧𝐟𝐢𝐠𝐮𝐫𝐚𝐜𝐢𝐨́𝐧 」⪨
 ┃⚘ .enable <option>
 ┃⚘ .disable <option>
 ┃⚘ .autoadmin
@@ -399,21 +449,24 @@ Hola *%name* soy *Kirito-Bot*
 ┃⚘ .unbanchat
 ┃⚘ .unbanuser <@tag>
 ┗━━━━━━━━━━━━━━━━━⪩
-┏━━⪩「 ♡⃝𝕮𝖗𝖊𝖆𝖉𝖔𝖗ᚐ҉ᚐ 」⪨
+┏━━⪩「 𝐂𝐫𝐞𝐚𝐝𝐨𝐫/𝐎𝐰𝐧𝐞𝐫 」⪨
 ┃🜲 .listafk
 ┃🜲 .expired *<días>*
-┃🜲 .addyenes *<@user>*
+┃🜲 .addcoins *<@user>*
 ┃🜲 .addprem [@user] <days>
 ┃🜲 .copia
 ┃🜲 .broadcast
+┃🜲 .bc
+┃🜲 .broadcastgroup
 ┃🜲 .bcgc
 ┃🜲 .bcgc2
 ┃🜲 .cleanfiles
-┃🜲 .spamwa <enlace>|<mesage>|<número>
+┃🜲 .cleartmp
 ┃🜲 .setcmd *<texto>*
 ┃🜲 .deletefile
 ┃🜲 .delexpired
 ┃🜲 .delvn <text>
+┃🜲 .delmsg <text>
 ┃🜲 .delimg <text>
 ┃🜲 .delsticker <text>
 ┃🜲 .delprem <@user>
@@ -427,18 +480,22 @@ Hola *%name* soy *Kirito-Bot*
 ┃🜲 .groups
 ┃🜲 .grouplist
 ┃🜲 .kickall @user
+┃🜲 .nuevabiobot <teks>
+┃🜲 .nuevafotobot *<imagen>*
+┃🜲 .nuevonombrebot <teks>
 ┃🜲 .prefix [prefix]
 ┃🜲 .resetpersonajes
 ┃🜲 .resetprefix
 ┃🜲 .restart
 ┃🜲 .saveplugin nombre
 ┃🜲 .update
+┃🜲 .actualizar
 ┃🜲 >
 ┃🜲 =>
 ┗━━━━━━━━━━━━━━━━━⪨
-> © 𝒫𝑜𝓌𝑒𝓇𝑒𝒹 𝐵𝓎 𝓓𝓮𝔂𝓵𝓲𝓷`.trim()
+> © 𝐏𝐨𝐰𝐞𝐫𝐞𝐝 𝐁𝐲 ☆𝑫𝒆𝒚𝒍𝒊𝒏☆`.trim()
 
-await conn.sendMessage(m.chat, { video: { url: vid.getRandom() }, caption: menu, contextInfo: { mentionedJid: [m.sender], isForwarded: true, forwardedNewsletterMessageInfo: { newsletterJid: channelRD.id, newsletterName: channelRD.name, serverMessageId: -1, }, forwardingScore: 999, externalAdReply: { title: '࿋ོ༙𝑲𝒊𝒓𝒊𝒕𝒐-𝑩𝒐𝒚࿐༵, body: dev, thumbnailUrl: perfil, sourceUrl: redes, mediaType: 1, renderLargerThumbnail: false,
+await conn.sendMessage(m.chat, { video: { url: vid.getRandom() }, caption: menu, contextInfo: { mentionedJid: [m.sender], isForwarded: true, forwardedNewsletterMessageInfo: { newsletterJid: channelRD.id, newsletterName: channelRD.name, serverMessageId: -1, }, forwardingScore: 999, externalAdReply: { title: 'KIRITO-BOT', body: dev, thumbnailUrl: perfil, sourceUrl: redes, mediaType: 1, renderLargerThumbnail: false,
 }, }, gifPlayback: true, gifAttribution: 0 }, { quoted: null })
 await m.react(emojis)    
 
@@ -449,7 +506,7 @@ await m.react(error)
 
 handler.help = ['menu']
 handler.tags = ['main']
-handler.command = ['menu', 'help', 'menú'] 
+handler.command = ['menu', 'help', 'menú', 'allmenú', 'allmenu', 'menucompleto'] 
 handler.register = true
 export default handler
 
