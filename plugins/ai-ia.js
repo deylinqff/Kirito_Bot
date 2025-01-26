@@ -62,7 +62,7 @@ throw error }}
 // Función para interactuar con la IA usando prompts
 async function luminsesi(q, username, logic) {
 try {
-const response = await axios.post("https://Luminai.my.id", {
+const response = await axios.post("https://apis-starlights-team.koyeb.app/starlight/gemini?text=${text}", {
 content: q,
 user: username,
 prompt: logic,
