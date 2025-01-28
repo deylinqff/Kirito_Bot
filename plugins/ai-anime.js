@@ -104,7 +104,7 @@ client.initialize();
 handler.help = ['chatgpt <texto>', 'anime <texto>'];
 handler.tags = ['tools'];
 handler.register = true;
-handler.command = ['ia', 'chatgpt', 'anime', 'chat', 'gpt'];
+handler.command = ['anime', 'chatgpt', 'anime', 'chat', 'gpt'];
 
 export default handler;
 
