@@ -4,7 +4,7 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
   let groq = new Groq({ apiKey: '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' })
   conn.aiSessions = conn.aiSessions ? conn.aiSessions : {}
 
-  if (!text) return conn.reply(m.chat, `✎ Ingresa un texto para hablar con la IA`, m)
+  if (!text) return conn.reply(m.chat, `⚡ Ingresa un texto para hablar con la IA`, m)
 
   try {
     if (!(m.sender in conn.aiSessions))
