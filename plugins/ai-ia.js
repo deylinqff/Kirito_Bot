@@ -10,7 +10,7 @@ const q = m.quoted
 const img = await q.download?.()
 if (!img) {
 console.error('⚠️ Error: No image buffer available')
-return conn.reply(m.chat, '✘ ChatGpT no pudo descargar la imagen.', m, fake)}
+return conn.reply(m.chat, '✘ kirito no pudo descargar la imagen.', m, fake)}
 const content = '⚡ ¿Qué se observa en la imagen?'
 try {
 const imageAnalysis = await fetchImageBuffer(content, img)
@@ -20,12 +20,12 @@ const description = await luminsesi(query, username, prompt)
 await conn.reply(m.chat, description, m, fake)
 } catch {
 await m.react(error)
-await conn.reply(m.chat, '✘ ChatGpT no pudo analizar la imagen.', m, fake)}
+await conn.reply(m.chat, '✘ Kirito no pudo analizar la imagen.', m, fake)}
 } else {
 if (!text) { return conn.reply(m.chat, `⚡ Ingrese una petición para que el ChatGpT lo responda.`, m)}
 await m.react(rwait)
 try {
-const { key } = await conn.sendMessage(m.chat, {text: `⚡ ChatGPT está procesando tu petición, espera unos segundos.`}, {quoted: m})
+const { key } = await conn.sendMessage(m.chat, {text: `⚡ Kirito-Bot está procesando tu petición, espera unos segundos.`}, {quoted: m})
 const query = text
 const prompt = `${basePrompt}. Responde lo siguiente: ${query}`
 const response = await luminsesi(query, username, prompt)
@@ -35,7 +35,7 @@ await m.react(done)
 await m.react(error)
 await conn.reply(m.chat, '✘ ChatGpT no puede responder a esa pregunta.', m, fake)}}}
 
-handler.help = ['ia', 'chatgpt']
+handler.help = ['ia', 'kirito']
 handler.tags = ['ai']
 handler.register = true
 handler.command = ['ia', 'chatgpt']
@@ -62,7 +62,7 @@ throw error }}
 // Función para interactuar con la IA usando prompts
 async function luminsesi(q, username, logic) {
 try {
-const response = await axios.post("https://apis-starlights-team.koyeb.app/starlight/gemini?text=${text}", {
+const response = await axios.post("https://Luminai.my.id", {
 content: q,
 user: username,
 prompt: logic,
