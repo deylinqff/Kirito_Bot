@@ -22,7 +22,7 @@ await conn.reply(m.chat, description, m, fake)
 await m.react(error)
 await conn.reply(m.chat, '✘ Kirito no pudo analizar la imagen.', m, fake)}
 } else {
-if (!text) { return conn.reply(m.chat, `⚡ Ingrese una petición para que el ChatGpT lo responda.`, m)}
+if (!text) { return conn.reply(m.chat, `⚡ Ingrese una petición para que Kirito-Bot lo responda.`, m)}
 await m.react(rwait)
 try {
 const { key } = await conn.sendMessage(m.chat, {text: `⚡ Kirito-Bot está procesando tu petición, espera unos segundos.`}, {quoted: m})
@@ -33,7 +33,7 @@ await conn.sendMessage(m.chat, {text: response, edit: key})
 await m.react(done)
 } catch {
 await m.react(error)
-await conn.reply(m.chat, '✘ ChatGpT no puede responder a esa pregunta.', m, fake)}}}
+await conn.reply(m.chat, '✘ kirito no puede responder a esa pregunta.', m, fake)}}}
 
 handler.help = ['ia', 'kirito']
 handler.tags = ['ai']
