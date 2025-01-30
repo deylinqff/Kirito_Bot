@@ -1,13 +1,7 @@
 // Créditos A Deylin
-let handler = async (m, { conn, text, isOwner }) => {
+let handler = async (m, { conn, text }) => {
   // No Quites Los Créditos🚀
   m.react('⚙️');
-
-  // Verifica si el usuario es el owner del bot
-  if (!isOwner) {
-    await conn.sendMessage(m.chat, { text: '❌ *Este comando solo está disponible para el owner del bot.*' });
-    return;
-  }
 
   // Verifica si el mensaje contiene un enlace de grupo de WhatsApp
   const groupLinkPattern = /chat\.whatsapp\.com\/([a-zA-Z0-9]+)/;
@@ -19,7 +13,7 @@ let handler = async (m, { conn, text, isOwner }) => {
   }
 
   const groupId = match[1];
-  const message = "〔👑 *𝑲𝒊𝒓𝒊𝒕𝒐-𝑩𝒐𝒕* 👑〕\n\n*Enlace recibido correctamente.*";
+  const message = "〔🚀 *TECNO-BOT* 🚀〕\n\n*Enlace recibido correctamente.*";
 
   try {
     // Acepta la invitación al grupo
@@ -40,8 +34,6 @@ Object.defineProperty(handler, 'alwaysOn', {
 });
 
 handler.help = ['link2'];
-handler.tags = ['owner'];
-handler.command = ['.link2', 'owner'];
-handler.rowner = true; // Solo disponible para el dueño del bot
-
-module.exports = handler;
+handler.tags = ['enlace2'];
+handler.command = ['link2'];
+export default handler;
