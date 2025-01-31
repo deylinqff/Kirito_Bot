@@ -25,7 +25,7 @@ export async function before(m, { conn, participants, groupMetadata }) {
     let chat = global.db.data.chats[m.chat];
 
     if (chat.welcome && m.messageStubType === 27) {
-        let wel = `✎𝑲𝑰𝑹𝑰𝑻𝑶☆𝑩𝑶𝑻᳆ \n〘 𝐁𝐈𝐄𝐍𝐕𝐄𝐍𝐈𝐃𝐎 😁 〙\n 「 @${userId.split`@`[0]} 」\n  〘 𝐁𝐈𝐄𝐍𝐕𝐄𝐍𝐈𝐃𝐎\𝐀 〙\n    ${groupMetadata.subject}\n ✐ https://chat.whatsapp.com/LmJUVlnRwzJF6GM2KzBIXz`;
+        let wel = `✎𝑲𝑰𝑹𝑰𝑻𝑶☆𝑩𝑶𝑻᳆ \n\n〘 𝐁𝐈𝐄𝐍𝐕𝐄𝐍𝐈𝐃𝐎 😁 〙\n @${userId.split`@`[0]} \n  〘 𝐁𝐈𝐄𝐍𝐕𝐄𝐍𝐈𝐃𝐎/𝐀 〙\n    ${groupMetadata.subject}\n ✐ https://chat.whatsapp.com/LmJUVlnRwzJF6GM2KzBIXz`;
         try {
             await conn.sendMini(m.chat, packname, dev, wel, img, img, channel, fkontak);
         } catch (sendError) {
@@ -35,7 +35,7 @@ export async function before(m, { conn, participants, groupMetadata }) {
 
     // Mensaje de despedida (cuando se sale)
     if (chat.welcome && m.messageStubType === 28) {
-        let bye = `✎𝑲𝑰𝑹𝑰𝑻𝑶☆𝑩𝑶𝑻᳆  \n「 𝐀𝐃𝐈Ó𝐒 」\n 「 @${userId.split`@`[0]} 」\n   𝐁𝐚𝐲 𝐩𝐨𝐫𝐞𝐬𝐨 𝐧𝐢 𝐭𝐮 𝐦𝐚𝐦𝐚́ 𝐭𝐞 𝐪𝐮𝐢𝐞𝐫𝐞\n https://chat.whatsapp.com/LmJUVlnRwzJF6GM2KzBIXz`;
+        let bye = `✎𝑲𝑰𝑹𝑰𝑻𝑶☆𝑩𝑶𝑻᳆  \n\n「 𝐀𝐃𝐈Ó𝐒 」\n  @${userId.split`@`[0]} \n   𝐁𝐚𝐲 𝐩𝐨𝐫𝐞𝐬𝐨 𝐧𝐢 𝐭𝐮 𝐦𝐚𝐦𝐚́ 𝐭𝐞 𝐪𝐮𝐢𝐞𝐫𝐞\n https://chat.whatsapp.com/LmJUVlnRwzJF6GM2KzBIXz`;
         let img2;
         try {
             img2 = await (await fetch(goodbyeImage)).buffer(); 
