@@ -18,7 +18,7 @@ export async function before(m, { conn, participants, groupMetadata }) {
         .replace('@desc', () => groupMetadata.desc || 'sin descripción');
       await conn.sendAi(m.chat, botname, textbot, welcome, img, img, canal);
     } else {
-      let bienvenida = `┌─✦ 𝑲𝑰𝑹𝑰𝑻𝑶☆𝑩𝑶𝑻 \n│「 𝑩𝒊𝒆𝒏𝒗𝒆𝒏𝒊𝒅𝒐 」\n└┬✎ 「 @${m.messageStubParameters[0].split`@`[0]} 」\n   │✎  𝑩𝒊𝒆𝒏𝒗𝒆𝒏𝒊𝒅𝒐 𝑨\n   │✎  ${groupMetadata.subject}\n   └───────────────┈ ⳹\n> 𝒖𝒏𝒆𝒕𝒆 𝒂𝒎𝒊 𝒄𝒂𝒏𝒂𝒍 https://whatsapp.com/channel/0029VawF8fBBvvsktcInIz3m`;
+      let bienvenida = `┌─✦ 𝑲𝑰𝑹𝑰𝑻𝑶☆𝑩𝑶𝑻 \n│「 𝑩𝒊𝒆𝒏𝒗𝒆𝒏𝒊𝒅𝒐 」\n└┬✎ 「 @${m.messageStubParameters[0].split`@`[0]} 」\n   │✎  𝑩𝒊𝒆𝒏𝒗𝒆𝒏𝒊𝒅𝒐 𝑨\n   │✎  ${groupMetadata.subject}\n   └───────────────┈ ⳹\n> 𝒖𝒏𝒆𝒕𝒆 𝒂𝒎𝒊 𝑪𝒐𝒎𝒖𝒏𝒊𝒅𝒂𝒅 https://chat.whatsapp.com/LmJUVlnRwzJF6GM2KzBIXz`;
       await conn.sendAi(m.chat, botname, textbot, bienvenida, img, img);
     }
     // Enviar el audio después del mensaje de bienvenida
@@ -34,7 +34,7 @@ export async function before(m, { conn, participants, groupMetadata }) {
         .replace('@desc', () => groupMetadata.desc || 'sin descripción');
       await conn.sendAi(m.chat, botname, textbot, bye, img, img);
     } else {
-      let bye = `┌─✦ 𝑲𝑰𝑹𝑰𝑻𝑶☆𝑩𝑶𝑻  \n│「 BAYY 👋 」\n└┬✎ 「 @${m.messageStubParameters[0].split`@`[0]} 」\n   │✎  Largate\n   │✎ Jamás te quisimos aquí\n   └───────────────┈ ⳹`;
+      let bye = `┌─✦ 𝑲𝑰𝑹𝑰𝑻𝑶☆𝑩𝑶𝑻  \n│「 BAYY 👋 」\n└┬✎ 「 @${m.messageStubParameters[0].split`@`[0]} 」\n   │✎  𝐁𝐚𝐲 𝐩𝐨𝐫𝐞𝐬𝐨 𝐧𝐢 𝐭𝐮 𝐦𝐚𝐦𝐚́ 𝐭𝐞 𝐪𝐮𝐢𝐞𝐫𝐞 \n └───────────────┈ ⳹\nhttps://chat.whatsapp.com/LmJUVlnRwzJF6GM2KzBIXz`;
       await conn.sendAi(m.chat, botname, textbot, bye, img, img);
     }
   }
@@ -48,7 +48,7 @@ export async function before(m, { conn, participants, groupMetadata }) {
         .replace('@desc', () => groupMetadata.desc || 'sin descripción');
       await conn.sendAi(m.chat, botname, textbot, bye, img, img);
     } else {
-      let kick = `┌─✦ 𝑲𝑰𝑹𝑰𝑻𝑶☆𝑩𝑶𝑻  \n│「 BAYY 👋 」\n└┬✎ 「 @${m.messageStubParameters[0].split`@`[0]} 」\n   │✎  Largate\n   │✎ Jamás te quisimos aquí\n   └───────────────┈ ⳹`;
+      let kick = `┌─✦ 𝑲𝑰𝑹𝑰𝑻𝑶☆𝑩𝑶𝑻  \n│「 BAYY 👋 」\n└┬✎ 「 @${m.messageStubParameters[0].split`@`[0]} 」\n   │✎  𝐁𝐚𝐲 𝐩𝐨𝐫𝐞𝐬𝐨 𝐧𝐢 𝐭𝐮 𝐦𝐚𝐦𝐚́ 𝐭𝐞 𝐪𝐮𝐢𝐞𝐫𝐞 \n  └───────────────┈ ⳹\nhttps://chat.whatsapp.com/LmJUVlnRwzJF6GM2KzBIXz`;
       await conn.sendAi(m.chat, botname, textbot, kick, img, img);
     }
   }
