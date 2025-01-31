@@ -1,55 +1,111 @@
-import { WAMessageStubType } from '@whiskeysockets/baileys';
+export async function before(m, { conn, participants, groupMetadata }) {
+    const fkontak = { key: { fromMe: false, participant: '0@s.whatsapp.net' }, message: { conversation: '¡Hola!' } };
+
+    if (!m.messageStubType || !m.isGroup) return true;
+
+    let userId = m.messageStubParameters[0];
+
+    const welcomeImage = 'https://files.catbox.moe/bgtoel.jpg'; // Imagen de bienvenida
+    const goodbyeImage = 'https://files.catbox.moe/mmfl7k.jpg'; // Imagen de despedida
+
+    let pp;
+    try {
+        pp = await conn.profilePictureUrl(userId, 'image');
+    } catch (error) {
+        pp = null;
+    }
+
+    let img;
+    try {
+        img = await (await fetch(pp || welcomeImage)).buffer();
+    } catch (fetchError) {
+        img = await (await fetch(welcomeImage)).buffer();
+    }
+
+    let chat = global.db.data.chats[m.chat];
+
+    if (chat.welcome && m.messageStubType === 27) {
+        let wel = `✎𝑲𝑰𝑹𝑰𝑻𝑶☆𝑩𝑶𝑻᳆ \n〘 𝐁𝐈𝐄𝐍𝐕𝐄𝐍𝐈𝐃𝐎 😁 〙\n 「 @${userId.split`@`[0]} 」\n  〘 𝐁𝐈𝐄𝐍𝐕𝐄𝐍𝐈𝐃𝐎\𝐀 〙\n    ${groupMetadata.subject}\n ✐ https://chat.whatsapp.com/LmJUVlnRwzJF6GM2KzBIXz`;
+        try {
+            await conn.sendMini(m.chat, packname, dev, wel, img, img, channel, fkontak);
+        } catch (sendError) {
+            console.error('Error al enviar mensaje de bienvenida:', sendError);
+        }
+    }
+
+    // Mensaje de despedida (cuando se sale)
+    if (chat.welcome && m.messageStubType === 28) {
+        let bye = `✎𝑲𝑰𝑹𝑰𝑻𝑶☆𝑩𝑶𝑻᳆  \n「 𝐀𝐃𝐈Ó𝐒 」\n 「 @${userId.split`@`[0]} 」\n   𝐁𝐚𝐲 𝐩𝐨𝐫𝐞𝐬𝐨 𝐧𝐢 𝐭𝐮 𝐦𝐚𝐦𝐚́ 𝐭𝐞 𝐪𝐮𝐢𝐞𝐫𝐞\n https://chat.whatsapp.com/LmJUVlnRwzJF6GM2KzBIXz`;
+        let img2;
+        try {
+            img2 = await (await fetch(goodbyeImage)).buffer(); 
+            await conn.sendMini(m.chat, packname, dev, bye, img2, img2, channel, fkontak);
+        } catch (sendError) {
+            console.error('Error al enviar mensaje de despedida:', sendError);
+        }
+    }
+
+    // Mensaje de expulsión (cuando se echa a alguien)
+    if (chat.welcome && m.messageStubType === 32) {
+        let kick = `✎𝑲𝑰𝑹𝑰𝑻𝑶☆𝑩𝑶𝑻᳆ \n「 𝐀𝐃𝐈Ó𝐒 」\n 「 @${userId.split`@`[0]} 」\n   𝐁𝐚𝐲 𝐩𝐨𝐫𝐞𝐬𝐨 𝐧𝐢 𝐭𝐮 𝐦𝐚𝐦𝐚́ 𝐭𝐞 𝐪𝐮𝐢𝐞𝐫𝐞\n https://chat.whatsapp.com/LmJUVlnRwzJF6GM2KzBIXz`;
+        let img3;
+        try {
+            img3 = await (await fetch(goodbyeImage)).buffer();
+            await conn.sendMini(m.chat, packname, dev, kick, img3, img3, channel, fkontak);
+        } catch (sendError) {
+            console.error('Error al enviar mensaje de expulsión:', sendError);
+        }
+    }
+}
+
+
+/*let WAMessageStubType = (await import('@whiskeysockets/baileys')).default;
 import fetch from 'node-fetch';
 
 export async function before(m, { conn, participants, groupMetadata }) {
-  if (!m.messageStubType || !m.isGroup) return !0;
-  let pp = await conn.profilePictureUrl(m.messageStubParameters[0], 'image').catch(_ => 'https://files.catbox.moe/bgtoel.jpg');
-  let img = await (await fetch(`${pp}`)).buffer();
+  if (!m.messageStubType || !m.isGroup) return true;
+
+  let vn = 'https://files.catbox.moe/wo866r.m4a';
+  let vn2 = 'https://files.catbox.moe/hmuevx.opus';
   let chat = global.db.data.chats[m.chat];
+  const getMentionedJid = () => {
+    return m.messageStubParameters.map(param => `${param}@s.whatsapp.net`);
+  };
 
-  const audioUrl = 'https://files.catbox.moe/mmfl7k.jpg';
+  let who = m.messageStubParameters[0] + '@s.whatsapp.net';
+  let user = global.db.data.users[who];
 
-  if (chat.bienvenida && m.messageStubType == 27) {
-    if (chat.sWelcome) {
-      let user = `@${m.messageStubParameters[0].split`@`[0]}`;
-      let welcome = chat.sWelcome
-        .replace('@user', () => user)
-        .replace('@group', () => groupMetadata.subject)
-        .replace('@desc', () => groupMetadata.desc || 'sin descripción');
-      await conn.sendAi(m.chat, botname, textbot, welcome, img, img, canal);
-    } else {
-      let bienvenida = `┌─✦ 𝑲𝑰𝑹𝑰𝑻𝑶☆𝑩𝑶𝑻 \n│「 𝑩𝒊𝒆𝒏𝒗𝒆𝒏𝒊𝒅𝒐 」\n└┬✎ 「 @${m.messageStubParameters[0].split`@`[0]} 」\n   │✎  𝑩𝒊𝒆𝒏𝒗𝒆𝒏𝒊𝒅𝒐 𝑨\n   │✎  ${groupMetadata.subject}\n   └───────────────┈ ⳹\n> 𝒖𝒏𝒆𝒕𝒆 𝒂𝒎𝒊 𝑪𝒐𝒎𝒖𝒏𝒊𝒅𝒂𝒅 https://chat.whatsapp.com/LmJUVlnRwzJF6GM2KzBIXz`;
-      await conn.sendAi(m.chat, botname, textbot, bienvenida, img, img);
-    }
-    // Enviar el audio después del mensaje de bienvenida
-    await conn.sendMessage(m.chat, { audio: { url: audioUrl }, mimetype: 'audio/mp4' });
-  }
+  let userName = user ? user.name : await conn.getName(who);
 
-  if (chat.bienvenida && m.messageStubType == 28) {
-    if (chat.sBye) {
-      let user = `@${m.messageStubParameters[0].split`@`[0]}`;
-      let bye = chat.sBye
-        .replace('@user', () => user)
-        .replace('@group', () => groupMetadata.subject)
-        .replace('@desc', () => groupMetadata.desc || 'sin descripción');
-      await conn.sendAi(m.chat, botname, textbot, bye, img, img);
-    } else {
-      let bye = `┌─✦ 𝑲𝑰𝑹𝑰𝑻𝑶☆𝑩𝑶𝑻  \n│「 BAYY 👋 」\n└┬✎ 「 @${m.messageStubParameters[0].split`@`[0]} 」\n   │✎  𝐁𝐚𝐲 𝐩𝐨𝐫𝐞𝐬𝐨 𝐧𝐢 𝐭𝐮 𝐦𝐚𝐦𝐚́ 𝐭𝐞 𝐪𝐮𝐢𝐞𝐫𝐞 \n └───────────────┈ ⳹\nhttps://chat.whatsapp.com/LmJUVlnRwzJF6GM2KzBIXz`;
-      await conn.sendAi(m.chat, botname, textbot, bye, img, img);
-    }
-  }
-
-  if (chat.bienvenida && m.messageStubType == 32) {
-    if (chat.sBye) {
-      let user = `@${m.messageStubParameters[0].split`@`[0]}`;
-      let bye = chat.sBye
-        .replace('@user', () => user)
-        .replace('@group', () => groupMetadata.subject)
-        .replace('@desc', () => groupMetadata.desc || 'sin descripción');
-      await conn.sendAi(m.chat, botname, textbot, bye, img, img);
-    } else {
-      let kick = `┌─✦ 𝑲𝑰𝑹𝑰𝑻𝑶☆𝑩𝑶𝑻  \n│「 BAYY 👋 」\n└┬✎ 「 @${m.messageStubParameters[0].split`@`[0]} 」\n   │✎  𝐁𝐚𝐲 𝐩𝐨𝐫𝐞𝐬𝐨 𝐧𝐢 𝐭𝐮 𝐦𝐚𝐦𝐚́ 𝐭𝐞 𝐪𝐮𝐢𝐞𝐫𝐞 \n  └───────────────┈ ⳹\nhttps://chat.whatsapp.com/LmJUVlnRwzJF6GM2KzBIXz`;
-      await conn.sendAi(m.chat, botname, textbot, kick, img, img);
-    }
-  }
+ if (chat.welcome && m.messageStubType === 27) {
+    this.sendMessage(m.chat, { audio: { url: vn }, 
+    contextInfo: { forwardedNewsletterMessageInfo: { 
+    newsletterJid: "120363307382381547@newsletter",
+    serverMessageId: '', 
+    newsletterName: namechannel }, forwardingScore: 9999999, isForwarded: true, mentionedJid: getMentionedJid(), "externalAdReply": { 
+    "title": `(ಥ ͜ʖಥ) 𝙒 𝙀 𝙇 𝘾 𝙊 𝙈 𝙀 (◕︿◕✿)`, 
+    "body": `${userName}`, 
+    "previewType": "PHOTO", 
+    "thumbnailUrl": null,
+    "thumbnail": icons, 
+    "sourceUrl": redes, 
+    "showAdAttribution": true}}, 
+     seconds: '4556', ptt: true, mimetype: 'audio/mpeg', fileName: `error.mp3` }, { quoted: fkontak, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100})
 }
+
+  if (chat.welcome && (m.messageStubType === 28 || m.messageStubType === 32)) {
+    this.sendMessage(m.chat, { audio: { url: vn2 }, 
+    contextInfo: { forwardedNewsletterMessageInfo: { 
+    newsletterJid: "120363322713003916@newsletter",
+    serverMessageId: '', 
+    newsletterName: namechannel }, forwardingScore: 9999999, isForwarded: true, mentionedJid: getMentionedJid(), "externalAdReply": { 
+    "title": `(oꆤ︵ꆤo) 𝘼 𝘿 𝙄 𝙊 𝙎 (|||❛︵❛.)`, 
+    "body": `${userName}, Soy gay asi que me voy.`, 
+    "previewType": "PHOTO", 
+    "thumbnailUrl": null,
+    "thumbnail": icons, 
+    "sourceUrl": redes, 
+    "showAdAttribution": true}}, 
+     seconds: '4556', ptt: true, mimetype: 'audio/mpeg', fileName: `error.mp3` }, { quoted: fkontak, ephemeralExpiration: 24*60*100, disappearingMessagesInChat: 24*60*100})
+  }
+}*/
