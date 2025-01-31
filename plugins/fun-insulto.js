@@ -1,14 +1,20 @@
 const { generateWAMessageFromContent, proto } = (await import('@whiskeysockets/baileys')).default;
 
 var handler = async (m, { conn }) => {
+    let name2 = m.pushName || "Alguien";
+    let name = m.mentionedJid?.[0] ? "@" + m.mentionedJid[0].split("@")[0] : null;
+    let who = m.quoted ? "@" + m.quoted.sender.split("@")[0] : null;
+
     let str;
-    if (m.mentionedJid.length > 0) {
-        str = `\`${name2}\` *insulto a* \`${name || who}\`.`;
+    if (m.mentionedJid?.length > 0) {
+        str = `\`${name2}\` *besó excitantemente a* \`${name}\`.`;
     } else if (m.quoted) {
-        str = `\`${name2}\` *besó apasionadamente a* \`${name || who}\`.`;
+        str = `\`${name2}\` *besó apasionadamente a* \`${who}\`.`;
     } else {
-        str = `\`${name2}\` *se insulto así mismo*`.trim();
+        str = `\`${name2}\` *se besa a sí mismo porque es un rolo e' gay.*`.trim();
     }
+
+    conn.reply(m.chat, str, m);
 
     conn.reply(m.chat, '⏳ Preparando un insulto épico, espera un momento...', m, {
         contextInfo: { 
