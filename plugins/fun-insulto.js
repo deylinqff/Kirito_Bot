@@ -14,24 +14,12 @@ var handler = async (m, { conn }) => {
         str = `\`${name2}\` *se besa a sí mismo porque es un rolo e' gay.*`.trim();
     }
 
-    conn.reply(m.chat, str, m);
+    let mensajeFinal = `*┏━_͜͡-͜͡-͜͡-͜͡-͜͡-͜͡-͜͡⚘-͜͡-͜͡-͜͡-͜͡-͜͡-͜͡-͜͡⚘-͜͡-͜͡-͜͡-͜͡-͜͡-͜͡-͜͡⚘-͜͡-͜͡-͜͡-͜͡-͜͡-͜͡_͜͡━┓*\n\n` +
+                      `${str}\n\n` +
+                      `❥ *"${pickRandom(global.insultos)}"*\n\n` +
+                      `*┗━_͜͡-͜͡-͜͡-͜͡-͜͡-͜͡-͜͡⚘-͜͡-͜͡-͜͡-͜͡-͜͡-͜͡-͜͡⚘-͜͡-͜͡-͜͡-͜͡-͜͡-͜͡-͜͡⚘-͜͡-͜͡-͜͡-͜͡-͜͡-͜͡_͜͡━┛*`;
 
-    conn.reply(m.chat, '⏳ Preparando un insulto épico, espera un momento...', m, {
-        contextInfo: { 
-            externalAdReply: { 
-                mediaUrl: null, 
-                mediaType: 1, 
-                showAdAttribution: true,
-                title: packname,
-                body: dev,
-                previewType: 0, 
-                thumbnail: icons,
-                sourceUrl: channel 
-            }
-        }
-    });
-
-    conn.reply(m.chat, `*┏━_͜͡-͜͡-͜͡-͜͡-͜͡-͜͡-͜͡⚘-͜͡-͜͡-͜͡-͜͡-͜͡-͜͡-͜͡⚘-͜͡-͜͡-͜͡-͜͡-͜͡-͜͡-͜͡⚘-͜͡-͜͡-͜͡-͜͡-͜͡-͜͡_͜͡━┓*\n\n❥ *"${pickRandom(global.insultos)}"*\n\n*┗━_͜͡-͜͡-͜͡-͜͡-͜͡-͜͡-͜͡⚘-͜͡-͜͡-͜͡-͜͡-͜͡-͜͡-͜͡⚘-͜͡-͜͡-͜͡-͜͡-͜͡-͜͡-͜͡⚘-͜͡-͜͡-͜͡-͜͡-͜͡-͜͡_͜͡━┛*`, m, rcanal);
+    conn.reply(m.chat, mensajeFinal, m);
 }
 
 handler.help = ['insulto'];
