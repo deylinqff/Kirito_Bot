@@ -5,8 +5,8 @@ export async function before(m, { conn, participants, groupMetadata }) {
 
     let userId = m.messageStubParameters[0];
 
-    const welcomeImage = 'https://qu.ax/SuZFt.jpg'; // Imagen de bienvenida
-    const goodbyeImage = 'https://qu.ax/jqiVK.jpg'; // Imagen de despedida
+    const welcomeImage = 'https://files.catbox.moe/bgtoel.jpg'; // Imagen de bienvenida
+    const goodbyeImage = 'https://files.catbox.moe/mmfl7k.jpg'; // Imagen de despedida
 
     let pp;
     try {
@@ -25,7 +25,7 @@ export async function before(m, { conn, participants, groupMetadata }) {
     let chat = global.db.data.chats[m.chat];
 
     if (chat.welcome && m.messageStubType === 27) {
-        let wel = `〘 𝑲𝒊𝒓𝒊𝒕𝒐-𝑩𝒐𝒕 〙\n『 𝐁𝐈𝐄𝐍𝐕𝐄𝐍𝐈𝐃𝐎 😁 』\n 『 @${userId.split`@`[0]} 』\n    『 𝐁𝐈𝐄𝐍𝐕𝐄𝐍𝐈𝐃𝐎/ 𝐀 』\n   ➥ ${groupMetadata.subject}\n   \n https://chat.whatsapp.com/LmJUVlnRwzJF6GM2KzBIXz`;
+        let wel = `〘 𝑲𝒊𝒓𝒊𝒕𝒐-𝑩𝒐𝒕 〙\n             『 𝐁𝐈𝐄𝐍𝐕𝐄𝐍𝐈𝐃𝐎 😁 』\n 『 @${userId.split`@`[0]} 』\n    『 𝐁𝐈𝐄𝐍𝐕𝐄𝐍𝐈𝐃𝐎/ 𝐀 』\n   ➥ ${groupMetadata.subject}\n   \n https://chat.whatsapp.com/LmJUVlnRwzJF6GM2KzBIXz`;
         try {
             await conn.sendMini(m.chat, packname, dev, wel, img, img, channel, fkontak);
         } catch (sendError) {
