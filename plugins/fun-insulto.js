@@ -7,15 +7,15 @@ var handler = async (m, { conn }) => {
 
     let str;
     if (m.mentionedJid?.length > 0) {
-        str = `\`${name2}\` *besó excitantemente a* \`${name}\`.`;
+        str = `\`${name2}\` *insulto a* \`${name}\`.`;
     } else if (m.quoted) {
-        str = `\`${name2}\` *besó apasionadamente a* \`${who}\`.`;
+        str = `\`${name2}\` *insulto a* \`${who}\`.`;
     } else {
-        str = `\`${name2}\` *se besa a sí mismo porque es un rolo e' gay.*`.trim();
+        str = `\`${name2}\` *se insulto así mismo.*`.trim();
     }
 
-    let mensajeFinal = `*┏━_͜͡-͜͡-͜͡-͜͡-͜͡-͜͡-͜͡⚘-͜͡-͜͡-͜͡-͜͡-͜͡-͜͡-͜͡⚘-͜͡-͜͡-͜͡-͜͡-͜͡-͜͡-͜͡⚘-͜͡-͜͡-͜͡-͜͡-͜͡-͜͡_͜͡━┓*\n\n` +
-                      `${str}\n\n` +
+    let mensajeFinal = 
+                      `${str}\n\n` + *┏━_͜͡-͜͡-͜͡-͜͡-͜͡-͜͡-͜͡⚘-͜͡-͜͡-͜͡-͜͡-͜͡-͜͡-͜͡⚘-͜͡-͜͡-͜͡-͜͡-͜͡-͜͡-͜͡⚘-͜͡-͜͡-͜͡-͜͡-͜͡-͜͡_͜͡━┓*\n\n` +
                       `❥ *"${pickRandom(global.insultos)}"*\n\n` +
                       `*┗━_͜͡-͜͡-͜͡-͜͡-͜͡-͜͡-͜͡⚘-͜͡-͜͡-͜͡-͜͡-͜͡-͜͡-͜͡⚘-͜͡-͜͡-͜͡-͜͡-͜͡-͜͡-͜͡⚘-͜͡-͜͡-͜͡-͜͡-͜͡-͜͡_͜͡━┛*`;
 
