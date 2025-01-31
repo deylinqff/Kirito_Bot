@@ -2,7 +2,6 @@ const { generateWAMessageFromContent, proto } = (await import('@whiskeysockets/b
 
 var handler = async (m, { conn }) => {
 
-conn.reply(m.chat, '⏳ Preparando un insulto épico, espera un momento...', m, {
 contextInfo: { externalAdReply :{ mediaUrl: null, mediaType: 1, showAdAttribution: true,
 title: packname,
 body: dev,
@@ -10,7 +9,13 @@ previewType: 0, thumbnail: icons,
 sourceUrl: channel }}})
 
 conn.reply(m.chat, `*┏━_͜͡-͜͡-͜͡-͜͡-͜͡-͜͡-͜͡⚘-͜͡-͜͡-͜͡-͜͡-͜͡-͜͡-͜͡⚘-͜͡-͜͡-͜͡-͜͡-͜͡-͜͡-͜͡⚘-͜͡-͜͡-͜͡-͜͡-͜͡-͜͡_͜͡━┓*\n\n❥ *"${pickRandom(global.insultos)}"*\n\n*┗━_͜͡-͜͡-͜͡-͜͡-͜͡-͜͡-͜͡⚘-͜͡-͜͡-͜͡-͜͡-͜͡-͜͡-͜͡⚘-͜͡-͜͡-͜͡-͜͡-͜͡-͜͡-͜͡⚘-͜͡-͜͡-͜͡-͜͡-͜͡-͜͡_͜͡━┛*`, m, rcanal)
-
+    let str;
+    if (m.mentionedJid.length > 0) {
+        str = `\`${name2}\` *beso excitantemente a* \`${name || who}\`.`;
+    } else if (m.quoted) {
+        str = `\`${name2}\` *insulto a* \`${name || who}\`.`;
+    } else {
+        str = `\`${name2}\` *se insulto así mismo.*`.trim();    }
 }
 handler.help = ['insulto']
 handler.tags = ['fun']
