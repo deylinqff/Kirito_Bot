@@ -13,12 +13,12 @@ export async function before(m, { conn, participants, groupMetadata }) {
 
   if (chat.welcome) {
     if (m.messageStubType === WAMessageStubType.GROUP_PARTICIPANT_ADD) {
-      let bienvenida = `👑 *¡Bienvenido a ${groupMetadata.subject}!* 🌟\n\n✨ ${taguser}, disfruta tu estadía en el grupo.\n${global.welcom1}\n\n> ✎ Usa *#menu* para ver los comandos disponibles.`
+      let bienvenida = `👑 *¡Bienvenido a ${groupMetadata.subject}!* \n\n⚡ ${taguser}, disfruta tu estadía en el grupo. \n\n ✎ https://chat.whatsapp.com/LmJUVlnRwzJF6GM2KzBIXz`
       let img = await (await fetch(welcomeImage)).buffer()
       await conn.sendMessage(m.chat, { image: img, caption: bienvenida, mentions: [who] })
       
     } else if (m.messageStubType === WAMessageStubType.GROUP_PARTICIPANT_REMOVE || m.messageStubType === WAMessageStubType.GROUP_PARTICIPANT_LEAVE) {
-      let bye = `⚡ *${taguser} ha salido de ${groupMetadata.subject}.*\n\n${global.welcom2}\n\n🖕 ¡Esperamos no verte de nuevo!`
+      let bye = `⚡ *${taguser} ha salido de ${groupMetadata.subject}.*\n\n${global.welcom2}\n\n🖕 ¡Esperamos no verte de nuevo!\n\n ✎ https://chat.whatsapp.com/LmJUVlnRwzJF6GM2KzBIXz`
       let img = await (await fetch(goodbyeImage)).buffer()
       await conn.sendMessage(m.chat, { image: img, caption: bye, mentions: [who] })
     }
