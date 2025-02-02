@@ -18,13 +18,13 @@ global.confirmCode = ''
 
 global.owner = [
   ['50488198573', 'Deylin', true],
-  ['595975677765', 'Davidius', true]
+  ['595975677765', 'Davidius', true],         ['527641291269', 'Davidius', true] 
 ]; // <-- Corchete de cierre y coma añadidos
 
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
 
-global.mods = ['595975677765', '50488198573', '', '', '']
-global.suittag = ['595975677765']
+global.mods = ['50488198573', '50488198573', '', '', '']
+global.suittag = ['50488198573']
 global.prems = []
 
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
