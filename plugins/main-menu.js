@@ -454,6 +454,7 @@ Hola *%name* soy *Kirito-Bot*
 ┃🜲 .expired *<días>*
 ┃🜲 .addcoins *<@user>*
 ┃🜲 .addprem [@user] <days>
+┃🜲 .addowner *<@user>*
 ┃🜲 .copia
 ┃🜲 .broadcast
 ┃🜲 .bc
@@ -465,6 +466,7 @@ Hola *%name* soy *Kirito-Bot*
 ┃🜲 .setcmd *<texto>*
 ┃🜲 .deletefile
 ┃🜲 .delexpired
+┃🜲 .delowner *<@user>*
 ┃🜲 .delvn <text>
 ┃🜲 .delmsg <text>
 ┃🜲 .delimg <text>
