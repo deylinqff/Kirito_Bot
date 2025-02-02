@@ -1,70 +1,52 @@
 import axios from 'axios'
-import { proto, generateWAMessageFromContent, generateWAMessageContent } from "@whiskeysockets/baileys"
+const { proto, generateWAMessageFromContent, generateWAMessageContent } = (await import("@whiskeysockets/baileys")).default
 
 let handler = async (message, { conn, text }) => {
-    if (!text) return conn.reply(message.chat, '『 🔎 』 Por favor, ingrese lo que desea buscar en TikTok.', message)
+  if (!text) return conn.reply(message.chat, '『 🔎 』 Por favor, ingrese lo que desea buscar en TikTok.', message)
 
-    async function createVideoMessage(url) {
-        const { videoMessage } = await generateWAMessageContent({ video: { url } }, { upload: conn.waUploadToServer })
-        return videoMessage
+  try {
+    await message.react('⏳') 
+    conn.reply(message.chat, '『 ⇓⇓ 』 Descargando su video, espere un momento...', message)
+
+    let { data: response } = await axios.get(`https://apis-starlights-team.koyeb.app/starlight/tiktoksearch?text=${encodeURIComponent(text)}`)
+    
+    if (!response.data || response.data.length === 0) {
+      return conn.reply(message.chat, '『 ⚠️ 』 No se encontraron resultados.', message)
     }
 
-    function shuffleArray(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1))
-            ;[array[i], array[j]] = [array[j], array[i]]
+    let searchResults = response.data.slice(0, 5) // Limitar a 5 resultados
+
+    let results = await Promise.all(searchResults.map(async result => {
+      let videoMessage = await generateWAMessageContent({ video: { url: result.nowm } }, { upload: conn.waUploadToServer })
+      return {
+        header: proto.Message.InteractiveMessage.Header.create({ title: result.title, hasMediaAttachment: true, videoMessage }),
+        body: proto.Message.InteractiveMessage.Body.create({ text: '『 🔎 』 Resultado de TikTok' }),
+        footer: proto.Message.InteractiveMessage.Footer.create({ text: '★ 𝐊𝐢𝐫𝐢𝐭𝐨-𝐁𝐨𝐭 ★' })
+      }
+    }))
+
+    let responseMessage = generateWAMessageFromContent(message.chat, {
+      viewOnceMessage: {
+        message: {
+          messageContextInfo: { deviceListMetadata: {}, deviceListMetadataVersion: 2 },
+          interactiveMessage: proto.Message.InteractiveMessage.create({
+            body: proto.Message.InteractiveMessage.Body.create({ text: '『 ➥ 』 Resultado de: ' + text }),
+            footer: proto.Message.InteractiveMessage.Footer.create({ text: '★ 𝐊𝐢𝐫𝐢𝐭𝐨-𝐁𝐨𝐭 ★' }),
+            carouselMessage: proto.Message.InteractiveMessage.CarouselMessage.create({ cards: results })
+          })
         }
-    }
+      }
+    }, { quoted: message })
 
-    try {
-        conn.reply(message.chat, '『 ⇓⇓ 』 Descargando su video, espere un momento...', message)
+    await message.react('✅')
+    await conn.relayMessage(message.chat, responseMessage.message, { messageId: responseMessage.key.id })
 
-        let { data: response } = await axios.get(`https://apis-starlights-team.koyeb.app/starlight/tiktoksearch?text=${encodeURIComponent(text)}`)
-        let searchResults = response.data
-
-        if (!searchResults.length) throw new Error('No se encontraron resultados.')
-
-        shuffleArray(searchResults)
-        let selectedResults = searchResults.slice(0, 7)
-
-        let results = []
-        for (let result of selectedResults) {
-            results.push({
-                body: proto.Message.InteractiveMessage.Body.fromObject({ text: null }),
-                footer: proto.Message.InteractiveMessage.Footer.fromObject({ text: 'Kirito-Bot' }),
-                header: proto.Message.InteractiveMessage.Header.fromObject({
-                    title: result.title,
-                    hasMediaAttachment: true,
-                    videoMessage: await createVideoMessage(result.nowm)
-                }),
-                nativeFlowMessage: proto.Message.InteractiveMessage.NativeFlowMessage.fromObject({ buttons: [] })
-            })
-        }
-
-        const responseMessage = generateWAMessageFromContent(message.chat, {
-            viewOnceMessage: {
-                message: {
-                    messageContextInfo: { deviceListMetadata: {}, deviceListMetadataVersion: 2 },
-                    interactiveMessage: proto.Message.InteractiveMessage.fromObject({
-                        body: proto.Message.InteractiveMessage.Body.create({ text: `『 ➥ 』 Resultado de: ${text}` }),
-                        footer: proto.Message.InteractiveMessage.Footer.create({ text: '★᭄ꦿ𝐊𝐢𝐫𝐢𝐭𝐨-𝐁𝐨𝐭' }),
-                        header: proto.Message.InteractiveMessage.Header.create({ hasMediaAttachment: false }),
-                        carouselMessage: proto.Message.InteractiveMessage.CarouselMessage.fromObject({ cards: results })
-                    })
-                }
-            }
-        }, { quoted: message })
-
-        await conn.relayMessage(message.chat, responseMessage.message, { messageId: responseMessage.key.id })
-    } catch (error) {
-        await conn.reply(message.chat, `❌ Error: ${error.message}`, message)
-    }
+  } catch (error) {
+    await conn.reply(message.chat, '『 ❌ 』 Error: ' + error.message, message)
+  }
 }
 
-handler.help = ['tiktoksearch <texto>']
-handler.coin = 1
-handler.register = true
+handler.help = ['tiktoksearch <txt>']
 handler.tags = ['buscador']
 handler.command = ['tiktoksearch', 'ttss', 'tiktoks']
-
 export default handler
