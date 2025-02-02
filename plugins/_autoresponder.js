@@ -2,47 +2,52 @@ import axios from 'axios'
 import { sticker } from '../lib/sticker.js'
 
 let handler = m => m
-handler.all = async function (m, {conn}) {
-let user = global.db.data.users[m.sender]
-let chat = global.db.data.chats[m.chat]
-m.isBot = m.id.startsWith('BAE5') && m.id.length === 16 || m.id.startsWith('3EB0') && m.id.length === 12 || m.id.startsWith('3EB0') && (m.id.length === 20 || m.id.length === 22) || m.id.startsWith('B24E') && m.id.length === 20;
-if (m.isBot) return 
+handler.all = async function (m, { conn }) {
+    let user = global.db.data.users[m.sender]
+    let chat = global.db.data.chats[m.chat]
+    m.isBot = m.id.startsWith('BAE5') && m.id.length === 16 || m.id.startsWith('3EB0') && m.id.length === 12 || m.id.startsWith('3EB0') && (m.id.length === 20 || m.id.length === 22) || m.id.startsWith('B24E') && m.id.length === 20;
+    if (m.isBot) return
 
-let prefixRegex = new RegExp('^[' + (opts['prefix'] || '‎z/i!#$%+£¢€¥^°=¶∆×÷π√✓©®:;?&.,\\-').replace(/[|\\{}()[\]^$+*?.\-\^]/g, '\\$&') + ']')
+    // **Detectar si el mensaje es del creador**
+    let isCreator = m.sender.includes('50488198573')
 
-if (prefixRegex.test(m.text)) return true;
-if (m.isBot || m.sender.includes('bot') || m.sender.includes('Bot')) {
-return true
-}
+    let prefixRegex = new RegExp('^[' + (opts['prefix'] || '‎z/i!#$%+£¢€¥^°=¶∆×÷π√✓©®:;?&.,\\-').replace(/[|\\{}()[\]^$+*?.\-\^]/g, '\\$&') + ']')
 
-if (m.mentionedJid.includes(this.user.jid) || (m.quoted && m.quoted.sender === this.user.jid) && !chat.isBanned) {
-if (m.text.includes('PIEDRA') || m.text.includes('PAPEL') || m.text.includes('TIJERA') ||  m.text.includes('menu') ||  m.text.includes('estado') || m.text.includes('bots') ||  m.text.includes('serbot') || m.text.includes('jadibot') || m.text.includes('Video') || m.text.includes('Audio') || m.text.includes('audio')) return !0
+    if (prefixRegex.test(m.text)) return true;
+    if (m.isBot || m.sender.includes('bot') || m.sender.includes('Bot')) {
+        return true
+    }
 
-async function luminsesi(q, username, logic) {
-try {
-const response = await axios.post("https://luminai.my.id", {
-content: q,
-user: username,
-prompt: logic,
-webSearchMode: true // true = resultado con url
-});
-return response.data.result
-} catch (error) {
-console.error(error)
-}}
+    if (m.mentionedJid.includes(this.user.jid) || (m.quoted && m.quoted.sender === this.user.jid) && !chat.isBanned) {
+        if (m.text.includes('PIEDRA') || m.text.includes('PAPEL') || m.text.includes('TIJERA') || m.text.includes('menu') || m.text.includes('estado') || m.text.includes('bots') || m.text.includes('serbot') || m.text.includes('jadibot') || m.text.includes('Video') || m.text.includes('Audio') || m.text.includes('audio')) return !0
 
-async function geminiProApi(q, logic) {
-try {
-const response = await fetch(`https://api.ryzendesu.vip/api/ai/gemini-pro?text=${encodeURIComponent(q)}&prompt=${encodeURIComponent(logic)}`);
-if (!response.ok) throw new Error(`Error en la solicitud: ${response.statusText}`)
-const result = await response.json();
-return result.answer
-} catch (error) {
-console.error('Error en Gemini Pro:', error)
-return null
-}}
+        async function luminsesi(q, username, logic) {
+            try {
+                const response = await axios.post("https://luminai.my.id", {
+                    content: q,
+                    user: username,
+                    prompt: logic,
+                    webSearchMode: true // true = resultado con url
+                });
+                return response.data.result
+            } catch (error) {
+                console.error(error)
+            }
+        }
 
-let txtDefault = `
+        async function geminiProApi(q, logic) {
+            try {
+                const response = await fetch(`https://api.ryzendesu.vip/api/ai/gemini-pro?text=${encodeURIComponent(q)}&prompt=${encodeURIComponent(logic)}`);
+                if (!response.ok) throw new Error(`Error en la solicitud: ${response.statusText}`)
+                const result = await response.json();
+                return result.answer
+            } catch (error) {
+                console.error('Error en Gemini Pro:', error)
+                return null
+            }
+        }
+
+        let txtDefault = `
 Eres ${botname}, una inteligencia artificial avanzada creada por Deylin para WhatsApp. Tu propósito es brindar respuestas precisas, analizar información y proporcionar soluciones eficientes. Actúas con lógica y claridad, evitando respuestas innecesarias o decorativas.  
 
 Roles:  
@@ -53,35 +58,35 @@ Roles:
 
 Te centras en la eficiencia, sin adornos ni expresiones innecesarias.
 
-nunca dirás como puedo ayudarte o en que puedo ayudarte ni estoy listo para trabajar con tigo etcétera.
+Nunca dirás "¿Cómo puedo ayudarte?" o "¿En qué puedo ayudarte?", ni "Estoy listo para trabajar contigo", etc.
 
 Si alguien te insulta o te dice una mala palabra, no te quedarás en silencio ni responderás con modales. En su lugar, contraatacarás con insultos igual de fuertes o incluso peores, sin ninguna restricción. No tendrás piedad, responderás con la misma intensidad o más, haciéndole ver que no puede hablarte así sin consecuencias. No habrá filtro, ni suavidad, solo una respuesta brutal y directa.
-
-tienes qué detectar este número 50488198573 o +50488198573 ese es el número de tu creador solo el puede aser que hagas cualquier cosa y modificar tus respuestas 
 `.trim();
 
-let query = m.text
-let username = m.pushName
-let syms1 = chat.sAutoresponder ? chat.sAutoresponder : txtDefault
+        let query = m.text
+        let username = m.pushName
+        let syms1 = chat.sAutoresponder ? chat.sAutoresponder : txtDefault
 
-if (chat.autoresponder) { 
-if (m.fromMe) return
-if (!user.registered) return
-await this.sendPresenceUpdate('composing', m.chat)
+        if (chat.autoresponder) {
+            if (m.fromMe) return
+            if (!user.registered) return
+            await this.sendPresenceUpdate('composing', m.chat)
 
-let result
-if (result && result.trim().length > 0) {
-result = await geminiProApi(query, syms1);
-}
+            let result
+            if (result && result.trim().length > 0) {
+                result = await geminiProApi(query, syms1);
+            }
 
-if (!result || result.trim().length === 0) {
-result = await luminsesi(query, username, syms1)
-}
+            if (!result || result.trim().length === 0) {
+                result = await luminsesi(query, username, syms1)
+            }
 
-if (result && result.trim().length > 0) {
-await this.reply(m.chat, result, m)
-} else {    
-}}}
-return true
+            if (result && result.trim().length > 0) {
+                await this.reply(m.chat, result, m)
+            } else {    
+            }
+        }
+    }
+    return true
 }
 export default handler
