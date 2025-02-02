@@ -2,10 +2,8 @@ import { downloadContentFromMessage } from '@whiskeysockets/baileys';
 
 let handler = async (m, { conn }) => {
     if (!m.quoted) return conn.reply(m.chat, `🖼️ Responde a una imagen o video ViewOnce.`, m);
-    
-    // Asegurar que el mensaje es ViewOnce
     if (!m.quoted.message.viewOnceMessageV2) return conn.reply(m.chat, `🖼️ Responde a una imagen o video ViewOnce.`, m);
-    
+
     let msg = m.quoted.message.viewOnceMessageV2.message;
     let type = Object.keys(msg)[0];
 
@@ -16,10 +14,10 @@ let handler = async (m, { conn }) => {
     let mediaType = type === 'imageMessage' ? 'image' : 'video';
 
     try {
-        let media = await downloadContentFromMessage(msg[type], mediaType);
-        let buffer = Buffer.from([]);
+        let stream = await downloadContentFromMessage(msg[type], mediaType);
+        let buffer = Buffer.concat([]);
 
-        for await (const chunk of media) {
+        for await (const chunk of stream) {
             buffer = Buffer.concat([buffer, chunk]);
         }
 
@@ -27,8 +25,8 @@ let handler = async (m, { conn }) => {
         let caption = msg[type]?.caption || '';
 
         await conn.sendFile(m.chat, buffer, fileName, caption, m);
-    } catch (e) {
-        console.error(e);
+    } catch (error) {
+        console.error(error);
         conn.reply(m.chat, `❌ Error al procesar el archivo.`, m);
     }
 };
