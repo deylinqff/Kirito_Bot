@@ -3,34 +3,29 @@ import { randomBytes } from "crypto"
 import axios from "axios"
 
 let handler = async (m, { conn, text }) => {
-    if (!text) throw '⍰ ¿Cómo puedo ayudarte hoy?';
+    if (!text) throw '¿Como puedo ayudarte hoy?';
     try {
         conn.reply(m.chat, m);
         let data = await chatGpt(text)
-await conn.sendMessage(m.chat, { 
-    text: '*Demo:* ' + data,
-    contextInfo: {
-        forwardingScore: 9999999,
-        isForwarded: false, 
-        externalAdReply: {
-            showAdAttribution: true,
-            containsAutoReply: true,
-            title: `[ ⌨ ძᥱm᥆ - іᥒ𝗍ᥱᥣіgᥱᥒᥴіᥲ ]`,
-            body: dev,
-            previewType: "PHOTO",
-            thumbnailUrl: 'https://tinyurl.com/2awg2bch', 
-            sourceUrl: channel,
-        }
-    }
-}, { quoted: m });
-
+await conn.sendMessage(m.chat, { text: data,
+contextInfo:{
+forwardingScore: 9999999,
+isForwarded: false, 
+"externalAdReply": {
+"showAdAttribution": true,
+"containsAutoReply": true,
+title: `[ Kakaroto - Ai ]`,
+body: ``,
+"previewType": "PHOTO",
+thumbnailUrl: 'https://tinyurl.com/2awg2bch', 
+sourceUrl: 'https://whatsapp.com/channel/0029VagYdbFEwEk5htUejk0t'}}},
+{ quoted: m})
     } catch (err) {
         m.reply('error cik:/ ' + err);
     }
 }
 
-handler.help = ['demo *<texto>*'];
-handler.command = ['demo', 'openai'];
+handler.command = handler.help = ['demo'];
 handler.tags = ['ai'];
 
 export default handler;
