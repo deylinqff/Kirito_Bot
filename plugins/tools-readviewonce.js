@@ -1,4 +1,4 @@
-Este si es para el whatsapp actualizado💁🏻‍♂️
+//Este si es para el whatsapp actualizado💁🏻‍♂️
 ```
 const { downloadContentFromMessage } = require('@whiskeysockets/baileys');
 
