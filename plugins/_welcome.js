@@ -18,14 +18,27 @@ export async function before(m, { conn, participants, groupMetadata }) {
       img = await (await fetch(defaultImage)).buffer();
     }
 
-    if (m.messageStubType === WAMessageStubType.GROUP_PARTICIPANT_ADD) {
-      let bienvenida = `👑 *¡Bienvenido a ${groupMetadata.subject}!* \n\n${taguser}, disfruta tu estadía en el grupo.\n\n Ya somos〘${participants.length}〙 Miembros.\n\n ${global.welcom1}\n\n> Usa *#help* para ver los comandos disponibles.\n https://chat.whatsapp.com/H9Er7VDTtCSGSvGZEUqPVb`
-      await conn.sendMessage(m.chat, { image: img, caption: bienvenida, mentions: [who] })
-    } else if (m.messageStubType === WAMessageStubType.GROUP_PARTICIPANT_REMOVE || m.messageStubType === WAMessageStubType.GROUP_PARTICIPANT_LEAVE) {
-      let bye = `⚡ *${taguser} ha salido de ${groupMetadata.subject}.*\n\n Sólo quedamos〘 ${participants.length} 〙Miembros.\n\n${global.welcom2}\n\n👻 ¡Esperamos verte de nuevo!\n https://chat.whatsapp.com/H9Er7VDTtCSGSvGZEUqPVb`
-      await conn.sendMessage(m.chat, { image: img, caption: bye, mentions: [who] })
-    }
-  }
-
-  return true
+if (m.messageStubType === WAMessageStubType.GROUP_PARTICIPANT_ADD) {
+  let bienvenida = `┏━━━━━━━━━━━━━┓\n`
+  bienvenida += `┃  *¡Bienvenido!* ┃\n`
+  bienvenida += `┣━━━━━━━━━━━━━┛\n`
+  bienvenida += `┃ Usuario: ${taguser}\n`
+  bienvenida += `┃ Grupo: 『${groupMetadata.subject}』\n`
+  bienvenida += `┃ Ahora somos *${participants.length}* miembros.\n`
+  bienvenida += `┗━━━━━━━━━━━━━✦\n\n`
+  bienvenida += ` ${global.welcom1}\n\n`
+  bienvenida += ` https://chat.whatsapp.com/H9Er7VDTtCSGSvGZEUqPVb`
+  
+  await conn.sendMessage(m.chat, { image: img, caption: bienvenida, mentions: [who] })
+} else if (m.messageStubType === WAMessageStubType.GROUP_PARTICIPANT_REMOVE || m.messageStubType === WAMessageStubType.GROUP_PARTICIPANT_LEAVE) {
+  let bye = `┏━━━━━━━━━━━━━┓\n`
+  bye += `┃  *¡Adiós, ${taguser}!* \n`
+  bye += `┣━━━━━━━━━━━━━┛\n`
+  bye += `┃ Grupo: 『${groupMetadata.subject}』\n`
+  bye += `┃ Ahora quedamos *${participants.length}* miembros.\n`
+  bye += `┗━━━━━━━━━━━━━✦\n\n`
+  bye += ` ${global.welcom2}\n\n`
+  bye += ` https://chat.whatsapp.com/H9Er7VDTtCSGSvGZEUqPVb`
+  
+  await conn.sendMessage(m.chat, { image: img, caption: bye, mentions: [who] })
 }
