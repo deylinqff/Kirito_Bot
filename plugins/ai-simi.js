@@ -1,30 +1,30 @@
-import translate from 'https://apis-starlights-team.koyeb.app/starlight/gemini?text=${text}';
+import translate from '@vitalets/google-translate-api';
 import axios from 'axios';
 import fetch from 'node-fetch';
 
 const handler = async (m, { conn, text, command, args, usedPrefix }) => {
-    if (!text) return conn.reply(m.chat, '⚡ Te faltó el texto para hablar con el bot.', m);
+    if (!text) return conn.reply(m.chat, '👑 Te faltó el texto para hablar con Kirito-Bot', m);
 
     try {
         // await m.react(emojis);
         const resSimi = await simitalk(text);
         conn.sendMessage(m.chat, { text: resSimi.resultado.simsimi }, { quoted: m });
     } catch {
-        return conn.reply(m.chat, '⚠️ Ocurrió un error', m);
+        return conn.reply(m.chat, '❌ Ocurrió un error', m);
     }
 };
 
 handler.help = ['kirito', 'bot'];
 handler.tags = ['ai'];
 handler.register = true;
-handler.command = ['bot', 'kirito'];
+handler.command = ['kirito', 'bot', 'kirito', 'kirito '];
 export default handler;
 
 async function simitalk(ask, apikeyyy = "iJ6FxuA9vxlvz5cKQCt3", language = "es") {
     if (!ask) return { status: false, resultado: { msg: "Debes ingresar un texto para hablar con simsimi." }};
 
     try {
-        const response1 = await axios.get(`https://delirius-apiofc.vercel.app/tools/simi?text=${encodeURIComponent(ask)}`);
+        const response1 = await axios.get(`https://deliriussapi-oficial.vercel.app/tools/simi?text=${encodeURIComponent(ask)}`);
         const trad1 = await translate(`${response1.data.data.message}`, { to: language, autoCorrect: true });
 
         if (trad1.text === 'indefinida' || response1 === '' || !response1.data) {
