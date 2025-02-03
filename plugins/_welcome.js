@@ -4,11 +4,11 @@ import fetch from 'node-fetch'
 export async function before(m, { conn, participants, groupMetadata }) {
   if (!m.messageStubType || !m.isGroup) return true
 
-let who = m.messageStubParameters[0]
+  let who = m.messageStubParameters[0]
   let taguser = `@${who.split('@')[0]}`
   let chat = global.db.data.chats[m.chat]
-  let welcomeImage = 'https://files.catbox.moe/bgtoel.jpg' 
-  let goodbyeImage = 'https://files.catbox.moe/mmfl7k.jpg' 
+  let defaultImage = 'https://files.catbox.moe/xr2m6u.jpg';
+
   if (chat.welcome) {
     let img;
     try {
