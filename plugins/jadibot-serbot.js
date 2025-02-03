@@ -65,7 +65,7 @@ handler.tags = ['serbot']
 handler.command = ['jadibot', 'serbot']
 export default handler 
 
-export async function yukiJadiBot(options) {
+export async function kiritoJadiBot(options) {
 let { pathYukiJadiBot, m, conn, args, usedPrefix, command } = options
 const mcode = args[0] && /(--code|code)/.test(args[0].trim()) ? true : args[1] && /(--code|code)/.test(args[1].trim()) ? true : false
 let txtCode, codeBot, txtQR
