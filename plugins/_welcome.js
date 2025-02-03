@@ -18,32 +18,14 @@ export async function before(m, { conn, participants, groupMetadata }) {
       img = await (await fetch(defaultImage)).buffer();
     }
 
-if (m.messageStubType === WAMessageStubType.GROUP_PARTICIPANT_ADD) {
-  let bienvenida = `┏━━━━━━━━━━━━━⚔️━━━━━━━━━━━━━⌬
-┃   ⚔️ *¡BIENVENIDO, ESPADACHÍN!* ⚔️   
-┣━━━━━━━━━━━━━⚔️━━━━━━━━━━━━━⌬
-┃ 🏰 *Reino:* 『${groupMetadata.subject}』  
-┃ 👤 *Guerrero:* ${taguser}  
-┃ ⚡ *Fuerza del Gremio:* ${participants.length} miembros  
-┃ 🖤 *"El mundo no es justo, pero tú decides cómo luchar."* - Kirito  
-┃ ${global.welcom1}  
-┃ 🗡️ *Usa:* #help para conocer tus habilidades. 
-┗━━━━━━━━━━━━⚔️━━━━━━━━━━━⌬
-🔗 *Únete a la batalla:* https://chat.whatsapp.com/H9Er7VDTtCSGSvGZEUqPVb`;
+    if (m.messageStubType === WAMessageStubType.GROUP_PARTICIPANT_ADD) {
+      let bienvenida = `👑 *¡Bienvenido a ${groupMetadata.subject}!* \n\n${taguser}, disfruta tu estadía en el grupo.\n\n Ya somos〘${participants.length}〙 Miembros.\n\n ${global.welcom1}\n\n> Usa *#help* para ver los comandos disponibles.\n https://chat.whatsapp.com/H9Er7VDTtCSGSvGZEUqPVb`
+      await conn.sendMessage(m.chat, { image: img, caption: bienvenida, mentions: [who] })
+    } else if (m.messageStubType === WAMessageStubType.GROUP_PARTICIPANT_REMOVE || m.messageStubType === WAMessageStubType.GROUP_PARTICIPANT_LEAVE) {
+      let bye = `⚡ *${taguser} ha salido de ${groupMetadata.subject}.*\n\n Sólo quedamos〘 ${participants.length} 〙Miembros.\n\n${global.welcom2}\n\n👻 ¡Esperamos verte de nuevo!\n https://chat.whatsapp.com/H9Er7VDTtCSGSvGZEUqPVb`
+      await conn.sendMessage(m.chat, { image: img, caption: bye, mentions: [who] })
+    }
+  }
 
-  await conn.sendMessage(m.chat, { image: img, caption: bienvenida, mentions: [who] });
-} else if (m.messageStubType === WAMessageStubType.GROUP_PARTICIPANT_REMOVE || m.messageStubType === WAMessageStubType.GROUP_PARTICIPANT_LEAVE) {
-  let bye = 
-`┏━━━━━━━━━━━━☠️━━━━━━━━━━━━━⌬
-┃   ☠️ *¡UN GUERRERO HA CAÍDO!* ☠️   
-┣━━━━━━━━━━━━━☠️━━━━━━━━━━━━⌬
-┃ 🏰 *Reino:* 『${groupMetadata.subject}』  
-┃ 👤 *Guerrero:* ${taguser}  
-┃ 📉 *Fuerza del Gremio:* ${participants.length} miembros  
-┃ 🖤 *"No importa cuántas veces caigas, lo importante es levantarte."* - Kirito  
-┃ ${global.welcom2}  
-┗━━━━━━━━━━━━━━━☠️━━━━━━━━━━━⌬
-🔗 *Si decides regresar:* https://chat.whatsapp.com/H9Er7VDTtCSGSvGZEUqPVb`;
-
-  await conn.sendMessage(m.chat, { image: img, caption: bye, mentions: [who] });
+  return true
 }
