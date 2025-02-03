@@ -19,15 +19,15 @@ export async function before(m, { conn, participants, groupMetadata }) {
     }
 
     if (m.messageStubType === WAMessageStubType.GROUP_PARTICIPANT_ADD) {
-      let bienvenida = `╭━━━━━━━━━━━━━━━━━✦\n +
-                 │ ⚔️ *¡BIENVENIDO, ESPADACHÍN!* ⚔️\n +
-                 │ 🏰 *Reino:* 『${groupMetadata.subject}』\n +
-                 │ 👤 *Guerrero:* ${taguser}\n +
-                 │ ⚡ *Fuerza del Gremio:* ${participants.length} miembros\n +
-                 ╰━━━━━━━━━━━━━━━━━✦\n\n +
-                 🖤 *"El mundo no es justo, pero tú decides cómo luchar."* - Kirito\n\n +
-                 💠 ${global.welcom1}\n\n +
-                 🗡️ *Usa:* #help para conocer tus habilidades.\n +
+      let bienvenida = `╭━━━━━━━━━━━━━━━━━✦\n
+                 │ ⚔️ *¡BIENVENIDO, ESPADACHÍN!* ⚔️\n
+                 │ 🏰 *Reino:* 『${groupMetadata.subject}』\n 
+                 │ 👤 *Guerrero:* ${taguser}\n 
+                 │ ⚡ *Fuerza del Gremio:* ${participants.length} miembros\n
+                 ╰━━━━━━━━━━━━━━━━━✦\n\n 
+                 🖤 *"El mundo no es justo, pero tú decides cómo luchar."* - Kirito\n\n 
+                 💠 ${global.welcom1}\n\n 
+                 🗡️ *Usa:* #help para conocer tus habilidades.\n 
                  🔗 *Únete a la batalla:* https://chat.whatsapp.com/H9Er7VDTtCSGSvGZEUqPVb`
 
 await conn.sendMessage(m.chat, { image: img, caption: bienvenida, mentions: [who] });
