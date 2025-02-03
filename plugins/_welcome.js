@@ -19,7 +19,7 @@ export async function before(m, { conn, participants, groupMetadata }) {
     }
 
     if (m.messageStubType === WAMessageStubType.GROUP_PARTICIPANT_ADD) {
-      let bienvenida = ╭━━━━━━━━━━━━━━━━━✦\n +
+      let bienvenida = `╭━━━━━━━━━━━━━━━━━✦\n +
                  │ ⚔️ *¡BIENVENIDO, ESPADACHÍN!* ⚔️\n +
                  │ 🏰 *Reino:* 『${groupMetadata.subject}』\n +
                  │ 👤 *Guerrero:* ${taguser}\n +
