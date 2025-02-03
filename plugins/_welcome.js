@@ -4,12 +4,20 @@ import fetch from 'node-fetch'
 export async function before(m, { conn, participants, groupMetadata }) {
   if (!m.messageStubType || !m.isGroup) return true
 
-  let who = m.messageStubParameters[0]
+let who = m.messageStubParameters[0]
   let taguser = `@${who.split('@')[0]}`
   let chat = global.db.data.chats[m.chat]
 
   let welcomeImage = 'https://files.catbox.moe/bgtoel.jpg' // Imagen de bienvenida
   let goodbyeImage = 'https://files.catbox.moe/mmfl7k.jpg' // Imagen de despedida
+  if (chat.welcome) {
+    let img;
+    try {
+      let pp = await conn.profilePictureUrl(who, 'image');
+      img = await (await fetch(pp)).buffer();
+    } catch {
+      img = await (await fetch(defaultImage)).buffer();
+    }
 
   if (chat.welcome) {
     if (m.messageStubType === WAMessageStubType.GROUP_PARTICIPANT_ADD) {
