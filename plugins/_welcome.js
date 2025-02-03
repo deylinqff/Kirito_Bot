@@ -7,17 +7,16 @@ export async function before(m, { conn, participants, groupMetadata }) {
   let who = m.messageStubParameters[0]
   let taguser = `@${who.split('@')[0]}`
   let chat = global.db.data.chats[m.chat]
-  let defaultImage = 'https://files.catbox.moe/mmfl7k.jpg' // Imagen predeterminada
-  let welcomeImage = 'https://files.catbox.moe/bgtoel.jpg'' // Imagen de bienvenida predeterminada
-  let goodbyeImage = 'https://files.catbox.moe/mmfl7k.jpg' // Imagen de despedida predeterminada
+  let defaultImage = 'https://files.catbox.moe/bgtoel.jpg';
 
-  let img
-  try {
-    let pp = await conn.profilePictureUrl(who, 'image') // Obtiene la foto de perfil
-    img = await (await fetch(pp)).buffer()
-  } catch {
-    img = await (await fetch(defaultImage)).buffer() // Usa la imagen predeterminada si no tiene foto de perfil
-  }
+  if (chat.welcome) {
+    let img;
+    try {
+      let pp = await conn.profilePictureUrl(who, 'image');
+      img = await (await fetch(pp)).buffer();
+    } catch {
+      img = await (await fetch(defaultImage)).buffer();
+    }
 
   if (chat.welcome) {
     if (m.messageStubType === WAMessageStubType.GROUP_PARTICIPANT_ADD) {
