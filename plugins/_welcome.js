@@ -8,7 +8,6 @@ export async function before(m, { conn, participants, groupMetadata }) {
   let taguser = `@${who.split('@')[0]}`
   let chat = global.db.data.chats[m.chat]
   let defaultImage = 'https://files.catbox.moe/bgtoel.jpg';
-
   if (chat.welcome) {
     let img;
     try {
@@ -19,10 +18,10 @@ export async function before(m, { conn, participants, groupMetadata }) {
     }
 
     if (m.messageStubType === WAMessageStubType.GROUP_PARTICIPANT_ADD) {
-      let bienvenida = `👑 *¡Bienvenido a ${groupMetadata.subject}!* \n\n${taguser}, disfruta tu estadía en el grupo.\n\n Ya somos〘${participants.length}〙 Miembros.\n\n ${global.welcom1}\n\n> Usa *#help* para ver los comandos disponibles.\n https://chat.whatsapp.com/H9Er7VDTtCSGSvGZEUqPVb`
+      let bienvenida = `✰ *𝐁𝐢𝐞𝐧𝐯𝐞𝐧𝐢𝐝𝐨* 𝐀 ${groupMetadata.subject}\n ✰ ${taguser}\n${global.welcom1}\n ʕ•ᴥ•ʔ 𝐃𝐢𝐬𝐟𝐫𝐢𝐭𝐚 𝐭𝐮 𝐞𝐬𝐭𝐚𝐝𝐢𝐚 𝐞𝐧 𝐞𝐥 𝐠𝐫𝐮𝐩𝐨!\n> ✎ 𝑷𝒖𝒆𝒅𝒆𝒔 𝒖𝒔𝒂𝒓 *#help* 𝒑𝒂𝒓𝒂 𝒗𝒆𝒓 𝒍𝒂 𝒍𝒊𝒔𝒕𝒂 𝒅𝒆 𝒄𝒐𝒎𝒂𝒎𝒅𝒐𝒔.\n https://chat.whatsapp.com/H9Er7VDTtCSGSvGZEUqPVb`
       await conn.sendMessage(m.chat, { image: img, caption: bienvenida, mentions: [who] })
     } else if (m.messageStubType === WAMessageStubType.GROUP_PARTICIPANT_REMOVE || m.messageStubType === WAMessageStubType.GROUP_PARTICIPANT_LEAVE) {
-      let bye = `┏ *${taguser} 𝐀 𝐬𝐚𝐥𝐢𝐝𝐨 𝐝𝐞\n┣ ${groupMetadata.subject}.*\n┃\n┣✎ ${global.welcom2}\n┃\n┗👻 ¡Esperamos verte de nuevo!\n https://chat.whatsapp.com/H9Er7VDTtCSGSvGZEUqPVb`
+      let bye = `✰ *𝐀𝐃𝐈𝐎𝐒* 𝐃𝐄 ${groupMetadata.subject}\n ✰ ${taguser}\n${global.welcom2}\n ʕ•ᴥ•ʔ 𝐓𝐄 𝐄𝐒𝐏𝐄𝐑𝐀𝐌𝐎𝐒 𝐏𝐑𝐎𝐍𝐓𝐎!\n> ✎ 𝑷𝒖𝒆𝒅𝒆𝒔 𝒖𝒔𝒂𝒓 *#help* 𝒑𝒂𝒓𝒂 𝒗𝒆𝒓 𝒍𝒂 𝒍𝒊𝒔𝒕𝒂 𝒅𝒆 𝒄𝒐𝒎𝒂𝒎𝒅𝒐𝒔.\n https://chat.whatsapp.com/H9Er7VDTtCSGSvGZEUqPVb`
       await conn.sendMessage(m.chat, { image: img, caption: bye, mentions: [who] })
     }
   }
