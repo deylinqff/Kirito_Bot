@@ -18,20 +18,30 @@ export async function before(m, { conn, participants, groupMetadata }) {
       img = await (await fetch(defaultImage)).buffer();
     }
 
-    if (m.messageStubType === WAMessageStubType.GROUP_PARTICIPANT_ADD) {
-      let bienvenida = `👑 *¡Bienvenido a ${groupMetadata.subject}!* \n\n${taguser}, disfruta tu estadía en el grupo.\n\n Ya somos〘${participants.length}〙 Miembros.\n\n ${global.welcom1}\n\n> Usa *#help* para ver los comandos disponibles.\n https://chat.whatsapp.com/H9Er7VDTtCSGSvGZEUqPVb`
-      await conn.sendMessage(m.chat, { image: img, caption: bienvenida, mentions: [who] })
-    } else if (m.messageStubType === WAMessageStubType.GROUP_PARTICIPANT_REMOVE || m.messageStubType === WAMessageStubType.GROUP_PARTICIPANT_LEAVE) {
-      let bye = `┏━━━━━━━━━━━━━┓\n`        ┃  *¡Adiós, ${taguser}!* \n`
-  ┣━━━━━━━━━━━━━┛\n`
-  ┃ Grupo: 『${groupMetadata.subject}』\n`
-  ┃ Ahora quedamos *${participants.length}* miembros.\n`
-  ┗━━━━━━━━━━━━━✦\n\n`
-  ` ${global.welcom2}\n\n`
- ` https://chat.whatsapp.com/H9Er7VDTtCSGSvGZEUqPVb``
-      await conn.sendMessage(m.chat, { image: img, caption: bye, mentions: [who] })
-    }
-  }
+if (m.messageStubType === WAMessageStubType.GROUP_PARTICIPANT_ADD) {
+  let bienvenida = `╔══════════════════╗\n` +
+                   `║ 👑 *¡BIENVENIDO!* 👑 ║\n` +
+                   `╠══════════════════╣\n` +
+                   `║ 🎉 *Grupo:* ${groupMetadata.subject} \n` +
+                   `║ 👤 *Usuario:* ${taguser} \n` +
+                   `║ 📌 *Miembros:* ${participants.length} \n` +
+                   `╚══════════════════╝\n\n` +
+                   `${global.welcom1}\n\n` +
+                   `💬 *Usa:* #help para ver los comandos disponibles.\n` +
+                   `🔗 *Únete:* https://chat.whatsapp.com/H9Er7VDTtCSGSvGZEUqPVb`;
 
-  return true
+  await conn.sendMessage(m.chat, { image: img, caption: bienvenida, mentions: [who] });
+} else if (m.messageStubType === WAMessageStubType.GROUP_PARTICIPANT_REMOVE || m.messageStubType === WAMessageStubType.GROUP_PARTICIPANT_LEAVE) {
+  let bye = `╔══════════════════╗\n` +
+            `║ ⚡ *¡ADIÓS!* ⚡ ║\n` +
+            `╠══════════════════╣\n` +
+            `║ 🚪 *Usuario:* ${taguser} \n` +
+            `║ 🏰 *Grupo:* ${groupMetadata.subject} \n` +
+            `║ 📉 *Miembros:* ${participants.length} \n` +
+            `╚══════════════════╝\n\n` +
+            `${global.welcom2}\n\n` +
+            `👻 *¡Esperamos verte de nuevo!*\n` +
+            `🔗 *Reingreso:* https://chat.whatsapp.com/H9Er7VDTtCSGSvGZEUqPVb`;
+
+  await conn.sendMessage(m.chat, { image: img, caption: bye, mentions: [who] });
 }
