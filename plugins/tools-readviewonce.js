@@ -1,5 +1,5 @@
 //Este si es para el whatsapp actualizado💁🏻‍♂️
-```
+
 const { downloadContentFromMessage } = require('@whiskeysockets/baileys');
 
 const handler = async (m, { conn }) => {
@@ -34,4 +34,3 @@ handler.limit = 1
 handler.register = true
 
 module.exports = handler
-```
