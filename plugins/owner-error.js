@@ -4,29 +4,44 @@ var handler = async (m, { conn }) => {
   m.react('🚀');
 
   try {
-    let logs;
+    let consoleErrors = '⚠️ No se pudieron obtener los errores de la consola.';
+    let repoErrors = '⚠️ No se encontraron errores en los archivos del repositorio.';
 
+    // 1. Buscar errores recientes en la consola del servidor
     try {
-      // Intentar obtener los últimos errores con journalctl (para sistemas Linux con systemd)
-      logs = execSync('journalctl -u tu-bot.service --no-pager --lines=20 -o cat 2>&1').toString();
+      consoleErrors = execSync('journalctl -u tu-bot.service --no-pager --lines=20 -o cat 2>&1 || tail -n 20 /var/log/syslog').toString();
     } catch {
       try {
-        // Si falla, intenta con PM2
-        logs = execSync('pm2 logs --nostream --lines 20 2>&1').toString();
+        consoleErrors = execSync('tail -n 20 nohup.out 2>&1 || true').toString();
       } catch {
-        logs = '⚠️ No se pudieron obtener los errores del servidor.';
+        consoleErrors = '⚠️ No se pudieron obtener los errores de la consola.';
       }
     }
 
-    if (!logs.trim()) {
-      conn.reply(m.chat, '✅ No se encontraron errores recientes en la consola.', m);
-      return;
+    // 2. Buscar errores en los archivos del repositorio
+    try {
+      repoErrors = execSync('grep -r -n "Error" . --exclude-dir=node_modules --exclude-dir=.git --exclude=package-lock.json 2>&1 || true').toString();
+    } catch {
+      repoErrors = '⚠️ No se encontraron errores en los archivos del repositorio.';
     }
 
-    conn.reply(m.chat, `⚠️ Últimos errores de la consola del servidor:\n\n${logs}`, m);
+    let response = '⚠️ *Reporte de errores:*\n\n';
 
+    if (consoleErrors.trim() && !consoleErrors.includes('No se pudieron obtener')) {
+      response += `🔴 *Errores en la consola del servidor:*\n${consoleErrors}\n\n`;
+    } else {
+      response += '✅ No hay errores en la consola del servidor.\n\n';
+    }
+
+    if (repoErrors.trim() && !repoErrors.includes('No se encontraron')) {
+      response += `🔵 *Errores en los archivos del repositorio:*\n${repoErrors}\n\n`;
+    } else {
+      response += '✅ No se encontraron errores en los archivos del repositorio.\n\n';
+    }
+
+    conn.reply(m.chat, response, m);
   } catch (error) {
-    conn.reply(m.chat, `⚠️ No se pudieron analizar los errores.\nError: ${error.message}`, m);
+    conn.reply(m.chat, `⚠️ Ocurrió un error al obtener los errores.\nError: ${error.message}`, m);
   }
 };
 
