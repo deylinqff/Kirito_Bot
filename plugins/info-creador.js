@@ -7,8 +7,8 @@ async function handler(m, { conn }) {
     let name = '👑 Deylin'; // Nombre del creador
     let packname = 'Kirito Bot'; // Nombre del bot
     let dev = 'By Deylin'; // Desarrollador
-    let channel = 'https://whatsapp.com/channel/0029VawF8fBBvvsktcInIz3m'; // URL
-    let banner = 'https://files.catbox.moe/vtsk5v.jpg'; // Imagen
+    let channel = 'https://github.com/deylinqff/Kirito_Bot'; // URL
+    let banner = 'https://files.catbox.moe/tm6axp.jpg'; // Imagen
 
     let bio = (await conn.fetchStatus(ownerJid).catch(_ => 'Sin Biografía')).status || 'Sin Biografía';
     let ppUrl = await conn.profilePictureUrl(ownerJid).catch(_ => banner);
@@ -34,10 +34,10 @@ END:VCARD`.trim();
         contextInfo: {
             forwardingScore: 2023,
             isForwarded: false,
+            externalAdReply: {  
                 title: packname, 
                 body: dev, 
                 sourceUrl: channel,
-                thumbnail: ppUrl,
                 mediaType: 1,
                 showAdAttribution: true, 
                 renderLargerThumbnail: true 
