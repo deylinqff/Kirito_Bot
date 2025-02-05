@@ -1,18 +1,23 @@
-function handler(m) {
+async function handler(m) {
     try {
-        if (!suittag || !packname || !dev || !channel || !banner) {
+        if (!suittag || !packname || !dev || !channel) {
             return conn.reply(m.chat, '❌ Faltan datos en la configuración.', m);
         }
 
-        let name = conn.getName(`${suittag}@s.whatsapp.net`);
         let ownerN = `${suittag}`;
+        let name = await conn.getName(`${ownerN}@s.whatsapp.net`);
+        let ppUrl;
 
-        // Enviar mensaje previo
-        let mensaje = `🤖 *Información del dueño*\n\n👤 *Nombre:* ${name}\n📞 *Número:* wa.me/${ownerN}\n🌟 *Bot oficial de ${packname}*`;
-        conn.reply(m.chat, mensaje, m);
+        try {
+            ppUrl = await conn.profilePictureUrl(`${ownerN}@s.whatsapp.net`, 'image');
+        } catch {
+            ppUrl = 'https://telegra.ph/file/7c0b1e3d8b8a5a3b3b3b3.jpg'; // Imagen de respaldo si no hay foto de perfil
+        }
 
-        // Enviar contacto
-        conn.sendContact(
+        await conn.reply(m.chat, mensaje, m);
+
+        // Enviar contacto con imagen de perfil
+        await conn.sendContact(
             m.chat,
             [[`${ownerN}@s.whatsapp.net`, `${name}`]],
             m,
@@ -24,7 +29,7 @@ function handler(m) {
                         title: packname,
                         body: dev,
                         sourceUrl: channel,
-                        thumbnail: banner,
+                        thumbnail: ppUrl,  // Se usa la foto de perfil
                         mediaType: 1,
                         showAdAttribution: true,
                         renderLargerThumbnail: true,
