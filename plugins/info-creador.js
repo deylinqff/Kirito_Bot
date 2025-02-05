@@ -26,6 +26,6 @@ handler.help = ['owner', 'creador'];
 handler.tags = ['info'];
 handler.command = /^(owner|creador|creator|dueño)$/i;
 
-export default handler; // Si tu bot usa CommonJS, cambia esto a module.exports = handler;
+module.exports = handler; // Si tu bot usa CommonJS, cambia esto a module.exports = handler;
 
 // Código creado por Deyin
