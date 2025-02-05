@@ -23,9 +23,7 @@ export async function before(m, { conn, participants, groupMetadata }) {
     } else if (m.messageStubType === WAMessageStubType.GROUP_PARTICIPANT_REMOVE || m.messageStubType === WAMessageStubType.GROUP_PARTICIPANT_LEAVE) {
         let bye = `✭~- 𝐊𝐈𝐑𝐈𝐓𝐎 𝐁𝐎𝐓 -~✭\n\n
  𝐁𝐚𝐲 *${taguser} 𝐒𝐞 𝐟𝐮𝐞 𝐝𝐞\n ${groupMetadata.subject}.*\n
-__°—👻 ¡𝐄𝐬𝐩𝐞𝐫𝐚𝐦𝐨𝐬 𝐧𝐨 𝐯𝐞𝐫𝐭𝐞 𝐧𝐮𝐧𝐜𝐚! 👻— ~_°
-
-_°       ➳𝐂𝐫𝐞𝐚𝐭𝐨𝐫 𝐛𝐲 𝓓𝓮𝔂𝓵𝓲𝓷 ...`
+👻 ¡𝐄𝐬𝐩𝐞𝐫𝐚𝐦𝐨𝐬 𝐧𝐨 𝐯𝐞𝐫𝐭𝐞 𝐧𝐮𝐧𝐜𝐚! 👻`
       await conn.sendMessage(m.chat, { image: img, caption: bye, mentions: [who] })
     }
   }
