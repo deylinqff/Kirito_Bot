@@ -34,7 +34,6 @@ END:VCARD`.trim();
         contextInfo: {
             forwardingScore: 2023,
             isForwarded: false,
-            externalAdReply: {  
                 title: packname, 
                 body: dev, 
                 sourceUrl: channel,
