@@ -26,9 +26,7 @@ let handler = async (m, { conn, usedPrefix, text, args, command }) => {
 
   // Llamar a la función para enviar la información de contacto
   await sendContactArray(conn, m.chat, [
-    [`${nomorown}`, `👑 Propietario`, `🚀 𝑫𝒆𝒚𝒍𝒊𝒏`, dev, 'Deylibaqudano40@gmail.com', ` 𝑯𝒐𝒏𝒅𝒖𝒓𝒂𝒔 🇭🇳`, `https://github.com/deylinqff`, bio],
-    [`${conn.user.jid.split('@')[0]}`, `Es Un Bot ⚡`, `${packname}`, `📵 No Hacer Spam`, 'moisesmusic04@gmail.com', `🇨🇴 Colombia`, `https://github.com/deylinqff/Kirito_Bot`, biobot]
-  ], m)
+    [`${nomorown}`, `👑 Propietario`, `🚀 𝑫𝒆𝒚𝒍𝒊𝒏`, dev, 'Deylibaqudano40@gmail.com', ` 𝑯𝒐𝒏𝒅𝒖𝒓𝒂𝒔 🇭🇳`, `https://github.com/deylinqff`, bio], m)
 }
 
 handler.help = ["creador", "owner"]
