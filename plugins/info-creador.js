@@ -5,43 +5,19 @@ async function handler(m, { conn }) {
     let ownerJid = `${ownerNumber}@s.whatsapp.net`;
 
     let name = '👑 Deylin'; // Nombre del creador
-    let packname = 'Kirito Bot'; // Nombre del bot
-    let dev = 'By Deylin'; // Desarrollador
-    let channel = 'https://github.com/deylinqff/Kirito_Bot'; // URL
-    let banner = 'https://files.catbox.moe/tm6axp.jpg'; // Imagen
-
-    let bio = (await conn.fetchStatus(ownerJid).catch(_ => 'Sin Biografía')).status || 'Sin Biografía';
-    let ppUrl = await conn.profilePictureUrl(ownerJid).catch(_ => banner);
 
     let vcard = `
 BEGIN:VCARD
 VERSION:3.0
 N:Sy;${name};;;
 FN:${name}
-ORG:${packname}
 TEL;waid=${ownerNumber}:${PhoneNumber('+' + ownerNumber).getNumber('international')}
-EMAIL:darel0954@gmail.com
-ADR:;;🇭🇳 Honduras;;;;
-URL:${channel}
-NOTE:${bio}
 END:VCARD`.trim();
 
     conn.sendMessage(m.chat, {
         contacts: {
             displayName: name,
             contacts: [{ vcard, displayName: name }]
-        },
-        contextInfo: {
-            forwardingScore: 2023,
-            isForwarded: false,
-            externalAdReply: {  
-                title: packname, 
-                body: dev, 
-                sourceUrl: channel,
-                mediaType: 1,
-                showAdAttribution: true, 
-                renderLargerThumbnail: true 
-            }
         }
     }, { quoted: m });
 }
