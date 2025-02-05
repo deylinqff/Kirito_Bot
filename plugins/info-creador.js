@@ -5,7 +5,7 @@ function handler(m) {
     let packname = 'Kirito Bot'; // Nombre del bot
     let dev = 'By Deylin'; // Desarrollador
     let channel = 'https://whatsapp.com/channel/0029VawF8fBBvvsktcInIz3m'; // URL (puede ser de GitHub, YouTube, etc.)
-    let banner = 'https://files.catbox.moe/tm6axp.jpg'; // URL de la imagen grande
+    let banner = 'https://files.catbox.moe/vtsk5v.jpg'; // URL de la imagen grande
 
     conn.sendContact(m.chat, [[ownerJid, name]], m, {
         contextInfo: { 
