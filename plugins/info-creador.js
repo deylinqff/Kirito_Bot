@@ -14,8 +14,6 @@ async function handler(m) {
             ppUrl = 'https://telegra.ph/file/7c0b1e3d8b8a5a3b3b3b3.jpg'; // Imagen de respaldo si no hay foto de perfil
         }
 
-        await conn.reply(m.chat, mensaje, m);
-
         // Enviar contacto con imagen de perfil
         await conn.sendContact(
             m.chat,
