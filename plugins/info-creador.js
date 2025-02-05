@@ -1,6 +1,6 @@
 import PhoneNumber from 'awesome-phonenumber';
 
-let handler = async (m, { conn }) => {
+async function handler(m, { conn }) {
     let ownerNumber = '50488198573';
     let ownerJid = `${ownerNumber}@s.whatsapp.net`;
 
@@ -11,21 +11,21 @@ BEGIN:VCARD
 VERSION:3.0
 N:Sy;${name};;;
 FN:${name}
-TEL;waid=${ownerNumber}:${new PhoneNumber('+' + ownerNumber).getNumber('international')}
+TEL;waid=${ownerNumber}:${PhoneNumber('+' + ownerNumber).getNumber('international')}
 END:VCARD`.trim();
 
-    await conn.sendMessage(m.chat, {
+    conn.sendMessage(m.chat, {
         contacts: {
             displayName: name,
             contacts: [{ vcard, displayName: name }]
         }
     }, { quoted: m });
-};
+}
 
 handler.help = ['owner', 'creador'];
 handler.tags = ['info'];
 handler.command = /^(owner|creador|creator|dueño)$/i;
 
-module.exports = handler; // Si tu bot usa CommonJS, cambia esto a module.exports = handler;
+export default handler;
 
 // Código creado por Deyin
