@@ -4,7 +4,7 @@ async function handler(m, { conn }) {
     let ownerNumber = '50488198573';
     let ownerJid = `${ownerNumber}@s.whatsapp.net`;
 
-    let name = '👑 Deylin';
+    let name = '👑 Deylin ⚡';
 
     let vcard = `
 BEGIN:VCARD
@@ -22,9 +22,9 @@ END:VCARD`.trim();
     }, { quoted: m });
 }
 
-handler.help = ['owner', 'creador'];
-handler.tags = ['info'];
-handler.command = /^(owner|creador|creator|dueño)$/i;
+handler.help = ['owner'];
+handler.tags = ['main'];
+handler.command = ['owner', 'creator', 'creador', 'dueño'];
 
 export default handler;
 
