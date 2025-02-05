@@ -9,7 +9,6 @@ isForwarded: false,
  title: packname, 
  body: dev, 
  thumbnail: banner,
- thumbnailUrl: banner, 
  mediaType: 1,
  showAdAttribution: true, 
  renderLargerThumbnail: true 
