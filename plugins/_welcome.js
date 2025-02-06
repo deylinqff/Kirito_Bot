@@ -20,7 +20,7 @@ export async function before(m, { conn, participants, groupMetadata }) {
 
     if (m.messageStubType === WAMessageStubType.GROUP_PARTICIPANT_ADD) {
       let bienvenida = `╔═══════⩽✰⩾═══════╗
-║     𝐁𝐈𝐄𝐍𝐕𝐄𝐍𝐈𝐃𝐎
+║       𝐁𝐈𝐄𝐍𝐕𝐄𝐍𝐈𝐃𝐎
 ╠═══════⩽✰⩾═══════╝
 ║╭──────────────┄
 ║│ *user* : ${taguser} 
@@ -30,7 +30,7 @@ export async function before(m, { conn, participants, groupMetadata }) {
       await conn.sendMessage(m.chat, { image: img, caption: bienvenida, mentions: [who] })
     } else if (m.messageStubType === WAMessageStubType.GROUP_PARTICIPANT_REMOVE || m.messageStubType === WAMessageStubType.GROUP_PARTICIPANT_LEAVE) {
       let bye = `╔═══════⩽✰⩾═══════╗
-║        𝐁𝐀𝐘
+║           𝐁𝐀𝐘
 ╠═══════⩽✰⩾═══════╝
 ║╭──────────────┄
 ║│ *user* : ${taguser}
