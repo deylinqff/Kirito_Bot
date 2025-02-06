@@ -27,7 +27,7 @@ export async function before(m, { conn, participants, groupMetadata }) {
 ║│ *Gastado* : ${groupMetadata.subject}
 ║╰──────────────┄
 ╚═══════⩽✰⩾═══════╝`
-      await textbot(m.chat, { image: img, caption: bienvenida, mentions: [who] })
+      await conn.sendMessage(m.chat, { image: img, caption: bienvenida, mentions: [who] })
     } else if (m.messageStubType === WAMessageStubType.GROUP_PARTICIPANT_REMOVE || m.messageStubType === WAMessageStubType.GROUP_PARTICIPANT_LEAVE) {
       let bye = `╔═══════⩽✰⩾═══════╗
 ║               𝐁𝐀𝐘
@@ -37,7 +37,7 @@ export async function before(m, { conn, participants, groupMetadata }) {
 ║│ *Grupo* : ${groupMetadata.subject}
 ║╰──────────────┄
 ╚═══════⩽✰⩾═══════╝`
-      await textbot(m.chat, { image: img, caption: bye, mentions: [who] })
+      await conn.sendMessage(m.chat, { image: img, caption: bye, mentions: [who] })
     }
   }
 
