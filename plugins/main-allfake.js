@@ -36,7 +36,7 @@ global.namechannel2 = '᭄𝐊𝐢𝐫𝐢𝐭𝐨-𝐁𝐨𝐭ᬊᬁ"'
 global.namegrupo = '𝑲𝒊𝒓𝒊𝒕𝒐-𝑩𝒐𝒕'
 global.namecomu = 'ᬊ𝑲𝒊𝒓𝒊𝒕𝒐 𝑩𝒐𝒕 𝑪𝒐𝒎𝒖𝒏𝒊𝒕𝒚ᬊ᭄'
 global.listo = '⚡ *Aquí tienes ฅ^•ﻌ•^ฅ*'
-global.fotoperfil = await conn.profilePictureUrl(m.sender, 'image').catch(_ => 'https://files.catbox.moe/wkvi52.jpg')
+global.fotoperfil = await conn.profilePictureUrl(m.sender, 'image').catch(_ => 'https://files.catbox.moe/56el7x.jpg')
 
 //Ids channel
 global.idchannel = '120363372653753296@newsletter'
@@ -107,12 +107,12 @@ global.fake = { contextInfo: { isForwarded: true, forwardedNewsletterMessageInfo
 }}, { quoted: m }
 
 global.icono = [ 
-'https://files.catbox.moe/r6thkc.jpg',
-'https://files.catbox.moe/1symn6.jpg',
-'https://files.catbox.moe/0ujv4o.jpg',
-'https://files.catbox.moe/yrgw6s.jpg',
-'https://files.catbox.moe/jzh98p.jpg',
-'https://files.catbox.moe/4vzm0s.jpg'
+'https://files.catbox.moe/56el7x.jpg',
+'https://files.catbox.moe/ywv6xr.jpg',
+'https://files.catbox.moe/va19q6.jpg',
+'https://files.catbox.moe/31io2q.jpg',
+'https://files.catbox.moe/39imcu.jpg',
+'https://files.catbox.moe/22mlg6.jpg'
 ].getRandom()
 
 global.rcanal = { contextInfo: { isForwarded: true, forwardedNewsletterMessageInfo: { newsletterJid: channelRD.id, serverMessageId: 100, newsletterName: channelRD.name, }, externalAdReply: { showAdAttribution: true, title: packname, body: dev, mediaUrl: null, description: null, previewType: "PHOTO", thumbnailUrl: icono, sourceUrl: redes, mediaType: 1, renderLargerThumbnail: false }, }, }}
