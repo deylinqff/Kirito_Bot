@@ -37,9 +37,11 @@ export async function before(m, { conn, participants, groupMetadata }) {
 ║│ *Grupo* : ${groupMetadata.subject}
 ║╰──────────────┄
 ╚═══════⩽✰⩾═══════╝`
-      await conn.sendMessage(m.chat, { image: img, caption: bye, mentions: [who] })
-    }
-  }
+await conn.sendMessage(m.chat, { 
+  image: img, 
+  caption: `${bye}\n\n${textbot}`, 
+  mentions: [who] 
+});
 
   return true
 }
