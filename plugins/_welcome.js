@@ -27,8 +27,7 @@ export async function before(m, { conn, participants, groupMetadata }) {
 ║│ *Gastado* : ${groupMetadata.subject}
 ║╰──────────────┄
 ╚═══════⩽✰⩾═══════╝`
-await conn.sendAi(m.chat, botname, textbot, bienvenida, img, img, canal)
-}
+      await conn.sendMessage(m.chat, { image: img, caption: bienvenida, mentions: [who] })
     } else if (m.messageStubType === WAMessageStubType.GROUP_PARTICIPANT_REMOVE || m.messageStubType === WAMessageStubType.GROUP_PARTICIPANT_LEAVE) {
       let bye = `╔═══════⩽✰⩾═══════╗
 ║               𝐁𝐀𝐘
@@ -38,11 +37,9 @@ await conn.sendAi(m.chat, botname, textbot, bienvenida, img, img, canal)
 ║│ *Grupo* : ${groupMetadata.subject}
 ║╰──────────────┄
 ╚═══════⩽✰⩾═══════╝`
-await conn.sendMessage(m.chat, { 
-  image: img, 
-  caption: `${bye}\n\n${textbot}`, 
-  mentions: [who] 
-});
+      await conn.sendMessage(m.chat, { image: img, caption: bye, mentions: [who] })
+    }
+  }
 
   return true
 }
