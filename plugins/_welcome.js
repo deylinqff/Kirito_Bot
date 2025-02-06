@@ -27,7 +27,8 @@ export async function before(m, { conn, participants, groupMetadata }) {
 ║│ *Gastado* : ${groupMetadata.subject}
 ║╰──────────────┄
 ╚═══════⩽✰⩾═══════╝`
-      await conn.sendMessage(m.chat, { image: img, caption: bienvenida, mentions: [who] })
+await conn.sendAi(m.chat, botname, textbot, bienvenida, img, img, canal)
+}
     } else if (m.messageStubType === WAMessageStubType.GROUP_PARTICIPANT_REMOVE || m.messageStubType === WAMessageStubType.GROUP_PARTICIPANT_LEAVE) {
       let bye = `╔═══════⩽✰⩾═══════╗
 ║               𝐁𝐀𝐘
