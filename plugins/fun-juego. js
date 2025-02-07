@@ -1,0 +1,86 @@
+const { default: makeWASocket, useMultiFileAuthState } = require('@whiskeysockets/baileys');
+const fs = require('fs');
+const path = require('path');
+
+// Definición de las preguntas del juego con sus respectivas imágenes y respuestas
+const questions = [
+  {
+    image: path.join(__dirname, 'images', 'gato.jpg'),
+    question: '¿Qué animal es este?',
+    answer: 'gato'
+  },
+  {
+    image: path.join(__dirname, 'images', 'perro.jpg'),
+    question: '¿Qué animal es este?',
+    answer: 'perro'
+  }
+  // Puedes agregar más preguntas aquí
+];
+
+// Objeto para almacenar el juego activo por usuario (clave: ID del usuario)
+const activeGames = {};
+
+async function startBot() {
+  // Inicializamos la autenticación multiarchivo
+  const { state, saveCreds } = await useMultiFileAuthState('./auth_info');
+  const sock = makeWASocket({ auth: state });
+
+  sock.ev.on('creds.update', saveCreds);
+
+  sock.ev.on('messages.upsert', async (msg) => {
+    const m = msg.messages[0];
+    if (!m.message || !m.key.remoteJid) return;
+
+    // Identificar el JID y el remitente (para chats individuales o grupos)
+    const jid = m.key.remoteJid;
+    // Si es un mensaje en grupo, m.key.participant contiene el remitente; en chats individuales se usa el jid
+    const sender = m.key.participant || m.key.remoteJid;
+
+    // Extraer el contenido textual del mensaje (ya sea en conversation o extendedTextMessage)
+    let text = '';
+    if (m.message.conversation) {
+      text = m.message.conversation;
+    } else if (m.message.extendedTextMessage && m.message.extendedTextMessage.text) {
+      text = m.message.extendedTextMessage.text;
+    }
+    text = text.trim().toLowerCase();
+
+    // Si el usuario envía el comando para iniciar el juego
+    if (text === '!jugar') {
+      // Selecciona una pregunta aleatoria
+      const question = questions[Math.floor(Math.random() * questions.length)];
+      // Guarda la pregunta activa para este usuario
+      activeGames[sender] = question;
+
+      // Lee el archivo de la imagen
+      let imageBuffer;
+      try {
+        imageBuffer = fs.readFileSync(question.image);
+      } catch (err) {
+        console.error('Error al leer la imagen:', err);
+        await sock.sendMessage(jid, { text: 'Hubo un error al cargar la imagen del juego.' });
+        return;
+      }
+
+      // Envía la imagen con la pregunta como caption
+      await sock.sendMessage(jid, { image: imageBuffer, caption: question.question });
+      return;
+    }
+
+    // Si el usuario ya tiene un juego activo y envía una respuesta
+    if (activeGames[sender] && text) {
+      const currentGame = activeGames[sender];
+
+      // Comprueba si la respuesta es correcta
+      if (text === currentGame.answer.toLowerCase()) {
+        await sock.sendMessage(jid, { text: '¡Correcto! Has ganado.' });
+      } else {
+        await sock.sendMessage(jid, { text: 'Incorrecto. Inténtalo de nuevo.' });
+      }
+      // Finaliza el juego eliminando el juego activo para este usuario
+      delete activeGames[sender];
+    }
+  });
+}
+
+startBot();
