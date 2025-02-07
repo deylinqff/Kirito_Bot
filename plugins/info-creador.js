@@ -1,21 +1,30 @@
-function handler(m) {
-let name = conn.getName(`${numcreador}@s.whatsapp.net`)
-let ownerN = `${numcreador}`
-conn.sendContact(m.chat, [[`${ownerN}@s.whatsapp.net`, `${name}`]], m, {
+import PhoneNumber from 'awesome-phonenumber';
+
+async function handler(m, { conn }) {
+    let numcreador = '50488198573'; // Número del creador
+    let ownerJid = `${numcreador}@s.whatsapp.net`;
+
+    let name = conn.getName(ownerJid) || 'Creador';
+
+    // Crear vCard
     let vcard = `
 BEGIN:VCARD
 VERSION:3.0
 N:Sy;${name};;;
 FN:${name}
-TEL;waid=${ownerNumber}:${PhoneNumber('+' + ownerNumber).getNumber('international')}
+TEL;waid=${numcreador}:${PhoneNumber('+' + numcreador).getNumber('international')}
 END:VCARD`.trim();
 
-    conn.sendMessage(m.chat, {
+    // Enviar el contacto con vCard
+    await conn.sendMessage(m.chat, {
         contacts: {
             displayName: name,
             contacts: [{ vcard, displayName: name }]
         }
     }, { quoted: m });
+
+    // Enviar el contacto con sendContact
+    await conn.sendContact(m.chat, [[ownerJid, name]], m);
 }
 
 handler.help = ['owner'];
