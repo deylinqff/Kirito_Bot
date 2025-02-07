@@ -4,7 +4,7 @@ async function handler(m, { conn }) {
     let ownerNumber = '50488198573';
     let ownerJid = `${ownerNumber}@s.whatsapp.net`;
 
-    let name = '👑 Deylin ⚡';
+    let name = '${name}';
 
     let vcard = `
 BEGIN:VCARD
