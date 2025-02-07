@@ -1,60 +1,6 @@
-const fs = require('fs');
-const path = require('path');
+let handler = async(m, { conn, text, usedPrefix, command }) => {
 
-let handler = async (m, { conn, args }) => {
-    if (!args[0]) {
-        return conn.reply(m.chat, 'Usa el comando así: *!jugar*', m);
-    }
-
-    if (args[0].toLowerCase() === 'start') {
-        const questions = [
-            {
-                image: path.join(__dirname, '../images/gato.jpg'),
-                question: '¿Qué animal es este?',
-                answer: 'gato'
-            },
-            {
-                image: path.join(__dirname, '../images/perro.jpg'),
-                question: '¿Qué animal es este?',
-                answer: 'perro'
-            }
-            // Agrega más preguntas aquí
-        ];
-
-        const question = questions[Math.floor(Math.random() * questions.length)];
-        global.activeGames[m.sender] = question; // Guarda la pregunta para el usuario
-
-        let imageBuffer;
-        try {
-            imageBuffer = fs.readFileSync(question.image);
-        } catch (err) {
-            console.error('Error al leer la imagen:', err);
-            return conn.reply(m.chat, 'Hubo un error al cargar la imagen del juego.', m);
-        }
-
-        conn.sendMessage(m.chat, { image: imageBuffer, caption: question.question }, { quoted: m });
-    } else {
-        if (!global.activeGames[m.sender]) {
-            return conn.reply(m.chat, 'No tienes un juego activo. Usa *!jugar start* para comenzar.', m);
-        }
-
-        const currentGame = global.activeGames[m.sender];
-
-        if (args.join(' ').toLowerCase() === currentGame.answer) {
-            conn.reply(m.chat, '¡Correcto! Has ganado.', m);
-            delete global.activeGames[m.sender]; // Borra el juego activo
-        } else {
-            conn.reply(m.chat, 'Incorrecto. Inténtalo de nuevo.', m);
-        }
-    }
-};
-
-handler.help = ['jugar start', 'jugar <respuesta>'];
-handler.tags = ['game'];
-handler.command = ['jugar'];
-
-module.exports = handler;
-const fs = require('fs');
+let hconst fs = require('fs');
 const path = require('path');
 
 let handler = async (m, { conn, args }) => {
