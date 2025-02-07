@@ -30,7 +30,7 @@ export async function before(m, { conn, participants, groupMetadata }) {
       await conn.sendMessage(m.chat, { image: img, caption: bienvenida, mentions: [who] })
     } else if (m.messageStubType === WAMessageStubType.GROUP_PARTICIPANT_REMOVE || m.messageStubType === WAMessageStubType.GROUP_PARTICIPANT_LEAVE) {
       let bye = `╔═══════⩽✰⩾═══════╗
-║                 𝐁𝐀𝐘
+║                 𝐁 𝐀 𝐘
 ╠═══════⩽✰⩾═══════╝
 ║╭──────────────┄
 ║│ *user* : ${taguser}
