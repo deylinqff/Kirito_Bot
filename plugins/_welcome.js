@@ -9,7 +9,7 @@ export async function before(m, { conn, participants, groupMetadata }) {
   let chat = global.db.data.chats[m.chat]
   let defaultImage = 'https://files.catbox.moe/56el7x.jpg';
 
-  if (chat.bienvenida) {
+  if (chat.welcome) {
     let img;
     try {
       let pp = await conn.profilePictureUrl(who, 'image');
@@ -20,17 +20,17 @@ export async function before(m, { conn, participants, groupMetadata }) {
 
     if (m.messageStubType === WAMessageStubType.GROUP_PARTICIPANT_ADD) {
       let bienvenida = `╔═══════⩽✰⩾═══════╗
-║       𝐁𝐈𝐄𝐍𝐕𝐄𝐍𝐈𝐃𝐎
+║           𝐁𝐈𝐄𝐍𝐕𝐄𝐍𝐈𝐃𝐎
 ╠═══════⩽✰⩾═══════╝
 ║╭──────────────┄
 ║│ *user* : ${taguser} 
-║│ *Gastado* : ${groupMetadata.subject}
+║│ *Grupo* : ${groupMetadata.subject}
 ║╰──────────────┄
 ╚═══════⩽✰⩾═══════╝`
       await conn.sendMessage(m.chat, { image: img, caption: bienvenida, mentions: [who] })
     } else if (m.messageStubType === WAMessageStubType.GROUP_PARTICIPANT_REMOVE || m.messageStubType === WAMessageStubType.GROUP_PARTICIPANT_LEAVE) {
       let bye = `╔═══════⩽✰⩾═══════╗
-║               𝐁𝐀𝐘
+║                 𝐁 𝐀 𝐘
 ╠═══════⩽✰⩾═══════╝
 ║╭──────────────┄
 ║│ *user* : ${taguser}
