@@ -12,21 +12,24 @@ let handler = async (m, { conn, text }) => {
     return;
   }
 
-  const groupId = match[1];
+  const inviteCode = match[1];
 
   try {
-    // Obtiene la lista de grupos del bot
-    let groups = await conn.groupFetchAllParticipating();
-    let groupToLeave = Object.values(groups).find(g => g.id.includes(groupId));
+    // Obtener la información del grupo usando el código de invitación
+    let groupInfo = await conn.groupGetInviteInfo(inviteCode);
+    let groupId = groupInfo.id;
 
-    if (!groupToLeave) {
+    // Verificar si el bot está en el grupo
+    let isInGroup = Object.keys(await conn.groupFetchAllParticipating()).includes(groupId);
+
+    if (!isInGroup) {
       await conn.sendMessage(m.chat, { text: '❌ *No estoy en ese grupo.*' });
       return;
     }
 
     // Salirse del grupo
-    await conn.groupLeave(groupToLeave.id);
-    await conn.sendMessage(m.chat, { text: `✅ *Me he salido del grupo exitosamente.*` });
+    await conn.groupLeave(groupId);
+    await conn.sendMessage(m.chat, { text: `✅ *Me he salido del grupo ${groupInfo.subject} exitosamente.*` });
   } catch (error) {
     console.error('Error al salir del grupo:', error);
     await conn.sendMessage(m.chat, { text: '❌ *Hubo un error al intentar salir del grupo.*' });
