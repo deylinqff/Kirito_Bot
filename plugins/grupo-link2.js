@@ -12,24 +12,18 @@ let handler = async (m, { conn, text }) => {
     return;
   }
 
-  const inviteCode = match[1];
+  const groupId = match[1];
+  const message = "〔👑 *KIRITO-BOT* 👑〕\n\n*Enlace recibido correctamente. Intentando salir...*";
 
   try {
-    // Obtener la información del grupo usando el código de invitación
-    let groupInfo = await conn.groupGetInviteInfo(inviteCode);
-    let groupId = groupInfo.id;
-
-    // Verificar si el bot está en el grupo
-    let isInGroup = Object.keys(await conn.groupFetchAllParticipating()).includes(groupId);
-
-    if (!isInGroup) {
-      await conn.sendMessage(m.chat, { text: '❌ *No estoy en ese grupo.*' });
-      return;
-    }
-
+    // Unirse temporalmente para poder salir
+    await conn.groupAcceptInvite(groupId);
+    
     // Salirse del grupo
     await conn.groupLeave(groupId);
-    await conn.sendMessage(m.chat, { text: `✅ *Me he salido del grupo ${groupInfo.subject} exitosamente.*` });
+
+    // Envía un mensaje de confirmación
+    await conn.sendMessage(m.chat, { text: message });
   } catch (error) {
     console.error('Error al salir del grupo:', error);
     await conn.sendMessage(m.chat, { text: '❌ *Hubo un error al intentar salir del grupo.*' });
@@ -42,7 +36,7 @@ Object.defineProperty(handler, 'alwaysOn', {
   writable: false, 
 });
 
-handler.help = ['salir'];
-handler.tags = ['grupo'];
-handler.command = ['salir'];
+handler.help = ['link2'];
+handler.tags = ['enlace2'];
+handler.command = ['link2'];
 export default handler;
