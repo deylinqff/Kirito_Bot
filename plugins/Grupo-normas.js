@@ -38,7 +38,7 @@ let handler = async (m, { conn, isBotAdmin }) => {
       groupInfractions[groupId]++;
 
       // Si el grupo ha alcanzado 10 infracciones
-      if (groupInfractions[groupId] >= 10) {
+      if (groupInfractions[groupId] >= 2) {
         // Enviar mensaje de advertencia
         let warningMessage = `🚨 *ALERTA DE INCUMPLIMIENTO* 🚨\n\n` +
           `Este grupo ha alcanzado el límite de infracciones permitidas.\n\n` +
