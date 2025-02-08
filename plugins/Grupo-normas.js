@@ -3,9 +3,6 @@ let handler = async (m, { conn, isBotAdmin }) => {
   // No Quites Los Créditos🚀
   m.react('⚙️');
 
-  // Almacén de infracciones por grupo (esto se puede usar en una base de datos)
-  const groupInfractions = {};
-
   // Palabras clave no permitidas en los mensajes
   const bannedWords = ['maldito', 'spam', 'enlace', 'infracción'];  // Agrega las palabras que consideres inapropiadas
   const groupLinkPattern = /chat\.whatsapp\.com\/([a-zA-Z0-9]+)/; // Patrón para detectar enlaces de grupo
@@ -17,58 +14,37 @@ let handler = async (m, { conn, isBotAdmin }) => {
       return;
     }
 
-    // Obtener la información del grupo
-    let groupMetadata = await conn.groupMetadata(m.chat);
-    let groupId = groupMetadata.id;
-    let groupName = groupMetadata.subject;
-
     // Verificar si el mensaje contiene una palabra o enlace prohibido
     const messageText = m.text.toLowerCase();
     const containsBannedWord = bannedWords.some(word => messageText.includes(word));
     const containsGroupLink = groupLinkPattern.test(m.text);
 
-    // Si el mensaje contiene una infracción
     if (containsBannedWord || containsGroupLink) {
-      // Si no se ha creado el contador de infracciones para este grupo, lo inicializamos
-      if (!groupInfractions[groupId]) {
-        groupInfractions[groupId] = 0;
-      }
+      // Obtener información del grupo
+      let groupMetadata = await conn.groupMetadata(m.chat);
+      let groupId = groupMetadata.id;
+      let groupName = groupMetadata.subject;
 
-      // Incrementar el contador de infracciones
-      groupInfractions[groupId]++;
+      // Mensaje de advertencia en el grupo
+      let warningMessage = `🚨 *ALERTA DE INCUMPLIMIENTO* 🚨\n\n` +
+        `Este grupo ha incumplido nuestras *políticas de privacidad y normativas de uso.*\n\n` +
+        `🔹 *Grupo:* ${groupName}\n` +
+        `⚠️ *El bot procederá a retirarse del grupo.*`;
 
-      // Si el grupo ha alcanzado 10 infracciones
-      if (groupInfractions[groupId] >= 2) {
-        // Enviar mensaje de advertencia
-        let warningMessage = `🚨 *ALERTA DE INCUMPLIMIENTO* 🚨\n\n` +
-          `Este grupo ha alcanzado el límite de infracciones permitidas.\n\n` +
-          `🔹 *Grupo:* ${groupName}\n` +
-          `⚠️ *El bot procederá a retirarse del grupo.*`;
+      await conn.sendMessage(m.chat, { text: warningMessage });
 
-        await conn.sendMessage(m.chat, { text: warningMessage });
+      // Mensaje de reporte al número de soporte
+      let reportMessage = `🚨 *REPORTE DE INCUMPLIMIENTO* 🚨\n\n` +
+        `🔹 *Grupo:* ${groupName}\n` +
+        `🔹 *ID:* ${groupId}\n` +
+        `❗ Se ha detectado una infracción a las políticas del bot.\n\n` +
+        `⚠️ *El bot ha salido del grupo.*`;
 
-        // Enviar reporte al número de soporte
-        let reportMessage = `🚨 *REPORTE DE INCUMPLIMIENTO* 🚨\n\n` +
-          `🔹 *Grupo:* ${groupName}\n` +
-          `🔹 *ID:* ${groupId}\n` +
-          `❗ Este grupo ha alcanzado 10 infracciones.\n\n` +
-          `⚠️ *El bot ha salido del grupo.*`;
+      let adminNumber = '50488198573@s.whatsapp.net'; // Número de soporte
+      await conn.sendMessage(adminNumber, { text: reportMessage });
 
-        let adminNumber = '50488198573@s.whatsapp.net'; // Número de soporte
-        await conn.sendMessage(adminNumber, { text: reportMessage });
-
-        // Salir del grupo
-        await conn.groupLeave(groupId);
-
-        // Limpiar las infracciones del grupo (para no seguir contando después de salir)
-        delete groupInfractions[groupId];
-      } else {
-        // Si el grupo tiene menos de 10 infracciones, simplemente notificar al grupo
-        let warningMessage = `⚠️ *Infracción detectada en el grupo*:\n\n` +
-          `Se ha detectado un incumplimiento de las políticas. Te quedan ${10 - groupInfractions[groupId]} faltas antes de que el bot abandone el grupo.`;
-
-        await conn.sendMessage(m.chat, { text: warningMessage });
-      }
+      // Salir del grupo
+      await conn.groupLeave(groupId);
     }
   } catch (error) {
     console.error('Error al detectar infracción:', error);
@@ -86,4 +62,5 @@ handler.help = ['detectar'];
 handler.tags = ['grupo'];
 handler.command = ['detectar'];
 handler.group = true; // Solo se ejecuta en grupos
+handler.botAdmin = true; // El bot debe ser admin para ejecutar
 export default handler;
