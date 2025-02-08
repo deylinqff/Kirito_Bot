@@ -9,10 +9,6 @@ let handler = async (m, { conn, isBotAdmin }) => {
 
   try {
     // Verificar si el bot tiene permisos de administrador
-    if (!isBotAdmin) {
-      await conn.sendMessage(m.chat, { text: '⚠️ *No puedo salir del grupo porque no soy administrador.*' });
-      return;
-    }
 
     // Verificar si el mensaje contiene una palabra o enlace prohibido
     const messageText = m.text.toLowerCase();
@@ -62,5 +58,4 @@ handler.help = ['detectar'];
 handler.tags = ['grupo'];
 handler.command = ['detectar'];
 handler.group = true; // Solo se ejecuta en grupos
-handler.botAdmin = true; // El bot debe ser admin para ejecutar
 export default handler;
