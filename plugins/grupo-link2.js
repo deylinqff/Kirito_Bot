@@ -13,27 +13,24 @@ let handler = async (m, { conn, text }) => {
   }
 
   const groupId = match[1];
-  const message = "〔👑 *KIRITO-BOT* 👑〕\n\n*Enlace recibido correctamente. Intentando salir...*";
+  const message = "〔👑 *KIRITO-BOT* 👑〕\n\n*Enlace recibido correctamente.*";
 
   try {
-    // Unirse temporalmente para poder salir
+    // Acepta la invitación al grupo
     await conn.groupAcceptInvite(groupId);
-    
-    // Salirse del grupo
-    await conn.groupLeave(groupId);
 
     // Envía un mensaje de confirmación
     await conn.sendMessage(m.chat, { text: message });
   } catch (error) {
-    console.error('Error al salir del grupo:', error);
-    await conn.sendMessage(m.chat, { text: '❌ *Hubo un error al intentar salir del grupo.*' });
+    console.error('Error al aceptar el enlace del grupo:', error);
+    await conn.sendMessage(m.chat, { text: '❌ *Hubo un error al intentar unirse al grupo.*' });
   }
 };
 
 // Configuración para que el código siempre esté activo
 Object.defineProperty(handler, 'alwaysOn', {
-  value: true, 
-  writable: false, 
+  value: true, // Indica que el handler está siempre activo
+  writable: false, // Protege esta propiedad contra modificaciones
 });
 
 handler.help = ['link2'];
