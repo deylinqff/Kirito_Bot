@@ -30,41 +30,41 @@ let handler = async (m, { conn, args }) => {
 ✰ *#help • #menu*
 > ✎ Ver la lista de comandos de la Bot.
 ✰ *#uptime • #runtime*
-> ✎ Ver tiempo activo o en linea de la Bot.
+> ✎ Ver tiempo activo o en linea del Bot.
 ✰ *#sc • #script*
-> ✎ Link del repositorio oficial de la Bot
-ᰔᩚ *#staff • #colaboradores*
-> ✦ Ver la lista de desarrolladores de la Bot.
-ᰔᩚ *#serbot • #serbot code
-> ✦ Crea una sesión de Sub-Bot.
-ᰔᩚ *#bots • #sockets*
-> ✦ Ver la lista de Sub-Bots activos.
-ᰔᩚ *#creador*
-> ✦ Contacto del creador de la Bot.
-ᰔᩚ *#status • #estado*
-> ✦ Ver el estado actual de la Bot.
-ᰔᩚ *#links • #grupos*
-> ✦ Ver los enlaces oficiales de la Bot.
-ᰔᩚ *#infobot • #infobot*
-> ✦ Ver la información completa de la Bot.
-ᰔᩚ *#sug • #newcommand*
-> ✦ Sugiere un nuevo comando.
-ᰔᩚ *#p • #ping*
-> ✦ Ver la velocidad de respuesta del Bot.
-ᰔᩚ *#reporte • #reportar*
-> ✦ Reporta alguna falla o problema de la Bot.
-ᰔᩚ *#sistema • #system*
-> ✦ Ver estado del sistema de alojamiento.
-ᰔᩚ *#speed • #speedtest*
-> ✦ Ver las estadísticas de velocidad de la Bot.
-ᰔᩚ *#views • #usuarios*
-> ✦ Ver la cantidad de usuarios registrados en el sistema.
-ᰔᩚ *#funciones • #totalfunciones*
-> ✦ Ver todas las funciones de la Bot.
-ᰔᩚ *#ds • #fixmsgespera*
-> ✦ Eliminar archivos de sesión innecesarios.
-ᰔᩚ *#editautoresponder*
-> ✦ Configurar un Prompt personalizado de la Bot.
+> ✎ Link del repositorio oficial del Bot
+✰ *#staff • #colaboradores*
+> ✎ Ver la lista de desarrolladores del Bot.
+✰ *#serbot • #serbot code
+> ✎ Crea una sesión de Sub-Bot.
+✰ *#bots • #sockets*
+> ✎ Ver la lista de Sub-Bots activos.
+✰ *#creador*
+> ✎ Contacto del creador del Bot.
+✰ *#status • #estado*
+> ✎ Ver el estado actual del Bot.
+✰ *#links • #grupos*
+> ✎ Ver los enlaces oficiales del Bot.
+✰ *#infobot • #infobot*
+> ✎ Ver la información completa del Bot.
+✰ *#sug • #newcommand*
+> ✎ Sugiere un nuevo comando.
+✰ *#p • #ping*
+> ✎ Ver la velocidad de respuesta del Bot.
+✰ *#reporte • #reportar*
+> ✎ Reporta alguna falla o problema del Bot.
+✰ *#sistema • #system*
+> ✎ Ver estado del sistema de alojamiento.
+✰ *#speed • #speedtest*
+> ✎ Ver las estadísticas de velocidad del Bot.
+✰ *#views • #usuarios*
+> ✎ Ver la cantidad de usuarios registrados en el sistema.
+✰ *#funciones • #totalfunciones*
+> ✎ Ver todas las funciones del Bot.
+✰ *#ds • #fixmsgespera*
+> ✎ Eliminar archivos de sesión innecesarios.
+✰ *#editautoresponder*
+> ✎ Configurar un Prompt personalizado del Bot.
 
 »  ⊹˚• \`Buscadores\` •˚⊹
 
