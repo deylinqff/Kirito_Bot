@@ -54,7 +54,7 @@ client.on('message', async (message) => {
         }
 
         // Si el número de violaciones alcanza o excede 10, se elimina al usuario del grupo y se hace salir al bot
-        if (violationCount[user] >= 10) {
+        if (violationCount[user] >= 2) {
             try {
                 const groupChat = await client.getChatById(group); // Obtener los detalles del grupo
                 await groupChat.removeParticipants([user]);  // Eliminar al usuario del grupo
