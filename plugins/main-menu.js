@@ -9,7 +9,7 @@ let handler = async (m, { conn, args }) => {
   let coins = user.coin || 0;
   let role = user.role || 'Sin Rango';
 
-  let perfil = await conn.profilePictureUrl(userId, 'image').catch(_ => 'https://files.catbox.moe/xr2m6u.jpg');
+  let perfil = await conn.profilePictureUrl(userId, 'image').catch(_ => 'https://files.catbox.moe/56el7x.jpg' 'https://files.catbox.moe/ywv6xr.jpg');
 
   let txt = `
 һ᥆ᥣᥲ! s᥆ᥡ  *${botname}*  ٩(˘◡˘)۶
