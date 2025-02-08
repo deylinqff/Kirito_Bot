@@ -9,10 +9,10 @@ let handler = async (m, { conn, args }) => {
   let coins = user.coin || 0;
   let role = user.role || 'Sin Rango';
 
-  let perfil = await conn.profilePictureUrl(userId, 'image').catch(_ => 'https://files.catbox.moe/56el7x.jpg');
+  let perfil = await conn.profilePictureUrl(userId, 'image').catch(_ => 'https://files.catbox.moe/ywv6xr.jpg');
 
   let txt = `
-һ᥆ᥣᥲ! s᥆ᥡ  *${botname}*  ٩(˘◡˘)۶
+һ᥆ᥣᥲ! s᥆ᥡ  *${botname}*
 ᥲ𝗊ᥙí 𝗍іᥱᥒᥱs ᥣᥲ ᥣіs𝗍ᥲ ძᥱ ᥴ᥆mᥲᥒძ᥆s
 ╭┈ ↷
 │☁️ Cliente » @${userId.split('@')[0]}
