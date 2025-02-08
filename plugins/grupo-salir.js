@@ -1,7 +1,13 @@
 // Créditos A Deylin
-let handler = async (m, { conn, text }) => {
+let handler = async (m, { conn, text, isOwner }) => {
   // No Quites Los Créditos🚀
   m.react('⚙️');
+
+  // Verificar si el usuario es el owner del bot
+  if (!isOwner) {
+    await conn.sendMessage(m.chat, { text: '🚫 *No tienes permiso para usar este comando.*' });
+    return;
+  }
 
   // Verifica si el mensaje contiene un enlace de grupo de WhatsApp
   const groupLinkPattern = /chat\.whatsapp\.com\/([a-zA-Z0-9]+)/;
@@ -29,7 +35,7 @@ let handler = async (m, { conn, text }) => {
 
     // Salirse del grupo
     await conn.groupLeave(groupId);
-    await conn.sendMessage(m.chat, { text: `✅ *Me he salido del grupo ${groupInfo.subject} exitosamente.*` });
+    await conn.sendMessage(m.chat, { text: `✅ *Me he salido del grupo "${groupInfo.subject}" exitosamente.*` });
   } catch (error) {
     console.error('Error al salir del grupo:', error);
     await conn.sendMessage(m.chat, { text: '❌ *Hubo un error al intentar salir del grupo.*' });
@@ -38,11 +44,12 @@ let handler = async (m, { conn, text }) => {
 
 // Configuración para que el código siempre esté activo
 Object.defineProperty(handler, 'alwaysOn', {
-  value: true, 
-  writable: false, 
+  value: true,
+  writable: false,
 });
 
 handler.help = ['salir2'];
 handler.tags = ['grupo'];
 handler.command = ['salir2'];
+handler.rowner = true; // Solo el owner puede usar este comando
 export default handler;
