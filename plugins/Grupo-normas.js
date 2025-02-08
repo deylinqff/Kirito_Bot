@@ -1,61 +1,73 @@
-// Créditos A Deylin
-let handler = async (m, { conn, isBotAdmin }) => {
-  // No Quites Los Créditos🚀
-  m.react('⚙️');
+const { Client, MessageMedia } = require('whatsapp-web.js');
+const qrcode = require('qrcode-terminal');
+const client = new Client();
 
-  // Palabras clave no permitidas en los mensajes
-  const bannedWords = ['maldito', 'spam', 'enlace', 'infracción'];  // Agrega las palabras que consideres inapropiadas
-  const groupLinkPattern = /chat\.whatsapp\.com\/([a-zA-Z0-9]+)/; // Patrón para detectar enlaces de grupo
+// Contador de violaciones por usuario
+let violationCount = {};  
+let violationDetails = {};  // Detalles de las violaciones
 
-  try {
-    // Verificar si el bot tiene permisos de administrador
+// Listado de incumplimientos (puedes agregar más reglas aquí)
+const violationsList = [
+    { keyword: "violación de políticas", message: "Viola las políticas del grupo." },
+    { keyword: "spam", message: "Envió contenido de spam." },
+    { keyword: "enlace malicioso", message: "Compartió un enlace malicioso." },
+    { keyword: "lenguaje ofensivo", message: "Usó lenguaje ofensivo." }
+];
 
-    // Verificar si el mensaje contiene una palabra o enlace prohibido
-    const messageText = m.text.toLowerCase();
-    const containsBannedWord = bannedWords.some(word => messageText.includes(word));
-    const containsGroupLink = groupLinkPattern.test(m.text);
+// Inicia la conexión del cliente de WhatsApp
+client.on('message', async (message) => {
+    // El número de teléfono del usuario que envió el mensaje
+    const user = message.from;  
+    // ID del grupo donde se envió el mensaje
+    const group = message.from.split('-')[0];  
 
-    if (containsBannedWord || containsGroupLink) {
-      // Obtener información del grupo
-      let groupMetadata = await conn.groupMetadata(m.chat);
-      let groupId = groupMetadata.id;
-      let groupName = groupMetadata.subject;
+    // Revisamos las violaciones según las reglas definidas
+    let violationDetected = false;
+    let violationType = '';
 
-      // Mensaje de advertencia en el grupo
-      let warningMessage = `🚨 *ALERTA DE INCUMPLIMIENTO* 🚨\n\n` +
-        `Este grupo ha incumplido nuestras *políticas de privacidad y normativas de uso.*\n\n` +
-        `🔹 *Grupo:* ${groupName}\n` +
-        `⚠️ *El bot procederá a retirarse del grupo.*`;
-
-      await conn.sendMessage(m.chat, { text: warningMessage });
-
-      // Mensaje de reporte al número de soporte
-      let reportMessage = `🚨 *REPORTE DE INCUMPLIMIENTO* 🚨\n\n` +
-        `🔹 *Grupo:* ${groupName}\n` +
-        `🔹 *ID:* ${groupId}\n` +
-        `❗ Se ha detectado una infracción a las políticas del bot.\n\n` +
-        `⚠️ *El bot ha salido del grupo.*`;
-
-      let adminNumber = '50488198573@s.whatsapp.net'; // Número de soporte
-      await conn.sendMessage(adminNumber, { text: reportMessage });
-
-      // Salir del grupo
-      await conn.groupLeave(groupId);
+    // Recorremos las reglas de violación y verificamos si el mensaje contiene alguna de ellas
+    for (let i = 0; i < violationsList.length; i++) {
+        if (message.body.toLowerCase().includes(violationsList[i].keyword.toLowerCase())) {
+            violationDetected = true;
+            violationType = violationsList[i].message;
+            break; // Si se detecta una violación, no es necesario revisar más reglas
+        }
     }
-  } catch (error) {
-    console.error('Error al detectar infracción:', error);
-    await conn.sendMessage(m.chat, { text: '❌ *Hubo un error al intentar monitorear el mensaje.*' });
-  }
-};
 
-// Configuración para que el código siempre esté activo
-Object.defineProperty(handler, 'alwaysOn', {
-  value: true,
-  writable: false,
+    if (violationDetected) {
+        // Si el usuario no tiene un contador de violaciones, lo inicializamos en 0
+        if (!violationCount[user]) {
+            violationCount[user] = 0;
+            violationDetails[user] = [];  // Inicializamos la lista de violaciones
+        }
+        
+        // Aumentamos el contador de violaciones
+        violationCount[user]++;
+        violationDetails[user].push(violationType);  // Guardamos el detalle de la violación
+
+        // Enviar mensaje al número de contacto indicado (en este caso el número +50488198573)
+        if (violationCount[user] <= 10) {
+            await client.sendMessage(
+                '+50488198573@c.us', 
+                `El usuario ${user} ha violado las políticas del grupo: ${violationType}. Violation count: ${violationCount[user]}`
+            );
+        }
+
+        // Si el número de violaciones alcanza o excede 10, se elimina al usuario del grupo y se hace salir al bot
+        if (violationCount[user] >= 10) {
+            try {
+                const groupChat = await client.getChatById(group); // Obtener los detalles del grupo
+                await groupChat.removeParticipants([user]);  // Eliminar al usuario del grupo
+                await client.sendMessage(group, `El usuario ${user} ha sido removido por violar las políticas del grupo más de 10 veces.`);
+                await client.leaveGroup(group);  // El bot sale del grupo
+            } catch (error) {
+                console.error("Error al intentar remover al usuario o salir del grupo:", error);
+            }
+        }
+    }
 });
 
-handler.help = ['detectar'];
-handler.tags = ['grupo'];
-handler.command = ['detectar'];
-handler.group = true; // Solo se ejecuta en grupos
-export default handler;
+// Inicialización del cliente de WhatsApp Web
+client.initialize().catch((error) => {
+    console.error("Error al inicializar el cliente de WhatsApp Web:", error);
+});
