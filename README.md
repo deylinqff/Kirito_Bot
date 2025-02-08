@@ -14,7 +14,7 @@
 <img src="https://github.com/AnderMendoza/AnderMendoza/raw/main/assets/line-neon.gif" width="100%">
 
 <p align="center">
-  <img src="https://readme-typing-svg.demolab.com/?lines= Deylin ;Nueva+versión+beta ; By:+admin ; y+StarCore+Team;TECNO-BOT-El+Mejor+Bot!&font=Fira%20Code&center=true&width=380&height=50&duration=2000&pause=600" alt="Example Usage - README Typing SVG">
+  <img src="https://readme-typing-svg.demolab.com/?lines= Deylin ;Nueva+versión+beta ; By:+admin +;Kirito-Bot-El+Mejor+Bot!&font=Fira%20Code&center=true&width=380&height=50&duration=2000&pause=600" alt="Example Usage - README Typing SVG">
 </p>
 
 <!-- RAINBOW LINE BOT -->
