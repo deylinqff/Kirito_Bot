@@ -2,7 +2,7 @@
 import fetch from 'node-fetch';
 const handler = async (m, {conn, text, usedPrefix, command}) => {
 // Verificamos que el usuario haya ingresado un texto
-if (!text) throw `*👑 𝒇𝒂𝒍𝒕𝒂 𝒕𝒆𝒙𝒕𝒐 𝒑𝒂𝒓𝒂 𝒈𝒆𝒏𝒆𝒓𝒂𝒓 𝒊𝒎𝒂𝒈𝒆𝒏*`;
+if (!text) throw '*👑 𝒇𝒂𝒍𝒕𝒂 𝒕𝒆𝒙𝒕𝒐 𝒑𝒂𝒓𝒂 𝒈𝒆𝒏𝒆𝒓𝒂𝒓 𝒊𝒎𝒂𝒈𝒆𝒏*';
 // Mostramos un emoji de reloj mientras generamos la imagen
 m.react('✨');
 await conn.sendMessage(m.chat, {text: '*👑 𝒈𝒆𝒏𝒆𝒓𝒂𝒏𝒅𝒐 𝒊𝒎𝒂𝒈𝒆𝒏*'}, {quoted: m});
