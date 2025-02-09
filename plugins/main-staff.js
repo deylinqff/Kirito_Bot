@@ -1,36 +1,52 @@
 let handler = async (m, { conn, command, usedPrefix }) => {
 let img = './src/catalogo.jpg'
-let staff = `╔═❖ *EQUIPO DE AYUDANTES* ❖═╗
-╠ 📌 *Dueño:* ${creador}
-╠ 🤖 *Bot:* ${botname}
-╠ ⚜️ *Versión:* ${vs}
-╠ 📚 *Librería:* ${libreria} ${baileys}
-╚══════════════════════╝
+let staff = `✨ *EQUIPO DE AYUDANTES* ✨
+👑 *Dueño* ${creador}
+🍬 *Bot:* ${botname}
+⚜️ *Versión:* ${vs}
+📚 *Libreria:* ${libreria} ${baileys}
 
-🌟 *𝗖𝗥𝗘𝗔𝗗𝗢𝗥*
-━━━━━━━━━━━━━━━
-👑 *𝑫𝒆𝒚𝒍𝒊𝒏*
-⚡ *Rol:* Creador
-🌟 *Número:* wa.me/+50488198573
-👾 *GitHub:* https://github.com/deylinqff
+🪐 *Creador:*
 
-💠 *𝗖𝗢𝗟𝗔𝗕𝗢𝗥𝗔𝗗𝗢𝗥𝗘𝗦*
-━━━━━━━━━━━━━━━
-🪄 *Davidius⁩*
+☁️ ⁱᵃᵐ|𝔇ĕ𝐬†𝓻⊙γ𒆜
+🔖 *Rol:* Creador
+👾 *GitHub:* https://github.com/The-King-Destroy
+
+🍃 *Colaboradores:*
+
+🫧 𝓔𝓶𝓶𝓪 𝓥𝓲𝓸𝓵𝓮𝓽𝓼 𝓥𝓮𝓻𝓼𝓲ó𝓷 
 🔖 *Rol:* Developer
-🌟 *Número:* wa.me/+595975677765
+👾 *GitHub:* https://github.com/Elpapiema
 
-🪄 *Jose*
+🍍 Niño Piña
 🔖 *Rol:* Developer
-🌟 *Número:* wa.me/+5217641291269
+👾 *GitHub:* https://github.com/WillZek
 
-━━━━━━━━━━━━━━━
-🔥 ¡Gracias por apoyar el proyecto! 🔥
+⚡ ☆꧁༒ĹєǤ𝒆𝐧𝐃༒꧂☆
+🔖 *Rol:* Developer
+👾 *GitHub:* https://github.com/Diomar-s
+
+☘️ I'm Fz' (Tesis)
+🔖 *Rol:* Developer
+👾 *GitHub:* https://github.com/FzTeis
+
+🌪️ 𝓛𝓮𝓰𝓷𝓪
+🔖 *Rol:* Moderador 
+👾 *GitHub:* https://github.com/Legna-chan
 `
-await conn.sendFile(m.chat, img, 'equipo.jpg', staff.trim(), fkontak, true, {
+await conn.sendFile(m.chat, img, 'yuki.jpg', staff.trim(), fkontak, true, {
 contextInfo: {
 'forwardingScore': 200,
 'isForwarded': false,
+/*externalAdReply: {
+showAdAttribution: true,
+renderLargerThumbnail: false,
+title: packname,
+body: dev,
+mediaType: 1,
+sourceUrl: channel,
+thumbnailUrl: icono
+}}*/
 }
 }, { mentions: m.sender })
 m.react(emoji)
