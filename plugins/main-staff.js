@@ -1,28 +1,31 @@
 let handler = async (m, { conn, command, usedPrefix }) => {
-let staff = `✨ *EQUIPO DE AYUDANTES*
-🤖 *Bot:* ${global.botname}
-🌟 *Versión:* ${global.vs}
+let staff = `╔═❖ EQUIPO DE AYUDANTES ❖═╗
+╠ 📌 Dueño: ${creador}
+╠ 🤖 Bot: ${botname}
+╠ ⚜️ Versión: ${vs}
+╠ 📚 Librería: ${libreria} ${baileys}
+╚══════════════════════╝
 
-👑 *Propietario:*
+🌟 𝗖𝗥𝗘𝗔𝗗𝗢𝗥
+━━━━━━━━━━━━━━━
+👑 *𝑫𝒆𝒚𝒍𝒊𝒏*
+⚡ *Rol:* Creador
+🌟*Number:* wa.me/+50488198573
+👾 *GitHub:* https://github.com/deylinqff
 
-• Destroy
-🤴 *Rol:* Propietario
-📱 *Número:* wa.me/584120346669
-✨️ *GitHub:* https://github.com/The-King-Destroy
+💠 𝗖𝗢𝗟𝗔𝗕𝗢𝗥𝗔𝗗𝗢𝗥𝗘𝗦
+━━━━━━━━━━━━━━━
+🪄 *Davidius⁩*
+🔖 *Rol:* Developer
+🌟 *Number:* wa.me/+595975677765
 
-🚀  *Colaboradores:*
+🪄 *Jose*
+🔖 *Rol:* Developer
+🌟 *Number:* wa.me/+5217641291269
 
-• Emma-Violets-Versión 
-🦁 *Rol:* Developer
-📱 *Número:* Wa.me/522441357601
 
-• Niño Piña
-🐯 *Rol:* Contribuidor
-📱 *Número:* Wa.me/50557865603
-
-• Legna
-💻 *Rol:* Soporte 
-📱 *Número:* Wa.me/526671548329
+━━━━━━━━━━━━━━━
+🔥 ¡Gracias por apoyar el proyecto! 🔥
 `
 await conn.sendFile(m.chat, icons, 'yaemori.jpg', staff.trim(), fkontak, true, {
 contextInfo: {
