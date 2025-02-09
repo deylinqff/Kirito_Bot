@@ -25,7 +25,7 @@ let staff = `╔═❖ EQUIPO DE AYUDANTES ❖═╗
 
 
 ━━━━━━━━━━━━━━━
-🔥 ¡Gracias por apoyar el proyecto! 🔥
+🔥¡Gracias por apoyar el proyecto!🔥
 `
 await conn.sendFile(m.chat, icons, 'yaemori.jpg', staff.trim(), fkontak, true, {
 contextInfo: {
