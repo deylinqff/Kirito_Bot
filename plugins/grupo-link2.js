@@ -36,4 +36,5 @@ Object.defineProperty(handler, 'alwaysOn', {
 handler.help = ['link2'];
 handler.tags = ['enlace2'];
 handler.command = ['link2'];
+handler.rowner = true; // Solo el owner puede usar este comando
 export default handler;
