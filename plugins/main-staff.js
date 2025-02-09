@@ -10,31 +10,21 @@ let staff = `
 
 🌟 𝗖𝗥𝗘𝗔𝗗𝗢𝗥
 ━━━━━━━━━━━━━━━
-👑 𝑫𝒆𝒚𝒍𝒊𝒏
-🔖 Rol: Creador
-👾 GitHub: https://github.com/deylinqff
+👑 *𝑫𝒆𝒚𝒍𝒊𝒏*
+⚡ *Rol:* Creador
+🌟*Number:* wa.me/+50488198573
+👾 *GitHub:* https://github.com/deylinqff
 
 💠 𝗖𝗢𝗟𝗔𝗕𝗢𝗥𝗔𝗗𝗢𝗥𝗘𝗦
 ━━━━━━━━━━━━━━━
-🍍 Niño Piña
-🔖 Rol: Developer
-👾 GitHub: WillZek
+🪄 *Davidius⁩*
+🔖 *Rol:* Developer
+🌟 *Number:* wa.me/+595975677765
 
-🫧 𝓔𝓶𝓶𝓪 𝓥𝓲𝓸𝓵𝓮𝓽𝓼 𝓥𝓮𝓻𝓼𝓲ó𝓷
-🔖 Rol: Developer
-👾 GitHub: Elpapiema
+🪄 *Jose*
+🔖 *Rol:* Developer
+🌟 *Number:* wa.me/+5217641291269
 
-⚡ ☆꧁༒ĹєǤ𝒆𝐧𝐃༒꧂☆
-🔖 Rol: Developer
-👾 GitHub: Diomar-s
-
-☘️ I'm Fz' (Tesis)
-🔖 Rol: Developer
-👾 GitHub: FzTeis
-
-🌪️ 𝓛𝓮𝓰𝓷𝓪
-🔖 Rol: Moderador
-👾 GitHub: Legna-chan
 
 ━━━━━━━━━━━━━━━
 🔥 ¡Gracias por apoyar el proyecto! 🔥`
