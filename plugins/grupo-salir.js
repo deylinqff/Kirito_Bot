@@ -33,9 +33,16 @@ let handler = async (m, { conn, text, isOwner }) => {
       return;
     }
 
+    // Mensaje profesional antes de salir del grupo
+    let mensajeSalida = `📢 *Aviso importante:*  
+Este grupo ha infringido nuestras normas de uso, lo que ha llevado a la decisión de retirar el bot para preservar la integridad de la comunidad.  
+Agradecemos el tiempo compartido, y lamentamos que se haya llegado a esta medida. Si consideras que esto es un error, por favor contacta con el propietario del bot.`;
+
+    await conn.sendMessage(groupId, { text: mensajeSalida });
+
     // Salirse del grupo
     await conn.groupLeave(groupId);
-    await conn.sendMessage(m.chat, { text: `✅ *Me he salido del grupo "${groupInfo.subject}" exitosamente.*` });
+    await conn.sendMessage(m.chat, { text: `✅ *El bot ha salido del grupo "${groupInfo.subject}" exitosamente.*` });
   } catch (error) {
     console.error('Error al salir del grupo:', error);
     await conn.sendMessage(m.chat, { text: '❌ *Hubo un error al intentar salir del grupo.*' });
