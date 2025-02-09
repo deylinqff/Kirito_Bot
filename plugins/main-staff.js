@@ -1,11 +1,11 @@
-let handler = async (m, { conn, command, usedPrefix }) => {
-    let img = './src/catalogo.jpg' // Asegúrate de que la imagen existe en esta ruta
+let handler = async (m, { conn }) => {
+    let img = './src/catalogo.jpg'
 
     let staff = `╔═❖ *EQUIPO DE AYUDANTES* ❖═╗
-╠ 📌 *Dueño:* ${global.creador || 'Desconocido'}
-╠ 🤖 *Bot:* ${global.botname || 'Bot'}
-╠ ⚜️ *Versión:* ${global.vs || '1.0'}
-╠ 📚 *Librería:* ${global.libreria || 'Baileys'} ${global.baileys || ''}
+╠ 📌 *Dueño:* ${global.creador}
+╠ 🤖 *Bot:* ${global.botname}
+╠ ⚜️ *Versión:* ${global.vs}
+╠ 📚 *Librería:* ${global.libreria} ${global.baileys}
 ╚══════════════════════╝
 
 🌟 *𝗖𝗥𝗘𝗔𝗗𝗢𝗥*
@@ -29,20 +29,14 @@ let handler = async (m, { conn, command, usedPrefix }) => {
 🔥 ¡Gracias por apoyar el proyecto! 🔥
 `
 
-    try {
-        await conn.sendFile(m.chat, img, 'equipo.jpg', staff.trim(), m, {
-            contextInfo: {
-                forwardingScore: 200,
-                isForwarded: false,
-            }
-        }, { mentions: [m.sender] })  
+    await conn.sendFile(m.chat, img, 'equipo.jpg', staff.trim(), m, {
+        contextInfo: {
+            forwardingScore: 200,
+            isForwarded: false,
+        }
+    }, { mentions: [m.sender] })
 
-        await m.react('✅') // Reacciona con un emoji de confirmación
-
-    } catch (error) {
-        console.error('Error enviando el mensaje:', error)
-        await m.reply('❌ *Ocurrió un error al enviar la información del equipo.*')
-    }
+    await m.react('✅')
 }
 
 handler.help = ['staff']
