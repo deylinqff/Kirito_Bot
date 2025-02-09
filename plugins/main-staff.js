@@ -1,47 +1,64 @@
-import moment from 'moment-timezone';
+let handler = async (m, { conn, command, usedPrefix }) => {
+let img = './src/catalogo.jpg'
+let staff = `
+╔═❖ EQUIPO DE AYUDANTES ❖═╗
+╠ 📌 Dueño: ${creador}
+╠ 🤖 Bot: ${botname}
+╠ ⚜️ Versión: ${vs}
+╠ 📚 Librería: ${libreria} ${baileys}
+╚══════════════════════╝
 
-let handler = async (m, { conn }) => {
-  let staff = `
-👑 *EQUIPO DE DESARROLLO*
+🌟 𝗖𝗥𝗘𝗔𝗗𝗢𝗥
+━━━━━━━━━━━━━━━
+👑 𝑫𝒆𝒚𝒍𝒊𝒏
+🔖 Rol: Creador
+👾 GitHub: https://github.com/deylinqff
 
-👑 *Dueño y Fundador:*  
-☁️ *Deylin*  
-📞 *WhatsApp:* wa.me/1234567890  
-🔗 (https://github.com/deylinqff)  
+💠 𝗖𝗢𝗟𝗔𝗕𝗢𝗥𝗔𝗗𝗢𝗥𝗘𝗦
+━━━━━━━━━━━━━━━
+🍍 Niño Piña
+🔖 Rol: Developer
+👾 GitHub: WillZek
 
-🛠️ *Ayudantes:*  
+🫧 𝓔𝓶𝓶𝓪 𝓥𝓲𝓸𝓵𝓮𝓽𝓼 𝓥𝓮𝓻𝓼𝓲ó𝓷
+🔖 Rol: Developer
+👾 GitHub: Elpapiema
 
-⚡ *Davidius⁩*  
-📞 *WhatsApp:* wa.me/+595975677765  
+⚡ ☆꧁༒ĹєǤ𝒆𝐧𝐃༒꧂☆
+🔖 Rol: Developer
+👾 GitHub: Diomar-s
 
-🚀 *Zoe*  
-📞 *WhatsApp:* wa.me/+56945882459  
+☘️ I'm Fz' (Tesis)
+🔖 Rol: Developer
+👾 GitHub: FzTeis
 
-⚙️ *Información Técnica:*  
-🔖 *Versión:* ${vs}  
-📚 *Librería:* ${libreria} ${baileys}  
-🤖 *Bot:* ${botname}
+🌪️ 𝓛𝓮𝓰𝓷𝓪
+🔖 Rol: Moderador
+👾 GitHub: Legna-chan
 
-✨ Gracias por confiar en nosotros. ¡Estamos aquí para mejorar tu experiencia!
-  `.trim();
+━━━━━━━━━━━━━━━
+🔥 ¡Gracias por apoyar el proyecto! 🔥`
+await conn.sendFile(m.chat, img, 'yuki.jpg', staff.trim(), fkontak, true, {
+contextInfo: {
+'forwardingScore': 200,
+'isForwarded': false,
+/*externalAdReply: {
+showAdAttribution: true,
+renderLargerThumbnail: false,
+title: packname,
+body: dev,
+mediaType: 1,
+sourceUrl: channel,
+thumbnailUrl: icono
+}}*/
+}
+}, { mentions: m.sender })
+m.react(emoji)
 
-  await conn.sendMessage(m.chat, { 
-    text: staff,
-    contextInfo: {
-      externalAdReply: {
-        title: `🌌 Equipo de Desarrollo 🌌`,
-        body: `Kirito Bot - Siempre contigo.`,
-        thumbnailUrl: 'https://files.catbox.moe/oue13b.jpg', // Cambia esto por tu URL de imagen
-        mediaType: 1,
-        showAdAttribution: true,
-        renderLargerThumbnail: true,
-      },
-    },
-  }, { quoted: m });
-};
+}
+handler.help = ['staff']
+handler.command = ['colaboradores', 'staff']
+handler.register = true
+handler.tags = ['main']
 
-handler.help = ['staff'];
-handler.tags = ['main'];
-handler.command = ['ayudantes', 'colaboradores', 'staff'];
-
-export default handler;
+export default handler
