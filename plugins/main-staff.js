@@ -4,7 +4,7 @@ let staff = `╔═❖ EQUIPO DE AYUDANTES ❖═╗
 ╠ 🤖 Bot: ${botname}
 ╠ ⚜️ Versión: ${vs}
 ╠ 📚 Librería: ${libreria} ${baileys}
-╚══════════════════════╝
+╚═════════════════════╝
 
 🌟 𝗖𝗥𝗘𝗔𝗗𝗢𝗥
 ━━━━━━━━━━━━━━━
