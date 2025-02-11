@@ -18,6 +18,7 @@ global.confirmCode = ''
 
 global.owner = [
   [ '50488198573', 'Deylin', true ],
+  [ '595975677765', 'Davidius', true ],
   [ '5217641291269', 'José', true ]
 ]; // <-- Corchete de cierre y coma añadidos
 
