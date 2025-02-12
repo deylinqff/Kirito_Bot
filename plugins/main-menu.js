@@ -44,7 +44,7 @@ let tags = {
   'advanced': 'ADVANCED',
 }
 
-    let img = 'https://qu.ax/zllFc.jpg' 'https://qu.ax/zXRxo.jpg' 'https://qu.ax/aDkgb.jpg' 'https://qu.ax/VeCrC.jpg'
+    let img = 'https://qu.ax/zllFc.jpg', 'https://qu.ax/zXRxo.jpg', 'https://qu.ax/aDkgb.jpg', 'https://qu.ax/VeCrC.jpg'
 
 const defaultMenu = {
   before:  `*⌬━━━━━▣━━◤⌬◢━━▣━━━━━━⌬*
