@@ -8,7 +8,7 @@ const formatVideo = ['360', '480', '720', '1080', '1440', '4k'];
 const ddownr = {
   download: async (url, format) => {
     if (!formatAudio.includes(format) && !formatVideo.includes(format)) {
-      throw new Error('Formato no soportado, verifica la lista de formatos disponibles_°.');
+      throw new Error('Formato no soportado, verifica la lista de formatos disponibles.');
     }
 
     const config = {
@@ -34,7 +34,7 @@ const ddownr = {
           downloadUrl: downloadUrl
         };
       } else {
-        throw new Error('✖️ 𝐹𝑎𝑙𝑙𝑜 𝑒𝑛 𝑜𝑏𝑡𝑒𝑛𝑒𝑟 𝑙𝑜𝑠 𝑑𝑒𝑡𝑎𝑙𝑙𝑒𝑠 𝑑𝑒𝑙 𝑣𝑖𝑑𝑒𝑜_°.');
+        throw new Error('Fallo al obtener los detalles del video.');
       }
     } catch (error) {
       console.error('Error:', error);
@@ -69,7 +69,7 @@ const ddownr = {
 const handler = async (m, { conn, text, usedPrefix, command }) => {
   try {
     if (!text.trim()) {
-      return conn.reply(m.chat, `👑 *𝐼𝑛𝑔𝑟𝑒𝑠𝑎 𝑒𝑙 𝑛𝑜𝑚𝑏𝑟𝑒 𝑑𝑒 𝑙𝑎 𝑚𝑢𝑠𝑖𝑐𝑎 𝑎 𝑑𝑒𝑠𝑐𝑎𝑟𝑔𝑎𝑟_°*.`, m);
+      return conn.reply(m.chat, `${emoji} ingresa el nombre de la música a descargar.`, m);
     }
 
     const search = await yts(text);
@@ -80,7 +80,7 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
     const videoInfo = search.all[0];
     const { title, thumbnail, timestamp, views, ago, url } = videoInfo;
     const vistas = formatViews(views);
-    const infoMessage = `🏓 𝑇𝑖𝑡𝑢𝑙𝑜: *${title}*\n*❦ ════ •⊰❂⊱• ════ ❦*\n> 🪄 𝐷𝑢𝑟𝑎𝑐𝑖𝑜𝑛: *${timestamp}*\n*❦ ════ •⊰❂⊱• ════ ❦*\n> 👑 𝑉𝑖𝑠𝑡𝑎𝑠: *${vistas}*\n*❦ ════ •⊰❂⊱• ════ ❦*\n> ✨ 𝐶𝑎𝑛𝑎𝑙: *${videoInfo.author.name || 'Desconocido'}*\n*❦ ════ •⊰❂⊱• ════ ❦*\n> 💫 𝑃𝑢𝑏𝑙𝑖𝑐𝑎𝑑𝑜: *${ago}*\n*❦ ════ •⊰❂⊱• ════ ❦*\n> ⚡ 𝐸𝑛𝑙𝑎𝑐𝑒: ${url}`;
+    const infoMessage = `🎬 Título: *${title}*\n*°.⎯⃘̶⎯̸⎯ܴ⎯̶᳞͇ࠝ⎯⃘̶⎯̸⎯ܴ⎯̶᳞͇ࠝ⎯⃘̶⎯̸.°*\n> 🕒 Duración: *${timestamp}*\n*°.⎯⃘̶⎯̸⎯ܴ⎯̶᳞͇ࠝ⎯⃘̶⎯̸⎯ܴ⎯̶᳞͇ࠝ⎯⃘̶⎯̸.°*\n> 👀 Vistas: *${vistas}*\n*°.⎯⃘̶⎯̸⎯ܴ⎯̶᳞͇ࠝ⎯⃘̶⎯̸⎯ܴ⎯̶᳞͇ࠝ⎯⃘̶⎯̸.°*\n> 🔖 Canal: *${videoInfo.author.name || 'Desconocido'}*\n*°.⎯⃘̶⎯̸⎯ܴ⎯̶᳞͇ࠝ⎯⃘̶⎯̸⎯ܴ⎯̶᳞͇ࠝ⎯⃘̶⎯̸.°*\n> 📆 Publicado: *${ago}*\n*°.⎯⃘̶⎯̸⎯ܴ⎯̶᳞͇ࠝ⎯⃘̶⎯̸⎯ܴ⎯̶᳞͇ࠝ⎯⃘̶⎯̸.°*\n> 🔗 Enlace: ${url}`;
     const thumb = (await conn.getFile(thumbnail))?.data;
 
     const JT = {
@@ -126,7 +126,7 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
               video: { url: downloadUrl },
               fileName: `${title}.mp4`,
               mimetype: 'video/mp4',
-              caption: `👑 *𝐴𝑞𝑢𝑖 𝑡𝑖𝑒𝑛𝑒𝑠*`,
+              caption: `${emoji} Aqui tienes ฅ^•ﻌ•^ฅ.`,
               thumbnail: thumb
             }, { quoted: m });
             break;
@@ -137,13 +137,13 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
       }
 
       if (!success) {
-        return m.reply(`✖️ *𝑁𝑜 𝑠𝑒 𝑝𝑢𝑑𝑜 𝑑𝑒𝑠𝑐𝑎𝑟𝑔𝑎𝑟 𝑒𝑙 𝑣𝑖𝑑𝑒𝑜:* 𝑁𝑜 𝑠𝑒 𝑒𝑛𝑐𝑜𝑛𝑡𝑟𝑜 𝑢𝑛 𝑒𝑛𝑙𝑎𝑐𝑒 𝑑𝑒 𝑑𝑒𝑠𝑐𝑎𝑟𝑔𝑎 𝑣𝑎𝑙𝑖𝑑𝑜_°.`);
+        return m.reply(`${emoji2} *No se pudo descargar el video:* No se encontró un enlace de descarga válido.`);
       }
     } else {
       throw "Comando no reconocido.";
     }
   } catch (error) {
-    return m.reply(`⚠️︎ *Error:* ${error.message}`);
+    return m.reply(`${msm}︎ Ocurrió un error: ${error.message}`);
   }
 };
 
