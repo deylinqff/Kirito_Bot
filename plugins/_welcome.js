@@ -32,7 +32,7 @@ export async function before(m, { conn, participants, groupMetadata }) {
 ║│ *user* :  @${userId.split`@`[0]}
 ║│ *Grupo* : ${groupMetadata.subject}
 ║╰──────────────┄
-╚═══════⩽✰⩾═══════╝\n>sigue el canal\n https://whatsapp.com/channel/0029VawF8fBBvvsktcInIz3m`;
+╚═══════⩽✰⩾═══════╝\n> sigue el canal\n https://whatsapp.com/channel/0029VawF8fBBvvsktcInIz3m`;
         try {
             await conn.sendMini(m.chat, packname, dev, wel, img, img, channel, fkontak);
         } catch (sendError) {
@@ -49,7 +49,7 @@ export async function before(m, { conn, participants, groupMetadata }) {
 ║│ *user* :  @${userId.split`@`[0]}
 ║│ *Grupo* : ${groupMetadata.subject}
 ║╰──────────────┄
-╚═══════⩽✰⩾═══════╝\n>sigue el canal\n https://whatsapp.com/channel/0029VawF8fBBvvsktcInIz3m`;
+╚═══════⩽✰⩾═══════╝\n> sigue el canal\n https://whatsapp.com/channel/0029VawF8fBBvvsktcInIz3m`;
         let img2;
         try {
             img2 = await (await fetch(goodbyeImage)).buffer(); 
@@ -68,7 +68,7 @@ export async function before(m, { conn, participants, groupMetadata }) {
 ║│ *user* :  @${userId.split`@`[0]}
 ║│ *Grupo* : ${groupMetadata.subject}
 ║╰──────────────┄
-╚═══════⩽✰⩾═══════╝\n>sigue el canal\n https://whatsapp.com/channel/0029VawF8fBBvvsktcInIz3m`;
+╚═══════⩽✰⩾═══════╝\n> sigue el canal\n https://whatsapp.com/channel/0029VawF8fBBvvsktcInIz3m`;
         let img3;
         try {
             img3 = await (await fetch(goodbyeImage)).buffer();
