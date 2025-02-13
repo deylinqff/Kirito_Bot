@@ -78,6 +78,6 @@ handler.help = ['profile'];
 handler.register = true;
 handler.group = true;
 handler.tags = ['rg'];
-handler.command = ['profile', 'perfil'];
+handler.command = ['perfil', 'profile'];
 
 export default handler;
