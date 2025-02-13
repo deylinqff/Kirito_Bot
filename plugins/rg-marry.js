@@ -76,7 +76,7 @@ const handler = async (m, { conn, command }) => {
             marriages[m.sender] = proposer;
             saveMarriages();
 
-            conn.sendMessage(m.chat, { text: `◎ ─━──━─❖─━──━─ ◎\n¡Se han Casado! ฅ^•ﻌ•^ฅ*:･ﾟ✧\n\n*•.¸♡ Esposo: ${conn.getName(proposer)}\n*•.¸♡ Esposa: ${conn.getName(m.sender)}\n\n\`Disfruten de su luna de miel\`\n◎ ─━──━─❖─━──━─ ◎`, mentions: [proposer, m.sender] }, { quoted: m });
+            conn.sendMessage(m.chat, { text: `◎ ─━──━─❖─━──━─ ◎\n¡Se han Casado! ฅ^•ﻌ•^ฅ*:･ﾟ✧\n\n*•.¸♡  ${conn.getName(proposer)} y ${conn.getName(m.sender)}\n\n\`Felizidades Disfruten de su luna de miel\`\n◎ ─━──━─❖─━──━─ ◎`, mentions: [proposer, m.sender] }, { quoted: m });
 
             clearTimeout(timeout);
             delete confirmation[m.sender];
