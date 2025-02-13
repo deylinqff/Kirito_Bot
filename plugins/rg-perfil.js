@@ -40,10 +40,6 @@ let handler = async (m, { conn, args }) => {
     let partner = isMarried ? global.db.data.marriages[userId] : null;
     let partnerName = partner ? conn.getName(partner) : 'Nadie';
 
-    // Definir moneda y developer info
-    let moneda = '$'; // O la moneda que quieras usar
-    let dev = 'Desarrollador: Deylin'; // O el nombre del desarrollador que prefieras
-
     let profileText = `
 「👑」 *Perfil* ✰@${userId.split('@')[0]}✰
 ${description}
