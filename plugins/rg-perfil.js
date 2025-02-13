@@ -74,7 +74,7 @@ ${description}
     }, { quoted: m });
 };
 
-handler.help = ['profile'];
+handler.help = ['profile', 'perfil'];
 handler.tags = ['rg'];
 handler.command = ['profile', 'perfil'];
 
