@@ -20,14 +20,14 @@
 },
 "homepage": "https://github.com/deylinqff/Kirito_Bot",
 "author": {
-"name": "Deylin"
+"name": "The-King-Deylin"
 },
 "repository": {
 "type": "git",
 "url": "git+https://github.com/deylinqff/Kirito_Bot.git"
 },
 "bugs": {
-"url": https://github.com/deylinqff/Kirito_Bot/issues"
+"url": "https://github.com/deylinqff/Kirito_Bot/issues"
 },
 "license": "GPL-3.0-or-later",
 "dependencies": {
