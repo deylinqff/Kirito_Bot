@@ -37,12 +37,6 @@ if (!Reg.test(text)) throw *『✦』El comando ingresado es incorrecto, úsalo 
 ᴠᴇʀɪғɪᴄᴀ ᴛᴜ ʀᴇɢɪᴛʀᴏ ᴀϙᴜɪ:
 ${channel2}
 ⌬━━━━▣━━◤◢━━▣━━━━━⌬
-
-  // Botón de "📜 Menú Principal"
-  let buttons = [
-    { buttonId: '.menu', buttonText: { displayText: '📜 Menú Principal' }, type: 1 }
-  ]
-
 ${packname}   await conn.sendMini(m.chat, '⊱『✅𝆺𝅥 𝗥𝗘𝗚𝗜𝗦𝗧𝗥𝗔𝗗𝗢(𝗔) 𝆹𝅥✅』⊰', textbot, regbot, imagen1, imagen1, channel, m)   //await m.reply(${sn}`)
 
 let chtxt =   ✐ *𝚄𝚜𝚎𝚛* » ${m.pushName || 'Anónimo'}   ⌨ *𝚅𝚎𝚛𝚒𝚏𝚒𝚌𝚊𝚌𝚒𝚘́𝚗* » ${user.name}   ⍰ *𝙴𝚍𝚊𝚍* » ${user.age} años   ✐ *𝙳𝚎𝚜𝚌𝚛𝚒𝚙𝚌𝚒𝚘𝚗* » ${user.descripcion}    ♛ *𝚄𝚕𝚝𝚒𝚖𝚊 𝙼𝚘𝚍𝚒𝚏𝚒𝚌𝚊𝚌𝚒𝚘𝚗* » ${fechaBio}   ߷︎ *𝙵𝚎𝚌𝚑𝚊* » ${moment.tz('America/Bogota').format('DD/MM/YY')}   ⚡ *𝙽𝚞𝚖𝚎𝚛𝚘 𝚍𝚎 𝚛𝚎𝚐𝚒𝚜𝚝𝚛𝚘* »   ⤷ ${sn}  .trim()
