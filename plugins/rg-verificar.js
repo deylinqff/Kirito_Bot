@@ -1,69 +1,76 @@
-import yts from 'yt-search';
-const handler = async (m, { conn, text, usedPrefix, command }) => {
-  if (!text) throw `${emoji} Por favor ingresa la música que deseás descargar.`;
+import db from '../lib/database.js';
+import fs from 'fs';
+import PhoneNumber from 'awesome-phonenumber';
+import { createHash } from 'crypto';
+import fetch from 'node-fetch';
 
-  const isVideo = /vid|2|mp4|v$/.test(command);
-  const search = await yts(text);
+let Reg = /\|?(.*)([.|] *?)([0-9]*)$/i;
 
-  if (!search.all || search.all.length === 0) {
-    throw "No se encontraron resultados para tu búsqueda.";
+let handler = async function (m, { conn, text, usedPrefix, command }) {
+  let who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? conn.user.jid : m.sender;
+  let mentionedJid = [who];
+  let bio = 0, fechaBio;
+  let sinDefinir = '😿 Es privada';
+  let biografia = await conn.fetchStatus(m.sender).catch(() => null);
+  if (!biografia || !biografia.status) {
+    bio = sinDefinir;
+    fechaBio = "Fecha no disponible";
+  } else {
+    bio = biografia.status || sinDefinir;
+    fechaBio = biografia.setAt ? new Date(biografia.setAt).toLocaleDateString("es-ES", { day: "2-digit", month: "2-digit", year: "numeric" }) : "Fecha no disponible";
   }
+  let perfil = await conn.profilePictureUrl(who, 'image').catch(_ => 'https://files.catbox.moe/xr2m6u.jpg');
+  let pp = await conn.profilePictureUrl(who, 'image').catch((_) => 'https://files.catbox.moe/xr2m6u.jpg');
+  let user = global.db.data.users[m.sender];
+  let name2 = conn.getName(m.sender);
+  if (user.registered === true) return m.reply(`Ya estás registrado.\n\n*¿Quiere volver a registrarse?*\n\nUse este comando para eliminar su registro.\n*${usedPrefix}unreg*`);
+  if (!Reg.test(text)) return m.reply(`Formato incorrecto.\n\nUso del comando: *${usedPrefix + command} nombre.edad*\nEjemplo : *${usedPrefix + command} ${name2}.18*`);
+  let [_, name, splitter, age] = text.match(Reg);
+  if (!name) return m.reply(`El nombre no puede estar vacío.`);
+  if (!age) return m.reply(`La edad no puede estar vacía.`);
+  if (name.length >= 100) return m.reply(`El nombre es demasiado largo.`);
+  age = parseInt(age);
+  if (age > 1000) return m.reply(`Wow el abuelo quiere jugar al bot.`);
+  if (age < 5) return m.reply(`Hay un abuelo bebé jsjsj.`);
+  user.name = name + '✓'.trim();
+  user.age = age;
+  user.descripcion = bio;
+  user.regTime = + new Date;
+  user.registered = true;
+  global.db.data.users[m.sender].coin += 40;
+  global.db.data.users[m.sender].exp += 300;
+  global.db.data.users[m.sender].joincount += 20;
+  let sn = createHash('md5').update(m.sender).digest('hex').slice(0, 20);
+  let regbot = `✨ 𝗥 𝗘 𝗚 𝗜 𝗦 𝗧 𝗥 𝗔 𝗗 𝗢 ✨\n`;
+  regbot += `•┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄•\n`;
+  regbot += `「☁️」𝗡𝗼𝗺𝗯𝗿𝗲 » ${name}\n`;
+  regbot += `「🪐」𝗘𝗱𝗮𝗱 » ${age} años\n`;
+  regbot += `•┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄•\n`;
+  regbot += `「🎁」 𝗥𝗲𝗰𝗼𝗺𝗽𝗲𝗻𝘀𝗮𝘀:\n`;
+  regbot += `> • 💸 *Monedas* » 40\n`;
+  regbot += `> • ✨ *Experiencia* » 300\n`;
+  regbot += `> • ⚜️ *Tokens* » 20\n`;
+  regbot += `•┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄•\n`;
+  regbot += `> Desarrollador`;
 
-  const videoInfo = search.all[0];
-  const body = `「✦」ძᥱsᥴᥲrgᥲᥒძ᥆ *<${videoInfo.title}>*\n\n> ✰ ᥎іs𝗍ᥲs » ${videoInfo.views}\n*°.⎯⃘̶⎯̸⎯ܴ⎯̶᳞͇ࠝ⎯⃘̶⎯̸⎯ܴ⎯̶᳞͇ࠝ⎯⃘̶⎯̸.°*\n> ⴵ ძᥙrᥲᥴі᥆ᥒ » ${videoInfo.timestamp}\n*°.⎯⃘̶⎯̸⎯ܴ⎯̶᳞͇ࠝ⎯⃘̶⎯̸⎯ܴ⎯̶᳞͇ࠝ⎯⃘̶⎯̸.°*\n> ✐ ⍴ᥙᑲᥣіᥴᥲძ᥆ » ${videoInfo.ago}\n*°.⎯⃘̶⎯̸⎯ܴ⎯̶᳞͇ࠝ⎯⃘̶⎯̸⎯ܴ⎯̶᳞͇ࠝ⎯⃘̶⎯̸.°*\n> 🜸 ᥣіᥒk » ${videoInfo.url}`;
+  await m.react('📩');
 
-    if (command === 'play' || command === 'play2' || command === 'playvid') {
-  await conn.sendMessage(m.chat, {
-      image: { url: videoInfo.thumbnail },
-      caption: body,
-      footer: dev,
-      buttons: [
-        {
-          buttonId: `.ytmp3 ${videoInfo.url}`,
-          buttonText: {
-            displayText: 'ᯓᡣ𐭩 ᥲᥙძі᥆',
-          },
-        },
-        {
-          buttonId: `.ytmp4 ${videoInfo.url}`,
-          buttonText: {
-            displayText: 'ᯓᡣ𐭩 ᥎іძᥱ᥆',
-          },
-        },
-      ],
-      viewOnce: true,
-      headerType: 4,
-    }, { quoted: fkontak });
-    m.react('🕒');
+  const buttons = [
+    { buttonId: `${usedPrefix}menu`, buttonText: { displayText: 'Menú' }, type: 1 }
+  ];
 
-    } else if (command === 'yta' || command === 'ytmp3') {
-    m.react(rwait)
-      let audio = await (await fetch(`https://api.botcahx.eu.org/api/download/get-YoutubeResult?url=${videoInfo.url}&type=audio&xky=zM%7DUrP%7DO`)).buffer()
-      conn.sendFile(m.chat, audio, videoInfo.title, '', m, null, { mimetype: "audio/mpeg", asDocument: false })
-    m.react(done)
-    } else if (command === 'ytv' || command === 'ytmp4') {
-    m.react(rwait)
-      let video = await (await fetch(`https://api.botcahx.eu.org/api/download/get-YoutubeResult?url=${videoInfo.url}&type=video&xky=zM%7DUrP%7DO`)).buffer()
-    await conn.sendMessage(m.chat, {
-      video: video,
-      mimetype: "video/mp4",
-      caption: ``,
-    }, { quoted: m });
-    m.react(done)
-    } else {
-      throw "Comando no reconocido.";
-    }
+  const buttonMessage = {
+    text: regbot,
+    footer: 'Seleccione una opción',
+    buttons: buttons,
+    headerType: 1
+  };
+
+  await conn.sendMessage(m.chat, buttonMessage, { quoted: m });
 };
 
-handler.command = handler.help = ['play3', 'playvid', 'ytv', 'ytmp4', 'yta', 'play2', 'ytmp3'];
-handler.tags = ['dl'];
+handler.help = ['reg'];
+handler.tags = ['rg'];
+handler.command = ['verify', 'verificar', 'reg', 'register', 'registrar'];
+
 export default handler;
-
-const getVideoId = (url) => {
-  const regex = /(?:v=|\/)([0-9A-Za-z_-]{11}).*/;
-  const match = url.match(regex);
-  if (match) {
-    return match[1];
-  }
-  throw new Error("Invalid YouTube URL");
-};
