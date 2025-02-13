@@ -63,7 +63,7 @@ ${description}
         contextInfo: {
             mentionedJid: [userId],
             externalAdReply: {
-                title: '✰ Perfil de Usuario ✰',
+                title: '✧ Perfil de Usuario ✧',
                 body: dev,
                 thumbnailUrl: perfil,
                 mediaType: 1,
@@ -74,10 +74,8 @@ ${description}
     }, { quoted: m });
 };
 
-handler.help = ['perfil'];
-handler.register = true;
-handler.group = true;
+handler.help = ['profile'];
 handler.tags = ['rg'];
-handler.command = ['perfil', 'profile'];
+handler.command = ['profile', 'perfil'];
 
 export default handler;
