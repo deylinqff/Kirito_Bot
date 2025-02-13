@@ -1,6 +1,6 @@
 {
-"name": "Kirito",
-"version": "2.1.5",
+"name": "Kirito-Bot",
+"version": "2.2.0",
 "description": "Super WhatsApp Bot Multi Device",
 "main": "index.js",
 "type": "module",
@@ -20,14 +20,14 @@
 },
 "homepage": "https://github.com/deylinqff/Kirito_Bot",
 "author": {
-"name": "The-King-Deylin"
+"name": "Deylin"
 },
 "repository": {
 "type": "git",
 "url": "git+https://github.com/deylinqff/Kirito_Bot.git"
 },
 "bugs": {
-"url": "https://github.com/deylinqff/Kirito_Bot/issues"
+"url": https://github.com/deylinqff/Kirito_Bot/issues"
 },
 "license": "GPL-3.0-or-later",
 "dependencies": {
