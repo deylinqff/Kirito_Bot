@@ -58,6 +58,22 @@ let regbot = `👤 𝗥 𝗘 𝗚 𝗜 𝗦 𝗧 𝗥 𝗢 👤
 ${channel2}
 ⌬━━━━▣━━◤◢━━▣━━━━━⌬
 ${packname}`
+
+    buttons: [
+        {
+          buttonId: `.ytmp3 ${videoInfo.url}`,
+          buttonText: {
+            displayText: 'ᯓᡣ𐭩 ᥲᥙძі᥆',
+          },
+        },
+        {
+          buttonId: `.ytmp4 ${videoInfo.url}`,
+          buttonText: {
+            displayText: 'ᯓᡣ𐭩 ᥎іძᥱ᥆',
+          },
+        },
+      ],
+
 await conn.sendMini(m.chat, '⊱『✅𝆺𝅥 𝗥𝗘𝗚𝗜𝗦𝗧𝗥𝗔𝗗𝗢(𝗔) 𝆹𝅥✅』⊰', textbot, regbot, imagen1, imagen1, channel, m)
 //await m.reply(`${sn}`)   
 
