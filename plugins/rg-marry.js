@@ -55,7 +55,7 @@ const handler = async (m, { conn, command }) => {
                 timeout: setTimeout(() => {
                     conn.sendMessage(m.chat, { text: '*〘⌛〙Se acabó el tiempo, no se obtuvo respuesta. La propuesta de matrimonio fue cancelada.*' }, { quoted: m });
                     delete confirmation[proposee];
-                }, 60000)
+                }, 300000)
             };
         } else if (isDivorce) {
             if (!userIsMarried(m.sender)) throw new Error('No estás casado con nadie.');
