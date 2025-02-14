@@ -25,7 +25,7 @@ let owner = `
 ┃ 💠 *#dsowner* - Eliminar archivos innecesarios de sesión.
 ╰━━━━━━━━━━━━━╯
 
-╭━━⊷ *comandos avanzados* ⊶━━╮
+╭━⊷ *comandos avanzados* ⊶━╮
 ┃ 🔥 *#addowner* / *#delowner* - Agregar o eliminar owner.
 ┃ 🔥 *#codigo* - Crear código de canjeo.
 ┃ 🔥 *#backup* - Respaldo de la DB del bot.
