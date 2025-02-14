@@ -76,5 +76,6 @@ handler.help = ['mods'];
 handler.tags = ['main'];
 handler.command = ['mods', 'dev', 'owners'];
 handler.mods = true;
+handler.rowner = true
 
 export default handler;
