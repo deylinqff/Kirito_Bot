@@ -3,7 +3,7 @@ import moment from 'moment-timezone';
 let handler = async (m, { conn }) => {
 let owner = `
 ┏━━━━━━━━━━⬣
-┃ ✦ 𝐌𝐎𝐃𝐒 & 𝐎𝐖𝐍𝐄𝐑𝐒 ✦
+┃ ✦ 𝐎𝐖𝐍𝐄𝐑𝐒 ✦
 ┗━━━━━━━━━━⬣
 👑 *Comandos exclusivos para Moderadores*
 
