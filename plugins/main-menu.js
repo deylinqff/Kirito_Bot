@@ -9,7 +9,7 @@ let nivel = user.level || 0;
 let coins = user.coin || 0;
 let role = user.role || 'Sin Rango';
 
-let perfil = await conn.profilePictureUrl(userId, 'image').catch(_ => 'https://qu.ax/zllFc.jpg');
+let perfil = await conn.profilePictureUrl(userId, 'image').catch(_ => 'https://files.catbox.moe/xr2m6u.jpg');
 
 let txt = `
 һ᥆ᥣᥲ! s᥆ᥡ  ${botname}  ٩(˘◡˘)۶
