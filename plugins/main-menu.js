@@ -8,8 +8,8 @@ let handler = async (m, { conn, args }) => {
   let nivel = user.level || 0;
   let coins = user.coin || 0;
   let role = user.role || 'Sin Rango';
-  let img = 'https://qu.ax/zllFc.jpg';
-  let perfil = await conn.profilePictureUrl(userId,
+  
+  let perfil = await conn.profilePictureUrl(userId, let img = 'https://qu.ax/zllFc.jpg'
 
   let txt = `
 һ᥆ᥣᥲ! s᥆ᥡ  *${botname}*  ٩(˘◡˘)۶
