@@ -13,7 +13,7 @@ const require = createRequire(__dirname);
 const { name, description, author, version } = require(join(__dirname, './package.json'));
 const { say } = cfonts;
 const rl = createInterface(process.stdin, process.stdout);
-say('Kirito-Bot', {
+say('kirito-bot', {
 font: 'block',
 align: 'center',
 colors: ['yellow']
@@ -73,7 +73,7 @@ p.emit('message', line.trim());
 }
 process.on('warning', (warning) => {
 if (warning.name === 'MaxListenersExceededWarning') {
-console.warn('⚡ Se excedió el límite de Listeners en:');
+console.warn('📌 Se excedió el límite de Listeners en:');
 console.warn(warning.stack);
 }
 });
