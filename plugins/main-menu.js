@@ -53,6 +53,7 @@ const generarSaludo = () => {
 const formatoMenu = {
   antes: `╔══════════════════╗\n   *Bienvenido a KIRITO-BOT*\n╚══════════════════╝
 
+✎ ${generarSaludo()}, *%name*.
 
 ╔═══════ೋೋ═══════☾
 ║┏◆━━━━━━◆❃◆━━━━━━◆
