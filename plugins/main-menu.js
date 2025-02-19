@@ -63,7 +63,7 @@ const formatoMenu = {
 ║┃ 👥 *Usuarios registrados:* %totalreg
 ║┗◆━━━━━━◆❃◆━━━━━━◆
 ╚═══════ೋೋ═══════☾
- %readmore
+%readmore
   ───────────────`,
   cabecera: '┏━☾➥ *%categoria* ««✰',
   cuerpo: '┃%emoji %cmd %isLimit %isPremium',
@@ -103,7 +103,8 @@ const handler = async (m, { conn, usedPrefix }) => {
       .replace(/%nivel/g, level)
       .replace(/%exp/g, exp - min)
       .replace(/%maxexp/g, xp)
-      .replace(/%totalreg/g, totalUsuarios);
+      .replace(/%totalreg/g, totalUsuarios)
+      .replace(/%readmore/g, '\n\n'); // Asegura que %readmore funcione
 
     for (let categoria in categorias) {
       const comandosFiltrados = comandos.filter(cmd => cmd.categorias.includes(categoria));
