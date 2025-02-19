@@ -128,8 +128,16 @@ const handler = async (m, { conn, usedPrefix }) => {
 
     menuTexto += `\n\n${formatoMenu.despues}`;
 
-    const imagenURL = 'https://files.catbox.moe/80uwhc.jpg', 'https://files.catbox.moe/hyrmn9.jpg', 'https://files.catbox.moe/0tv7r3.jpg', 'https://files.catbox.moe/yiaw4a.jpg';
-    await conn.sendFile(m.chat, imagenURL, 'menu.jpg', menuTexto.trim(), m);
+    const imagenesURL = [
+      'https://files.catbox.moe/80uwhc.jpg',
+      'https://files.catbox.moe/hyrmn9.jpg',
+      'https://files.catbox.moe/0tv7r3.jpg',
+      'https://files.catbox.moe/yiaw4a.jpg'
+    ];
+    
+    const imagenAleatoria = imagenesURL[Math.floor(Math.random() * imagenesURL.length)];
+
+    await conn.sendFile(m.chat, imagenAleatoria, 'menu.jpg', menuTexto.trim(), m);
   } catch (error) {
     console.error('Error en el menú:', error);
     conn.reply(m.chat, '❌ Error al generar el menú.', m);
