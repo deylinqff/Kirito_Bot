@@ -3,15 +3,6 @@ import { join } from 'path'
 import fetch from 'node-fetch'
 import { xpRange } from '../lib/levelling.js'
 
-const generarEstilo = (texto) => {
-  const caracteres = 'abcdefghijklmnopqrstuvwxyz1234567890';
-  const estilo = 'ᴀʙᴄᴅᴇꜰɢʜɪᴊᴋʟᴍɴᴏᴘqʀꜱᴛᴜᴠᴡxʏᴢ1234567890';
-  return texto.toLowerCase().split('').map(char => {
-    const index = caracteres.indexOf(char);
-    return index !== -1 ? estilo[index] : char;
-  }).join('');
-};
-
 const categorias = {
   'anime': '🌸 ANIME',
   'main': '📌 INFO',
@@ -60,17 +51,27 @@ const formatoMenu = {
 
 const handler = async (m, { conn, usedPrefix }) => {
   try {
+    // Validar que el usuario exista en la base de datos
     const usuario = global.db.data.users[m.sender];
-    const { exp, level } = usuario;
-    const { min, xp, max } = xpRange(level, global.multiplier);
-    const nombre = await conn.getName(m.sender);
-    const totalUsuarios = Object.keys(global.db.data.users).length;
+    if (!usuario) {
+      return conn.reply(m.chat, '❌ No estás registrado en la base de datos.', m);
+    }
+
+    const { exp = 0, level = 1 } = usuario;
+    const { min, xp, max } = xpRange(level, global.multiplier || 1);
+    const nombre = (await conn.getName(m.sender)) || 'Usuario';
+    const totalUsuarios = Object.keys(global.db.data.users || {}).length;
     const modo = global.opts['self'] ? 'Privado' : 'Público';
 
+    // Validar que existan los plugins
+    if (!global.plugins) {
+      return conn.reply(m.chat, '❌ Error: No se encontraron comandos.', m);
+    }
+
     const comandos = Object.values(global.plugins)
-      .filter(plugin => !plugin.disabled)
+      .filter(plugin => plugin && !plugin.disabled)
       .map(plugin => ({
-        ayuda: Array.isArray(plugin.tags) ? plugin.help : [plugin.help],
+        ayuda: Array.isArray(plugin.help) ? plugin.help : [plugin.help],
         categorias: Array.isArray(plugin.tags) ? plugin.tags : [plugin.tags],
         limite: plugin.limit ? '🛑' : '',
         premium: plugin.premium ? '💎' : '',
@@ -105,7 +106,7 @@ const handler = async (m, { conn, usedPrefix }) => {
     const imagenURL = 'https://files.catbox.moe/80uwhc.jpg';
     await conn.sendFile(m.chat, imagenURL, 'menu.jpg', menuTexto.trim(), m);
   } catch (error) {
-    console.error(error);
+    console.error('Error en el menú:', error);
     conn.reply(m.chat, '❌ Error al generar el menú.', m);
   }
 };
