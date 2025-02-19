@@ -102,7 +102,7 @@ const handler = async (m, { conn, usedPrefix }) => {
 
     menuTexto += `\n\n${formatoMenu.despues}`;
 
-    const imagenURL = 'https://i.ibb.co/vvTfkcm/file.jpg';
+    const imagenURL = 'https://files.catbox.moe/80uwhc.jpg';
     await conn.sendFile(m.chat, imagenURL, 'menu.jpg', menuTexto.trim(), m);
   } catch (error) {
     console.error(error);
