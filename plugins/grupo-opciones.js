@@ -21,7 +21,7 @@ const handler = async (m, { conn, participants, groupMetadata }) => {
 
 > Nota: Puedes activar una de estas opciones de esta manera Ejemplo: #enable antilink`.trim();
 
-  await conn.sendFile(m.chat, icons, 'yuki.jpg', text, m, true, {
+  await conn.sendFile(m.chat, icons, 'kirito.jpg', text, m, true, {
     contextInfo: {
       forwardingScore: 200,
       isForwarded: false,
