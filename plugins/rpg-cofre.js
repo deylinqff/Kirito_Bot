@@ -39,7 +39,7 @@ const handler = async (m, { isPrems, conn }) => {
 ╰━━━━━━━━━━━━⬣`;
 
   try {
-    await conn.sendFile(m.chat, img, 'yuki.jpg', texto);
+    await conn.sendFile(m.chat, img, 'kirito.jpg', texto);
   } catch (error) {
     throw `⚠️ Ocurrió un error al enviar el cofre.`;
   }
