@@ -64,7 +64,7 @@ const formatoMenu = {
 ║┗◆━━━━━━◆❃◆━━━━━━◆
 ╚═══════ೋೋ═══════☾
 
-\u200B`, // Aquí se coloca el código de "Leer más"
+\u%readmore`,
 
   cabecera: '┏━☾➥ *%categoria* ««✰',
   cuerpo: '┃%emoji %cmd %isLimit %isPremium',
