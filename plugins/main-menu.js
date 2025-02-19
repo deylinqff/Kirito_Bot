@@ -23,6 +23,26 @@ const categorias = {
   'advanced': '🚀 AVANZADO',
 };
 
+const emojisCategorias = {
+  'anime': '🎴',
+  'main': '📌',
+  'search': '🔎',
+  'game': '🕹️',
+  'serbot': '🤖',
+  'rpg': '⚔️',
+  'sticker': '🎭',
+  'group': '👥',
+  'premium': '💎',
+  'downloader': '📥',
+  'tools': '🛠️',
+  'fun': '🎉',
+  'nsfw': '🔞',
+  'cmd': '📂',
+  'owner': '👑',
+  'audio': '🎶',
+  'advanced': '🚀',
+};
+
 const generarSaludo = () => {
   const hora = new Date().getHours();
   if (hora >= 5 && hora < 12) return '🌞 ¡Buenos días!';
@@ -31,27 +51,25 @@ const generarSaludo = () => {
 };
 
 const formatoMenu = {
-  antes: `╔══❖•ೋ°⚔️°ೋ•❖══╗
+  antes: `╔══════════════════╗
   🌟 *Bienvenido a KIRITO-BOT* 🌟
-  ╚══❖•ೋ°⚔️°ೋ•❖══╝
+  ╚══════════════════╝
 
   ${generarSaludo()}, *%name*.
-  🤖 *Estado:* %modo
+  🤖 *Modo:* %modo
   📊 *Nivel:* %nivel
   🏆 *Experiencia:* %exp / %maxexp
   👥 *Usuarios registrados:* %totalreg
 
-  🌟 _¡Explora los comandos disponibles!_ 🌟
-  `,
-  cabecera: '⚡ *%categoria* ⚡',
-  cuerpo: '🔹 %cmd %isLimit %isPremium',
+  ───────────────`,
+  cabecera: '🌟 *%categoria* 🌟',
+  cuerpo: '%emoji %cmd %isLimit %isPremium',
   pie: '──────────────────────',
   despues: '🔥 *By DEYLIN* 🔥',
 };
 
 const handler = async (m, { conn, usedPrefix }) => {
   try {
-    // Validar que el usuario exista en la base de datos
     const usuario = global.db.data.users[m.sender];
     if (!usuario) {
       return conn.reply(m.chat, '❌ No estás registrado en la base de datos.', m);
@@ -63,7 +81,6 @@ const handler = async (m, { conn, usedPrefix }) => {
     const totalUsuarios = Object.keys(global.db.data.users || {}).length;
     const modo = global.opts['self'] ? 'Privado' : 'Público';
 
-    // Validar que existan los plugins
     if (!global.plugins) {
       return conn.reply(m.chat, '❌ Error: No se encontraron comandos.', m);
     }
@@ -94,7 +111,8 @@ const handler = async (m, { conn, usedPrefix }) => {
             menuTexto += `\n${formatoMenu.cuerpo
               .replace(/%cmd/g, usedPrefix + help)
               .replace(/%isLimit/g, cmd.limite)
-              .replace(/%isPremium/g, cmd.premium)}`;
+              .replace(/%isPremium/g, cmd.premium)
+              .replace(/%emoji/g, emojisCategorias[categoria] || '🔹')}`;
           });
         });
         menuTexto += `\n${formatoMenu.pie}`;
