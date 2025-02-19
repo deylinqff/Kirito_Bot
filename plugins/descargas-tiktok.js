@@ -1,31 +1,37 @@
-import fetch from 'node-fetch';
+import fetch from "node-fetch";
 
-const handler = async (m, { conn, text }) => {
-  if (!text) return conn.reply(m.chat, '『 ✎ 』 Por favor, ingresa un enlace de TikTok.', m);
-
-  const tiktokAPI = `https://apis-starlights-team.koyeb.app/starlight/tiktok2?url=${text}`;
+const handler = async (m, { conn, args }) => {
+  if (!args[0]) {
+    return conn.reply(m.chat, "⚔️ *Kirito-Bot* | Por favor, ingresa un enlace de TikTok.", m);
+  }
 
   try {
-    await m.react(rwait);
-    const res = await fetch(tiktokAPI);
-    const json = await res.json();
+    await conn.reply(m.chat, "⏳ Procesando tu solicitud, espera un momento...", m);
 
-    if (!json || !json.video) return conn.reply(m.chat, '『 ⍰ 』 No se pudo descargar el video. Verifica que la URL sea correcta.', m);
+    const tiktokData = await tiktokdl(args[0]);
 
-    await conn.sendMessage(m.chat, { video: { url: json.video }, caption: '『 ⌬ 』 Aqui tienes ฅ^•ﻌ•^ฅ.' }, { quoted: m });
-   await m.react(done);
+    if (!tiktokData?.data?.play) {
+      return conn.reply(m.chat, "❌ Error: No se pudo obtener el video.", m);
+    }
 
-  } catch (e) {
-    conn.reply(m.chat, '⚠️ Ocurrió un error al descargar el video.', m);
-    await m.react(error);
-    console.log(e);
+    const videoURL = tiktokData.data.play;
+
+    await conn.sendFile(m.chat, videoURL, "tiktok.mp4", "🎥 Aquí tienes tu video descargado por *Kirito-Bot* ⚔", m);
+  } catch (error) {
+    return conn.reply(m.chat, `⚠ Ocurrió un error: ${error.message}`, m);
   }
 };
 
-handler.help = ['tiktok', 'tt'];
-handler.tags = ['descargas'];
-handler.command = ['tiktok', 'tt'];
-handler.coin = 1;
+handler.help = ["tiktok"].map(v => v + " <link>");
+handler.tags = ["descargas"];
+handler.command = ["tiktok", "tt"];
 handler.register = true;
+handler.limit = true;
 
 export default handler;
+
+async function tiktokdl(url) {
+  let apiURL = `https://www.tikwm.com/api/?url=${url}&hd=1`;
+  let response = await fetch(apiURL);
+  return await response.json();
+}
