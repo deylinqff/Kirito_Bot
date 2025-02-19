@@ -71,6 +71,9 @@ const formatoMenu = {
   despues: '🔥 *By DEYLIN* 🔥',
 };
 
+const more = String.fromCharCode(8206);
+const readMore = more.repeat(4001);
+
 const handler = async (m, { conn, usedPrefix }) => {
   try {
     const usuario = global.db.data.users[m.sender];
@@ -104,7 +107,7 @@ const handler = async (m, { conn, usedPrefix }) => {
       .replace(/%exp/g, exp - min)
       .replace(/%maxexp/g, xp)
       .replace(/%totalreg/g, totalUsuarios)
-      .replace(/%readmore/g, '\n\n'); // Asegura que %readmore funcione
+      .replace(/%readmore/g, readMore);
 
     for (let categoria in categorias) {
       const comandosFiltrados = comandos.filter(cmd => cmd.categorias.includes(categoria));
