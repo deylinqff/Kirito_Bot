@@ -11,50 +11,44 @@ const ddownr = {
       throw new Error("⚠ Formato no soportado, elige uno de la lista disponible.");
     }
 
-    const config = {
-      method: "GET",
-      url: `https://p.oceansaver.in/ajax/download.php?format=${format}&url=${encodeURIComponent(url)}&api=dfcb6d76f2f6a9894gjkege8a4ab232222`,
-      headers: {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, como Gecko) Chrome/91.0.4472.124 Safari/537.36"
-      }
-    };
+    const apiURL = `https://p.oceansaver.in/ajax/download.php?format=${format}&url=${encodeURIComponent(url)}&api=dfcb6d76f2f6a9894gjkege8a4ab232222`;
 
     try {
-      const response = await axios.request(config);
+      const response = await axios.get(apiURL, {
+        headers: { "User-Agent": "Mozilla/5.0" },
+      });
+
       if (response.data?.success) {
-        const { id } = response.data;
-        return await ddownr.cekProgress(id);
+        return await ddownr.cekProgress(response.data.id);
       } else {
         throw new Error("⛔ No se pudo obtener los detalles del video.");
       }
     } catch (error) {
-      console.error("❌ Error:", error);
+      console.error("❌ Error en ddownr:", error);
       throw error;
     }
   },
 
   cekProgress: async (id) => {
-    const config = {
-      method: "GET",
-      url: `https://p.oceansaver.in/ajax/progress.php?id=${id}`,
-      headers: {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, como Gecko) Chrome/91.0.4472.124 Safari/537.36"
-      }
-    };
+    const progressURL = `https://p.oceansaver.in/ajax/progress.php?id=${id}`;
 
     try {
       while (true) {
-        const response = await axios.request(config);
+        const response = await axios.get(progressURL, {
+          headers: { "User-Agent": "Mozilla/5.0" },
+        });
+
         if (response.data?.success && response.data.progress === 1000) {
           return response.data.download_url;
         }
-        await new Promise(resolve => setTimeout(resolve, 3000));
+
+        await new Promise((resolve) => setTimeout(resolve, 3000));
       }
     } catch (error) {
-      console.error("❌ Error:", error);
+      console.error("❌ Error en cekProgress:", error);
       throw error;
     }
-  }
+  },
 };
 
 const handler = async (m, { conn, text, usedPrefix, command }) => {
@@ -100,6 +94,11 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
 
     if (command === "playdoc" || command === "ytmp3doc") {
       const downloadUrl = await ddownr.download(url, "mp3");
+
+      if (!downloadUrl) {
+        return m.reply("⛔ No se pudo obtener el enlace de descarga.");
+      }
+
       await conn.sendMessage(m.chat, {
         document: { url: downloadUrl },
         fileName: `${title}.mp3`,
@@ -109,18 +108,21 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
     } else if (command === "playdoc2" || command === "ytmp4doc") {
       const sources = [
         `https://api.siputzx.my.id/api/d/ytmp4?url=${url}`,
-        `https://delirius-apiofc.vercel.app/download/ytmp4?url=${url}`
+        `https://delirius-apiofc.vercel.app/download/ytmp4?url=${url}`,
+        `https://yt-api.flx.codes/api/ytmp4?url=${url}` // Nueva API de respaldo
       ];
 
       let success = false;
+
       for (let source of sources) {
         try {
           const res = await fetch(source);
-          const { data } = await res.json();
-          let downloadUrl = data?.dl || data?.download?.url;
+          const data = await res.json();
+          let downloadUrl = data?.dl || data?.download?.url || data?.link;
 
           if (downloadUrl) {
             success = true;
+
             await conn.sendMessage(m.chat, {
               document: { url: downloadUrl },
               fileName: `${title}.mp4`,
@@ -128,10 +130,11 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
               caption: "⚔ Aquí tienes tu video descargado por *Kirito-Bot* ⚔",
               thumbnail: thumb
             }, { quoted: m });
+
             break;
           }
         } catch (e) {
-          console.error(`⚠ Error con la fuente ${source}:`, e.message);
+          console.error(`⚠ Error con la API ${source}:`, e.message);
         }
       }
 
