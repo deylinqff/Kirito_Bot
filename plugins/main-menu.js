@@ -31,22 +31,20 @@ const generarSaludo = () => {
 };
 
 const formatoMenu = {
-  antes: `╭══•*💠*•══╮
-        ✨ *KIRITO-BOT* ✨  
-╰══•*💠*•══╯
+  antes: `╔══❖•ೋ°⚔️°ೋ•❖══╗
+  🌟 *Bienvenido a KIRITO-BOT* 🌟
+  ╚══❖•ೋ°⚔️°ೋ•❖══╝
 
-╭━━━━━━━━━━━━━⬣
-┃ 👤 *Usuario:* ${nombre}
-┃ 🔰 *Modo:* ${modo}
-┃ 📊 *Nivel:* ${level}
-┃ 🏆 *Exp:* ${exp - min} / ${xp}
-┃ 👥 *Usuarios:* ${totalUsuarios}
-╰━━━━━━━━━━━━━⬣
+  ${generarSaludo()}, *%name*.
+  🤖 *Estado:* %modo
+  📊 *Nivel:* %nivel
+  🏆 *Experiencia:* %exp / %maxexp
+  👥 *Usuarios registrados:* %totalreg
 
   🌟 _¡Explora los comandos disponibles!_ 🌟
   `,
   cabecera: '⚡ *%categoria* ⚡',
-  cuerpo: '👑 %cmd %isLimit %isPremium',
+  cuerpo: '🔹 %cmd %isLimit %isPremium',
   pie: '──────────────────────',
   despues: '🔥 *By DEYLIN* 🔥',
 };
