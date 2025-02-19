@@ -127,11 +127,11 @@ echo -e "\e[35m
 ╚═╝░░╚═╝░░╚═╝░░  ╚═╝╚═╝░░╚══╝╚═════╝░░░░╚═╝░░░╚═╝░░╚═╝╚══════╝╚══════╝\n\e[0m"
 
 echo -e "\033[1;35m"
-git clone https://github.com/The-King-Destroy/Yuki_Suou-Bot.git
+git clone https://github.com/deylinqff/Kirito_Bot.git
 echo -e "\033[01;32m\033[01mLa clonación se ha descargado e instalado correctamente.\nThe clone has been downloaded and installed successfully.\n\033[0m"
 
-echo -e "\033[01;32m\033[01mCambiando al directorio del repositorio!!\nChanging to the repository directory!!\n\033[0m" 
-cd Yuki_Suou-Bot
+echo -e "\033[01;32m\033[01mCambiando al directorio del repositorio!!\nChanging to the repository Deylin!!\n\033[0m" 
+cd Kirito-Bot
 
 echo -e "\e[36m
 █░█ █▀█ █▀▄ ▄▀█ ▀█▀ █▀▀   █▄█ ▄▀█ █▀█ █▄░█
@@ -163,18 +163,18 @@ clear
 echo -e "\e[36m
 ┏━━━━━━━━━⪩
 ┃˚₊ · ͟͟͞͞➳❥ INFORMACÍON
-┃⏤͟͟͞͞YUKI-BOT
+┃⏤͟͟͞͞KIRITO-BOT
 ┗━━━━━━━━━⪩
 
 ✰ Mode by:
-» ⁱᵃᵐ|𝔇ĕ𝐬†𝓻⊙γ𒆜
+» DEYLIN
 ✰ GitHub:
-» https://github.com/The-King-Destroy
+» https://github.com/deylinqff
 ✰ Numero:
-» +58 412-0346669
+» +504 8819-8573
 
 𝐆 𝐑 𝐀 𝐂 𝐈 𝐀 𝐒, 𝐏 𝐎 𝐑, 𝐏 𝐑 𝐄 𝐅 𝐄 𝐑 𝐈 𝐑 𝐍 𝐎 𝐒\n\e[0m"
 
 
-echo -e "\033[01;32m\033[01mIniciando Yuki_Suou-Bot \nYuki Bot\n\033[0m"
+echo -e "\033[01;32m\033[01mIniciando Kirito-Bot \nkirito Bot\n\033[0m"
 npm start
