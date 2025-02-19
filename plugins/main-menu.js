@@ -51,14 +51,17 @@ const generarSaludo = () => {
 };
 
 const formatoMenu = {
-  antes: `╔══════════════════╗\n*Bienvenido a KIRITO-BOT*\n╚══════════════════╝
+  antes: `╔══════════════════╗\n   *Bienvenido a KIRITO-BOT*\n╚══════════════════╝
 
-  ${generarSaludo()}, *%name*.
-  🤖 *Modo:* %modo
-  📊 *Nivel:* %nivel
-  🏆 *Experiencia:* %exp / %maxexp
-  👥 *Usuarios registrados:* %totalreg
 
+╔═══════ೋೋ═══════☾
+║┏◆━━━━━━◆❃◆━━━━━━◆
+║┃ 🤖 *Modo:* %modo
+║┃ 📊 *Nivel:* %nivel
+║┃ 🏆 *Experiencia:* %exp / %maxexp
+║┃ 👥 *Usuarios registrados:* %totalreg
+║┗◆━━━━━━◆❃◆━━━━━━◆
+╚═══════ೋೋ═══════☾
   ───────────────`,
   cabecera: '🌟 *%categoria* 🌟',
   cuerpo: '%emoji %cmd %isLimit %isPremium',
