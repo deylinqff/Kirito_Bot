@@ -55,7 +55,7 @@ const formatoMenu = {
   cabecera: '⚡ *%categoria* ⚡',
   cuerpo: '🔹 %cmd %isLimit %isPremium',
   pie: '──────────────────────',
-  despues: '🔥 *By TECNO-BOT®* 🔥',
+  despues: '🔥 *By DEYLIN* 🔥',
 };
 
 const handler = async (m, { conn, usedPrefix }) => {
