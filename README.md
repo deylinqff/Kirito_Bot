@@ -1,5 +1,6 @@
 > ⌛ **Versión Actual:** `1.1.2`  
-# ⚔️ **Kirito-Bot** \n | `El Guardián del Código` 🌌  
+# ⚔️ **Kirito-Bot** 
+| `El Guardián del Código` 🌌  
 
 <!-- DIVISOR ESPECIAL -->
 <p align="center">
