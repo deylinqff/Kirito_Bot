@@ -1,112 +1,54 @@
-import { promises as fs } from 'fs'
-import { join } from 'path'
-import fetch from 'node-fetch'
-import { xpRange } from '../lib/levelling.js'
-
-const categorias = {
-  'anime': '🌸 ANIME',
-  'main': '📌 INFO',
-  'search': '🔍 BÚSQUEDA',
-  'game': '🎮 JUEGOS',
-  'serbot': '🤖 SUB BOTS',
-  'rpg': '⚔️ RPG',
-  'sticker': '🎭 STICKERS',
-  'group': '👥 GRUPOS',
-  'premium': '💎 PREMIUM',
-  'downloader': '📥 DESCARGAS',
-  'tools': '🛠️ HERRAMIENTAS',
-  'fun': '🎉 DIVERSIÓN',
-  'nsfw': '🔞 NSFW',
-  'cmd': '📂 BASE DE DATOS',
-  'owner': '👑 ADMIN',
-  'audio': '🎵 AUDIOS',
-  'advanced': '🚀 AVANZADO',
-};
-
-const generarSaludo = () => {
-  const hora = new Date().getHours();
-  if (hora >= 5 && hora < 12) return '🌞 ¡Buenos días!';
-  if (hora >= 12 && hora < 18) return '🌤 ¡Buenas tardes!';
-  return '🌙 ¡Buenas noches!';
-};
-
-const formatoMenu = {
-  antes: `╔══❖•ೋ°⚔️°ೋ•❖══╗
-  🌟 *Bienvenido a KIRITO-BOT* 🌟
-  ╚══❖•ೋ°⚔️°ೋ•❖══╝
-
-  ${generarSaludo()}, *%name*.
-  🤖 *Estado:* %modo
-  📊 *Nivel:* %nivel
-  🏆 *Experiencia:* %exp / %maxexp
-  👥 *Usuarios registrados:* %totalreg
-
-  🌟 _¡Explora los comandos disponibles!_ 🌟
-  `,
-  cabecera: '⚡ *%categoria* ⚡',
-  cuerpo: '🔹 %cmd %isLimit %isPremium',
-  pie: '──────────────────────',
-  despues: '🔥 *By DEYLIN* 🔥',
-};
+import { xpRange } from '../lib/levelling.js';
 
 const handler = async (m, { conn, usedPrefix }) => {
   try {
-    // Validar que el usuario exista en la base de datos
-    const usuario = global.db.data.users[m.sender];
-    if (!usuario) {
-      return conn.reply(m.chat, '❌ No estás registrado en la base de datos.', m);
+    const usuario = global.db.data.users[m.sender] || {};
+    const { exp = 0, level = 0 } = usuario;
+    const { min, xp } = xpRange(level, global.multiplier || 1);
+    let nombre;
+    try {
+      nombre = await conn.getName(m.sender);
+    } catch {
+      nombre = 'Usuario';
     }
-
-    const { exp = 0, level = 1 } = usuario;
-    const { min, xp, max } = xpRange(level, global.multiplier || 1);
-    const nombre = (await conn.getName(m.sender)) || 'Usuario';
     const totalUsuarios = Object.keys(global.db.data.users || {}).length;
-    const modo = global.opts['self'] ? 'Privado' : 'Público';
+    const modo = global.opts?.self ? '🔒 *Privado*' : '🌎 *Público*';
 
-    // Validar que existan los plugins
-    if (!global.plugins) {
-      return conn.reply(m.chat, '❌ Error: No se encontraron comandos.', m);
-    }
+    let menuTexto = `╭══•*💠*•══╮
+        ✨ *KIRITO-BOT* ✨  
+╰══•*💠*•══╯
 
-    const comandos = Object.values(global.plugins)
-      .filter(plugin => plugin && !plugin.disabled)
-      .map(plugin => ({
-        ayuda: Array.isArray(plugin.help) ? plugin.help : [plugin.help],
-        categorias: Array.isArray(plugin.tags) ? plugin.tags : [plugin.tags],
-        limite: plugin.limit ? '🛑' : '',
-        premium: plugin.premium ? '💎' : '',
-      }));
+╭━━━━━━━━━━━━━⬣
+┃ 👤 *Usuario:* ${nombre}
+┃ 🔰 *Modo:* ${modo}
+┃ 📊 *Nivel:* ${level}
+┃ 🏆 *Exp:* ${exp - min} / ${xp}
+┃ 👥 *Usuarios:* ${totalUsuarios}
+╰━━━━━━━━━━━━━⬣
 
-    let menuTexto = formatoMenu.antes
-      .replace(/%name/g, nombre)
-      .replace(/%modo/g, modo)
-      .replace(/%nivel/g, level)
-      .replace(/%exp/g, exp - min)
-      .replace(/%maxexp/g, xp)
-      .replace(/%totalreg/g, totalUsuarios);
+╭═══•〈 🔹 *MENÚ DE COMANDOS* 🔹 〉•═══╮`;
 
     for (let categoria in categorias) {
-      const comandosFiltrados = comandos.filter(cmd => cmd.categorias.includes(categoria));
+      const comandosFiltrados = Object.values(global.plugins || {}).filter(
+        (plugin) => !plugin.disabled && (plugin.tags || []).includes(categoria)
+      );
+
       if (comandosFiltrados.length > 0) {
-        menuTexto += `\n\n${formatoMenu.cabecera.replace(/%categoria/g, categorias[categoria])}\n`;
-        comandosFiltrados.forEach(cmd => {
-          cmd.ayuda.forEach(help => {
-            menuTexto += `\n${formatoMenu.cuerpo
-              .replace(/%cmd/g, usedPrefix + help)
-              .replace(/%isLimit/g, cmd.limite)
-              .replace(/%isPremium/g, cmd.premium)}`;
+        menuTexto += `\n│ 🎭 *${categorias[categoria]}* 🎭\n│═══════════════════⬣\n`;
+        comandosFiltrados.forEach((cmd) => {
+          (cmd.help || []).forEach((help) => {
+            menuTexto += `│ ➤ *${usedPrefix + help}* ${cmd.limit ? '🛑' : ''} ${cmd.premium ? '💎' : ''}\n`;
           });
         });
-        menuTexto += `\n${formatoMenu.pie}`;
       }
     }
 
-    menuTexto += `\n\n${formatoMenu.despues}`;
+    menuTexto += `╰═══•〈 🚀 *By Deylin* 🚀 〉•═══╯`;
 
     const imagenURL = 'https://files.catbox.moe/80uwhc.jpg';
-    await conn.sendFile(m.chat, imagenURL, 'menu.jpg', menuTexto.trim(), m);
+    await conn.sendMessage(m.chat, { image: { url: imagenURL }, caption: menuTexto.trim() }, { quoted: m });
   } catch (error) {
-    console.error('Error en el menú:', error);
+    console.error(error);
     conn.reply(m.chat, '❌ Error al generar el menú.', m);
   }
 };
