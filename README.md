@@ -1,35 +1,16 @@
 > ⌛ **Versión Actual:** `1.1.2`  
-# ⚔️ **Kirito-Bot** 
-| `El Guardián del Código` 🌌  
+# ⚔️ **Kirito-Bot** | `El Guardián del Código` 🌌  
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bienvenido al repositorio oficial de Kirito-Bot</title>
-  <style>
-    @keyframes fuego {
-      0% { color: orange; text-shadow: 0 0 5px red, 0 0 10px orange, 0 0 15px yellow, 0 0 20px red; }
-      50% { color: red; text-shadow: 0 0 10px orange, 0 0 15px yellow, 0 0 20px red, 0 0 25px white; }
-      100% { color: yellow; text-shadow: 0 0 5px orange, 0 0 10px yellow, 0 0 15px red, 0 0 20px orange; }
-    }
+<!-- DIVISOR ESPECIAL -->
+<p align="center">
+  <img src="https://github.com/deylinqff/assets/blob/main/kirito-line.gif" width="100%">
+</p>
 
-    .texto-fuego {
-      font-size: 40px;
-      font-weight: bold;
-      font-family: Arial, sans-serif;
-      text-align: center;
-      animation: fuego 1.5s infinite;
-    }
-  </style>
-</head>
-<body>
-  <div class="texto-fuego">
-    Bienvenido al repositorio oficial de Kirito-Bot
-  </div>
-</body>
-</html>
+<p align="center">
+  <img src="https://tinyurl.com/2yeaghq8" alt="Menú Principal">
+</p>  
+
+<!-- DIVISOR ESPECIAL -->
 <p align="center">
   <img src="https://github.com/deylinqff/assets/blob/main/kirito-line.gif" width="100%">
 </p>
@@ -52,7 +33,7 @@
 
 <!-- DIVISOR ESPECIAL -->
 <p align="center">
-  <img src="https://qu.ax/bpuvJ.mp4" width="100%">
+  <img src="https://github.com/deylinqff/assets/blob/main/kirito-line.gif" width="100%">
 </p>
 
 ## 🔥 **¡Únete y Personaliza!**  
