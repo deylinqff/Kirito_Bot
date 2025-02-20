@@ -129,6 +129,8 @@ const handler = async (m, { conn, usedPrefix }) => {
 
     menuTexto += `\n\n${formatoMenu.despues}`;
 
+let perfil = await conn.profilePictureUrl(who, 'image').catch(_ => 'https://files.catbox.moe/80uwhc.jpg')
+
     const imagenesURL = [
       'https://files.catbox.moe/80uwhc.jpg',
       'https://files.catbox.moe/hyrmn9.jpg',
