@@ -3,7 +3,7 @@
 `El Guardián del Código` 🌌 
 
 <a href="https://media.tenor.com/0y8yGK559cAAAAAM/flames-twin.gif"><img
-src="https://media.tenor.com/0y8yGK559cAAAAAM/flames-twin.gif" width="350" height="20" alt="maicolxyz777"/></a>
+src="https://media.tenor.com/0y8yGK559cAAAAAM/flames-twin.gif" width="350" height="15" alt="maicolxyz777"/></a>
 <p align="center">
   <img src="https://tinyurl.com/2yeaghq8" alt="Menú Principal">
 </p>  
