@@ -154,15 +154,6 @@ const handler = async (m, { conn, usedPrefix }) => {
           newsletterName: channelRD.name,
           serverMessageId: -1,
         },
-        forwardingScore: 999,
-        externalAdReply: {
-          title: botname,
-          body: textbot,
-          thumbnailUrl: banner,
-          mediaType: 1,
-          showAdAttribution: true,
-          renderLargerThumbnail: true,
-        },
       },
     }, { quoted: m });
 
