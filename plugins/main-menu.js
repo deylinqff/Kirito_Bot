@@ -23,26 +23,6 @@ const categorias = {
   'advanced': '🚀 AVANZADO',
 };
 
-const emojisCategorias = {
-  'anime': '🎴',
-  'main': '📌',
-  'search': '🔎',
-  'game': '🕹️',
-  'serbot': '🤖',
-  'rpg': '⚔️',
-  'sticker': '🎭',
-  'group': '👥',
-  'premium': '💎',
-  'downloader': '📥',
-  'tools': '🛠️',
-  'fun': '🎉',
-  'nsfw': '🔞',
-  'cmd': '📂',
-  'owner': '👑',
-  'audio': '🎶',
-  'advanced': '🚀',
-};
-
 const generarSaludo = () => {
   const hora = new Date().getHours();
   if (hora >= 5 && hora < 12) return '🌞 ¡Buenos días!';
@@ -51,31 +31,32 @@ const generarSaludo = () => {
 };
 
 const formatoMenu = {
-  antes: `╔══════════════════╗\n   *Bienvenido a KIRITO-BOT*\n╚══════════════════╝
+  antes: `╭─────────────◆
+│ 📢 *Ver canal*
+╰─────────────◆
+  
+🔁 *Reenviado muchas veces*
 
+💠 *Kirito-Bot - Avisos* 💠
+  
 ✎ ${generarSaludo()}, *%name*.
 
-╔═══════ೋೋ═══════☾
-║┏◆━━━━━━◆❃◆━━━━━━◆
-║┃ 🤖 *Modo:* %modo
-║┃ 📊 *Nivel:* %nivel
-║┃ 🏆 *Experiencia:* %exp / %maxexp
-║┃ 👥 *Usuarios registrados:* %totalreg
-║┗◆━━━━━━◆❃◆━━━━━━◆
-╚═══════ೋೋ═══════☾
+╭─◆ *Información* ◆─
+│ 🤖 *Modo:* %modo
+│ 📊 *Nivel:* %nivel
+│ 🏆 *Experiencia:* %exp / %maxexp
+│ 👥 *Usuarios registrados:* %totalreg
+╰─────────────◆
 %readmore
   ───────────────`,
   cabecera: '┏━☾➥ *%categoria* ««✰',
   cuerpo: '┃%emoji %cmd %isLimit %isPremium',
   pie: '┗━━«✰»━━━━«✰»━━━━«✰»━━┛',
-  despues: '🔥 *By DEYLIN* 🔥',
+  despues: '🔗 *Únete a nuestro canal oficial:*\nhttps://whatsapp.com/channel/XXXXXXXXXXX',
 };
 
 const more = String.fromCharCode(8206);
 const readMore = more.repeat(4001);
-
-const canalID = '120363365444927738@newsletter '; 
-const mensajeConfirmacion = '✅ La imagen del menú ha sido reenviada al canal oficial.';
 
 const handler = async (m, { conn, usedPrefix }) => {
   try {
@@ -122,7 +103,7 @@ const handler = async (m, { conn, usedPrefix }) => {
               .replace(/%cmd/g, usedPrefix + help)
               .replace(/%isLimit/g, cmd.limite)
               .replace(/%isPremium/g, cmd.premium)
-              .replace(/%emoji/g, emojisCategorias[categoria] || '🔹')}`;
+              .replace(/%emoji/g, '🔹')}`;
           });
         });
         menuTexto += `\n${formatoMenu.pie}`;
@@ -140,32 +121,12 @@ const handler = async (m, { conn, usedPrefix }) => {
 
     const imagenAleatoria = imagenesURL[Math.floor(Math.random() * imagenesURL.length)];
 
-    const mensajeEnviado = await conn.sendFile(m.chat, imagenAleatoria, 'menu.jpg', menuTexto.trim(), m);
-
-    // Guardar el ID del mensaje para su reenvío
-    global.db.data.messages = global.db.data.messages || {};
-    global.db.data.messages[mensajeEnviado.key.id] = {
-      tipo: 'menuImagen',
-      imagen: imagenAleatoria,
-      canal: canalID,
-    };
-
+    await conn.sendFile(m.chat, imagenAleatoria, 'menu.jpg', menuTexto.trim(), m);
   } catch (error) {
     console.error('Error en el menú:', error);
     conn.reply(m.chat, '❌ Error al generar el menú.', m);
   }
 };
-
-// Evento para reenviar la imagen cuando alguien la toque
-conn.on('message', async (m) => {
-  if (m.mtype === 'imageMessage' && global.db.data.messages[m.id]) {
-    const datosMensaje = global.db.data.messages[m.id];
-    if (datosMensaje.tipo === 'menuImagen') {
-      await conn.sendFile(datosMensaje.canal, datosMensaje.imagen, 'reenviado.jpg', '📢 Imagen del menú reenviada.', m);
-      conn.reply(m.chat, mensajeConfirmacion, m, datosMensaje.canal);
-    }
-  }
-});
 
 handler.help = ['menu', 'allmenu'];
 handler.tags = ['main'];
