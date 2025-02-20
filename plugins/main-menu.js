@@ -137,22 +137,7 @@ const handler = async (m, { conn, usedPrefix }) => {
 
     const imagenAleatoria = imagenesURL[Math.floor(Math.random() * imagenesURL.length)];
 
-    await conn.sendMessage(m.chat, {
-      image: { url: imagenAleatoria },
-      caption: menuTexto.trim(),
-      contextInfo: {
-        forwardingScore: 999,
-        externalAdReply: {
-          title: botname,
-          body: textbot,
-          thumbnailUrl: banner,
-          mediaType: 1,
-          showAdAttribution: true,
-          renderLargerThumbnail: true,
-        },
-      },
-    }, { quoted: m });
-
+    await conn.sendFile(m.chat, imagenAleatoria, 'menu.jpg', menuTexto.trim(), m);
   } catch (error) {
     console.error('Error en el menú:', error);
     conn.reply(m.chat, '❌ Error al generar el menú.', m);
