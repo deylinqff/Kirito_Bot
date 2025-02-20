@@ -54,15 +54,15 @@ Al usar Kirito Bot, aceptas estas condiciones.
 
 const imagenesURL = 'https://files.catbox.moe/hyrmn9.jpg';  // URL de la imagen
 
-export async function handler(m, { command }) {
+export async function handler(m, { command, conn }) {
     if (command === 'norma') {
-        await m.reply({
+        await conn.sendMessage(m.chat, {
             text: normas,
             image: { url: imagenesURL },
             caption: 'Normas de uso de Kirito Bot'
         });
     } else if (command === 'política') {
-        await m.reply({
+        await conn.sendMessage(m.chat, {
             text: politica,
             image: { url: imagenesURL },
             caption: 'Política de privacidad de Kirito Bot'
