@@ -5,7 +5,7 @@
 ---
 # Bienvenido al repositorio oficial de Kirito-Bot
 
-![Bienvenido](https://media.giphy.com/media/3o6Zt8JM5yfu9xNNuo/giphy.gif)
+![Bienvenido](https://media.giphy.com/media/26Ff3YZ9LqVLo5U7a/giphy.gif)
 ---
 
 <p align="center">
