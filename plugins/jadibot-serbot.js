@@ -13,6 +13,9 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
     fs.mkdirSync(pathKiritoJadiBot, { recursive: true });
   }
 
+  // Verifica si el comando tiene el argumento --code
+  const isCodeRequested = args.includes('--code');
+
   // Obtener la versión más reciente de Baileys
   const { version } = await fetchLatestBaileysVersion();
   const { state } = await useMultiFileAuthState(pathKiritoJadiBot);
@@ -31,8 +34,8 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
   async function connectionUpdate(update) {
     const { connection, qr } = update;
 
-    // Si se genera un QR, enviamos la imagen del QR al chat
-    if (qr) {
+    // Solo genera y envía el QR si el argumento --code fue pasado
+    if (qr && isCodeRequested) {
       if (m?.chat) {
         // Convertir el QR en una imagen y enviarla al chat
         const qrImage = await qrcode.toBuffer(qr, { scale: 8 });
