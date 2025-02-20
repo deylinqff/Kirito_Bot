@@ -3,19 +3,10 @@
 | `El Guardián del Código` 🌌  
 
 <!-- RAINBOW LINE BOT -->
-<style>
-  @keyframes moverImagen {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(100px); }
-  }
-  .imagen-animada {
-    width: 100%;
-    height: auto;
-    animation: moverImagen 2s infinite alternate;
-  }
-</style>
-<img src="https://files.catbox.moe/nozcci.jpg" class="imagen-animada" style="height: 150px;">
-<!-- RAINBOW LINE BOT -->
+<img src="https://github.com/AnderMendoza/AnderMendoza/raw/main/assets/line-neon.gif" width="100%">
+
+<!-- RAINBOW LINE BOT -->  
+
 <p align="center">
   <img src="https://tinyurl.com/2yeaghq8" alt="Menú Principal">
 </p>  
