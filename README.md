@@ -3,6 +3,37 @@
 `El Guardián del Código` 🌌  
 
 ---
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Barra de Colores Cambiantes</title>
+  <style>
+    /* Barra de colores */
+    .barra {
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3);
+      background-size: 1400% 1400%;
+      animation: cambioColor 10s linear infinite;
+    }
+
+    /* Animación que cambia el color */
+    @keyframes cambioColor {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="barra"></div>
+
+</body>
+</html>
++---
 
 <p align="center">
   <img src="https://tinyurl.com/2yeaghq8" alt="Menú Principal">
