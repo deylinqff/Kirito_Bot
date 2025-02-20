@@ -23,6 +23,26 @@ const categorias = {
   'advanced': '🚀 AVANZADO',
 };
 
+const emojisCategorias = {
+  'anime': '🎴',
+  'main': '📌',
+  'search': '🔎',
+  'game': '🕹️',
+  'serbot': '🤖',
+  'rpg': '⚔️',
+  'sticker': '🎭',
+  'group': '👥',
+  'premium': '💎',
+  'downloader': '📥',
+  'tools': '🛠️',
+  'fun': '🎉',
+  'nsfw': '🔞',
+  'cmd': '📂',
+  'owner': '👑',
+  'audio': '🎶',
+  'advanced': '🚀',
+};
+
 const generarSaludo = () => {
   const hora = new Date().getHours();
   if (hora >= 5 && hora < 12) return '🌞 ¡Buenos días!';
@@ -31,28 +51,24 @@ const generarSaludo = () => {
 };
 
 const formatoMenu = {
-  antes: `╭─────────────◆
-│ 📢 *Ver canal*
-╰─────────────◆
-  
-🔁 *Reenviado muchas veces*
+  antes: `╔══════════════════╗\n   *Bienvenido a KIRITO-BOT*\n╚══════════════════╝
 
-💠 *Kirito-Bot - Avisos* 💠
-  
 ✎ ${generarSaludo()}, *%name*.
 
-╭─◆ *Información* ◆─
-│ 🤖 *Modo:* %modo
-│ 📊 *Nivel:* %nivel
-│ 🏆 *Experiencia:* %exp / %maxexp
-│ 👥 *Usuarios registrados:* %totalreg
-╰─────────────◆
+╔═══════ೋೋ═══════☾
+║┏◆━━━━━━◆❃◆━━━━━━◆
+║┃ 🤖 *Modo:* %modo
+║┃ 📊 *Nivel:* %nivel
+║┃ 🏆 *Experiencia:* %exp / %maxexp
+║┃ 👥 *Usuarios registrados:* %totalreg
+║┗◆━━━━━━◆❃◆━━━━━━◆
+╚═══════ೋೋ═══════☾
 %readmore
   ───────────────`,
   cabecera: '┏━☾➥ *%categoria* ««✰',
   cuerpo: '┃%emoji %cmd %isLimit %isPremium',
   pie: '┗━━«✰»━━━━«✰»━━━━«✰»━━┛',
-  despues: '🔗 *Únete a nuestro canal oficial:*\nhttps://whatsapp.com/channel/XXXXXXXXXXX',
+  despues: '🔥 *By DEYLIN* 🔥',
 };
 
 const more = String.fromCharCode(8206);
@@ -70,6 +86,8 @@ const handler = async (m, { conn, usedPrefix }) => {
     const nombre = (await conn.getName(m.sender)) || 'Usuario';
     const totalUsuarios = Object.keys(global.db.data.users || {}).length;
     const modo = global.opts['self'] ? 'Privado' : 'Público';
+    
+    let perfil = await conn.profilePictureUrl(m.sender, 'image').catch(_ => 'https://files.catbox.moe/80uwhc.jpg');
 
     if (!global.plugins) {
       return conn.reply(m.chat, '❌ Error: No se encontraron comandos.', m);
@@ -103,7 +121,7 @@ const handler = async (m, { conn, usedPrefix }) => {
               .replace(/%cmd/g, usedPrefix + help)
               .replace(/%isLimit/g, cmd.limite)
               .replace(/%isPremium/g, cmd.premium)
-              .replace(/%emoji/g, '🔹')}`;
+              .replace(/%emoji/g, emojisCategorias[categoria] || '🔹')}`;
           });
         });
         menuTexto += `\n${formatoMenu.pie}`;
@@ -112,16 +130,7 @@ const handler = async (m, { conn, usedPrefix }) => {
 
     menuTexto += `\n\n${formatoMenu.despues}`;
 
-    const imagenesURL = [
-      'https://files.catbox.moe/80uwhc.jpg',
-      'https://files.catbox.moe/hyrmn9.jpg',
-      'https://files.catbox.moe/0tv7r3.jpg',
-      'https://files.catbox.moe/yiaw4a.jpg'
-    ];
-
-    const imagenAleatoria = imagenesURL[Math.floor(Math.random() * imagenesURL.length)];
-
-    await conn.sendFile(m.chat, imagenAleatoria, 'menu.jpg', menuTexto.trim(), m);
+    await conn.sendFile(m.chat, perfil, 'perfil.jpg', menuTexto.trim(), m);
   } catch (error) {
     console.error('Error en el menú:', error);
     conn.reply(m.chat, '❌ Error al generar el menú.', m);
