@@ -71,7 +71,6 @@ const formatoMenu = {
   despues: '🔥 *By DEYLIN* 🔥',
 };
 
-
 const more = String.fromCharCode(8206);
 const readMore = more.repeat(4001);
 
@@ -87,6 +86,8 @@ const handler = async (m, { conn, usedPrefix }) => {
     const nombre = (await conn.getName(m.sender)) || 'Usuario';
     const totalUsuarios = Object.keys(global.db.data.users || {}).length;
     const modo = global.opts['self'] ? 'Privado' : 'Público';
+    
+    let perfil = await conn.profilePictureUrl(m.sender, 'image').catch(_ => 'https://files.catbox.moe/80uwhc.jpg');
 
     if (!global.plugins) {
       return conn.reply(m.chat, '❌ Error: No se encontraron comandos.', m);
@@ -129,18 +130,7 @@ const handler = async (m, { conn, usedPrefix }) => {
 
     menuTexto += `\n\n${formatoMenu.despues}`;
 
-let perfil = await conn.profilePictureUrl(who, 'image').catch(_ => 'https://files.catbox.moe/80uwhc.jpg')
-
-    const imagenesURL = [
-      'https://files.catbox.moe/80uwhc.jpg',
-      'https://files.catbox.moe/hyrmn9.jpg',
-      'https://files.catbox.moe/0tv7r3.jpg',
-      'https://files.catbox.moe/yiaw4a.jpg'
-    ];
-
-    const imagenAleatoria = imagenesURL[Math.floor(Math.random() * imagenesURL.length)];
-
-    await conn.sendFile(m.chat, imagenAleatoria, 'menu.jpg', menuTexto.trim(), m);
+    await conn.sendFile(m.chat, perfil, 'perfil.jpg', menuTexto.trim(), m);
   } catch (error) {
     console.error('Error en el menú:', error);
     conn.reply(m.chat, '❌ Error al generar el menú.', m);
