@@ -2,12 +2,7 @@
 # ⚔️ **Kirito-Bot** | 
 `El Guardián del Código` 🌌  
 
----
-# Bienvenido al repositorio oficial de Kirito-Bot
-
-![Bienvenido](https://media.giphy.com/media/26Ff3YZ9LqVLo5U7a/giphy.gif)
----
-
+*---*
 <p align="center">
   <img src="https://tinyurl.com/2yeaghq8" alt="Menú Principal">
 </p>  
