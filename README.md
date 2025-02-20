@@ -3,45 +3,9 @@
 `El Guardián del Código` 🌌  
 
 ---
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Barra de Bienvenida</title>
-  <style>
-    @keyframes fuegoBarra {
-      0% { background-color: red; }
-      25% { background-color: orange; }
-      50% { background-color: yellow; }
-      75% { background-color: orange; }
-      100% { background-color: red; }
-    }
+# Bienvenido al repositorio oficial de Kirito-Bot
 
-    .barra {
-      width: 100%;
-      height: 30px;
-      background-color: gray;
-      border-radius: 15px;
-      margin-top: 50px;
-      animation: fuegoBarra 3s infinite;
-    }
-
-    .barra-texto {
-      text-align: center;
-      line-height: 30px;
-      font-size: 18px;
-      font-weight: bold;
-      color: white;
-    }
-  </style>
-</head>
-<body>
-  <div class="barra">
-    <div class="barra-texto">Bienvenido al repositorio oficial de Kirito-Bot</div>
-  </div>
-</body>
-</html>
+![Bienvenido](https://media.giphy.com/media/3o6Zt8JM5yfu9xNNuo/giphy.gif)
 ---
 
 <p align="center">
