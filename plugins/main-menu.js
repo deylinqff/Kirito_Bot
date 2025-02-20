@@ -70,7 +70,7 @@ const formatoMenu = {
   pie: '┗━━«✰»━━━━«✰»━━━━«✰»━━┛',
   despues: '🔥 *By DEYLIN* 🔥',
 };
-
+conn.reply(m.chat, messager, m, rcanal,)
 const more = String.fromCharCode(8206);
 const readMore = more.repeat(4001);
 
