@@ -52,13 +52,14 @@ Esta política puede actualizarse en cualquier momento. Se notificará si hay ca
 Al usar Kirito Bot, aceptas estas condiciones.
 `;
 
-const imagenesURL = 'https://files.catbox.moe/hyrmn9.jpg';
+const imagenNormas = 'https://files.catbox.moe/7czphn.jpg';
+const imagenPolitica = 'https://files.catbox.moe/da62mt.jpg';
 
 export async function handler(m, { command, conn }) {
     if (command === 'norma') {
-        await conn.sendMessage(m.chat, { image: { url: imagenesURL }, caption: normas }, { quoted: m });
+        await conn.sendMessage(m.chat, { image: { url: imagenNormas }, caption: normas }, { quoted: m });
     } else if (command === 'política') {
-        await conn.sendMessage(m.chat, { image: { url: imagenesURL }, caption: politica }, { quoted: m });
+        await conn.sendMessage(m.chat, { image: { url: imagenPolitica }, caption: politica }, { quoted: m });
     }
 }
 
