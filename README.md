@@ -3,9 +3,8 @@
 | `El Guardián del Código` 🌌  
 
 <!-- RAINBOW LINE BOT -->
-<img src="https://github.com/AnderMendoza/AnderMendoza/raw/main/assets/line-neon.gif" width="100%">
-
-<!-- RAINBOW LINE BOT -->  
+<img src="https://media.giphy.com/media/3o6Zt8JM5yfu9xNNuo/giphy.gif" width="100%">
+<!-- RAINBOW LINE BOT -->
 
 <p align="center">
   <img src="https://tinyurl.com/2yeaghq8" alt="Menú Principal">
