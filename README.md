@@ -2,7 +2,7 @@
 # ⚔️ **Kirito-Bot** | 
 `El Guardián del Código` 🌌  
 
-*---*
+---
 <p align="center">
   <img src="https://tinyurl.com/2yeaghq8" alt="Menú Principal">
 </p>  
