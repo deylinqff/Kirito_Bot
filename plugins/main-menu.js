@@ -21,6 +21,7 @@ const categorias = {
   'owner': '👑 ADMIN',
   'audio': '🎵 AUDIOS',
   'advanced': '🚀 AVANZADO',
+  'rcanal': '📺 R-CANAL',
 };
 
 const emojisCategorias = {
@@ -41,6 +42,7 @@ const emojisCategorias = {
   'owner': '👑',
   'audio': '🎶',
   'advanced': '🚀',
+  'rcanal': '📺',
 };
 
 const generarSaludo = () => {
@@ -70,7 +72,6 @@ const formatoMenu = {
   pie: '┗━━«✰»━━━━«✰»━━━━«✰»━━┛',
   despues: '🔥 *By DEYLIN* 🔥',
 };
-
 
 const more = String.fromCharCode(8206);
 const readMore = more.repeat(4001);
