@@ -8,32 +8,41 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Barra de Colores Cambiantes</title>
+  <title>Barra de Bienvenida</title>
   <style>
-    /* Barra de colores */
-    .barra {
-      width: 100%;
-      height: 5px;
-      background: linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3);
-      background-size: 1400% 1400%;
-      animation: cambioColor 10s linear infinite;
+    @keyframes fuegoBarra {
+      0% { background-color: red; }
+      25% { background-color: orange; }
+      50% { background-color: yellow; }
+      75% { background-color: orange; }
+      100% { background-color: red; }
     }
 
-    /* Animación que cambia el color */
-    @keyframes cambioColor {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+    .barra {
+      width: 100%;
+      height: 30px;
+      background-color: gray;
+      border-radius: 15px;
+      margin-top: 50px;
+      animation: fuegoBarra 3s infinite;
+    }
+
+    .barra-texto {
+      text-align: center;
+      line-height: 30px;
+      font-size: 18px;
+      font-weight: bold;
+      color: white;
     }
   </style>
 </head>
 <body>
-
-  <div class="barra"></div>
-
+  <div class="barra">
+    <div class="barra-texto">Bienvenido al repositorio oficial de Kirito-Bot</div>
+  </div>
 </body>
 </html>
-+---
+---
 
 <p align="center">
   <img src="https://tinyurl.com/2yeaghq8" alt="Menú Principal">
