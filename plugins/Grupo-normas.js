@@ -1,5 +1,4 @@
-export async function reglasBot(m, command) {
-    const normas = `
+const normas = `
 ┏━━━━━━━━━━━━━━━┓
 ┃  📜 *NORMAS DE USO* 📜  
 ┗━━━━━━━━━━━━━━━┛
@@ -29,7 +28,7 @@ El incumplimiento de las normas puede llevar a bloqueos sin previo aviso.
 El uso del bot implica la aceptación de estas normas.
 `;
 
-    const politica = `
+const politica = `
 ┏━━━━━━━━━━━━━━━┓
 ┃  🔒 *POLÍTICA DE PRIVACIDAD* 🔒  
 ┗━━━━━━━━━━━━━━━┛
@@ -53,6 +52,16 @@ Esta política puede actualizarse en cualquier momento. Se notificará si hay ca
 Al usar Kirito Bot, aceptas estas condiciones.
 `;
 
-handler.help = ['normas']
-handler.tags = ['grupo']
-handler.command = ['norma']
+export async function handler(m, { command }) {
+    if (command === 'norma') {
+        await m.reply(normas);
+    } else if (command === 'política') {
+        await m.reply(politica);
+    }
+}
+
+handler.help = ['norma', 'política'];
+handler.tags = ['grupo'];
+handler.command = ['norma', 'política'];
+
+export default handler;
