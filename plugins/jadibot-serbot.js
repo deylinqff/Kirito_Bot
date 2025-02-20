@@ -1,20 +1,19 @@
-import { useMultiFileAuthState, fetchLatestBaileysVersion } from '@whiskeysockets/baileys';
+import { useMultiFileAuthState, fetchLatestBaileysVersion, makeWASocket } from '@whiskeysockets/baileys';
 import qrcode from 'qrcode';
 import fs from 'fs';
 import path from 'path';
 import pino from 'pino';
 
 let handler = async (m, { conn, args, usedPrefix, command }) => {
-  // Definir el ID del usuario
   let who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? conn.user.jid : m.sender;
   let id = `${who.split`@`[0]}`;
   let pathKiritoJadiBot = path.join(`./kirito/`, id);
 
-  // Crear la carpeta para el sub-bot si no existe
   if (!fs.existsSync(pathKiritoJadiBot)) {
     fs.mkdirSync(pathKiritoJadiBot, { recursive: true });
   }
 
+  // Obtener la versión más reciente de Baileys
   const { version } = await fetchLatestBaileysVersion();
   const { state } = await useMultiFileAuthState(pathKiritoJadiBot);
 
@@ -32,14 +31,16 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
   async function connectionUpdate(update) {
     const { connection, qr } = update;
 
-    // Si es un nuevo QR, lo enviamos al usuario para que lo escanee
+    // Si se genera un QR, enviamos la imagen del QR al chat
     if (qr) {
       if (m?.chat) {
-        await conn.sendMessage(m.chat, { image: await qrcode.toBuffer(qr, { scale: 8 }), caption: "*☆𝗞𝗜𝗥𝗜𝗧𝗢 - 𝗕𝗢𝗧☆*\n\n✐ Escanea este QR para convertirte en un *Sub-Bot* Temporal." }, { quoted: m });
+        // Convertir el QR en una imagen y enviarla al chat
+        const qrImage = await qrcode.toBuffer(qr, { scale: 8 });
+        await conn.sendMessage(m.chat, { image: qrImage, caption: "*☆𝗞𝗜𝗥𝗜𝗧𝗢 - 𝗕𝗢𝗧☆*\n\n✐ Escanea este QR para convertirte en un *Sub-Bot* Temporal." }, { quoted: m });
       }
     }
 
-    // Si la conexión se abre
+    // Si la conexión se abre, indicamos que el sub-bot está conectado
     if (connection === 'open') {
       console.log(`✅ Sub-Bot conectado exitosamente.`);
       await conn.sendMessage(m.chat, { text: `@${m.sender.split('@')[0]}, ya eres un *Sub-Bot*.`, mentions: [m.sender] }, { quoted: m });
@@ -52,4 +53,5 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
 handler.help = ['serbot'];
 handler.tags = ['serbot'];
 handler.command = ['serbot'];
+
 export default handler;
