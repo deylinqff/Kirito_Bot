@@ -2,10 +2,12 @@
 # ⚔️ **Kirito-Bot** 
 | `El Guardián del Código` 🌌  
 
-<!-- DIVISOR ESPECIAL -->
-<p align="center">
-  <img src="https://github.com/deylinqff/assets/blob/main/kirito-line.gif" width="100%">
-</p>
+<!-- RAINBOW LINE BOT -->
+<video width="100%" controls>
+  <source src="https://files.catbox.moe/rwzvco.mp4" type="video/mp4">
+  Tu navegador no soporta el elemento de video.
+</video>
+<!-- RAINBOW LINE BOT -->
 
 <p align="center">
   <img src="https://tinyurl.com/2yeaghq8" alt="Menú Principal">
