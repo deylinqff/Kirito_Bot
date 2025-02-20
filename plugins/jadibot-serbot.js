@@ -1,9 +1,6 @@
-import { useMultiFileAuthState, makeWASocket, fetchLatestBaileysVersion, jidNormalizedUser } from '@whiskeysockets/baileys';
+import { makeWASocket, fetchLatestBaileysVersion, useMultiFileAuthState } from '@whiskeysockets/baileys';
 import pino from 'pino';
 import fs from 'fs';
-import NodeCache from 'node-cache';
-import { makeCacheableSignalKeyStore } from '@whiskeysockets/baileys';
-import { DisconnectReason, MessageRetryMap } from '@whiskeysockets/baileys';
 
 if (!(global.conns instanceof Array)) global.conns = [];
 
@@ -22,17 +19,8 @@ let handler = async (m, { conn: _conn, args, usedPrefix, command, isOwner }) => 
       fs.mkdirSync(userFolderPath, { recursive: true });
     }
 
-    if (args[0]) {
-      const creds = Buffer.from(args[0], 'base64').toString('utf-8');
-      fs.writeFileSync(`${userFolderPath}/creds.json`, creds);
-    }
-
     const { state, saveState, saveCreds } = await useMultiFileAuthState(userFolderPath);
-    const msgRetryCounterMap = MessageRetryMap;
-    const msgRetryCounterCache = new NodeCache();
     const { version } = await fetchLatestBaileysVersion();
-
-    let phoneNumber = m.sender.split('@')[0];
 
     const connectionOptions = {
       logger: pino({ level: 'silent' }),
@@ -41,18 +29,14 @@ let handler = async (m, { conn: _conn, args, usedPrefix, command, isOwner }) => 
       browser: ["KiritoBot", "Chrome", "1.0"],
       auth: {
         creds: state.creds,
-        keys: makeCacheableSignalKeyStore(state.keys, pino({ level: "fatal" }).child({ level: "fatal" }))
       },
       markOnlineOnConnect: true,
-      generateHighQualityLinkPreview: true,
-      msgRetryCounterCache,
-      msgRetryCounterMap,
-      version
     };
 
     let conn = makeWASocket(connectionOptions);
 
     if (args[0] && !conn.authState.creds.registered) {
+      let phoneNumber = m.sender.split('@')[0];
       if (!phoneNumber) process.exit(0);
       let cleanedNumber = phoneNumber.replace(/[^0-9]/g, '');
 
@@ -71,7 +55,6 @@ let handler = async (m, { conn: _conn, args, usedPrefix, command, isOwner }) => 
     }
 
     conn.isInit = false;
-    let isInit = true;
 
     async function connectionUpdate(update) {
       const { connection, lastDisconnect, isNewLogin, qr } = update;
@@ -95,38 +78,9 @@ let handler = async (m, { conn: _conn, args, usedPrefix, command, isOwner }) => 
       }
     }, 60000);
 
-    let creloadHandler = async function (restatConn) {
-      try {
-        const Handler = await import(`../handler.js?update=${Date.now()}`).catch(console.error);
-        if (Object.keys(Handler || {}).length) handler = Handler;
-      } catch (e) {
-        console.error(e);
-      }
+    conn.ev.on('connection.update', connectionUpdate);
+    conn.ev.on('creds.update', saveCreds);
 
-      if (restatConn) {
-        try { conn.ws.close() } catch { }
-        conn.ev.removeAllListeners();
-        conn = makeWASocket(connectionOptions);
-        isInit = true;
-      }
-
-      if (!isInit) {
-        conn.ev.off('messages.upsert', conn.handler);
-        conn.ev.off('connection.update', conn.connectionUpdate);
-        conn.ev.off('creds.update', conn.credsUpdate);
-      }
-
-      conn.handler = handler.handler.bind(conn);
-      conn.connectionUpdate = connectionUpdate.bind(conn);
-      conn.credsUpdate = saveCreds.bind(conn, true);
-
-      conn.ev.on('messages.upsert', conn.handler);
-      conn.ev.on('connection.update', conn.connectionUpdate);
-      conn.ev.on('creds.update', conn.credsUpdate);
-      isInit = false;
-      return true;
-    };
-    creloadHandler(false);
   }
 
   serbot();
