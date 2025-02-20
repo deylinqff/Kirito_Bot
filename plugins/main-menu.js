@@ -71,6 +71,20 @@ const formatoMenu = {
   despues: '🔥 *By DEYLIN* 🔥',
 };
 
+          forwardingScore: 999,
+          externalAdReply: {
+              title: botname,
+              body: textbot,
+              thumbnailUrl: banner,
+              mediaType: 1,
+              showAdAttribution: true,
+              renderLargerThumbnail: true,
+          },
+      },
+  }, { quoted: m });
+
+};
+
 const more = String.fromCharCode(8206);
 const readMore = more.repeat(4001);
 
