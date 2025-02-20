@@ -7,10 +7,7 @@
   <img src="https://tinyurl.com/2yeaghq8" alt="Menú Principal">
 </p>  
 
-<!-- DIVISOR ESPECIAL -->
-<p align="center">
-  <img src="https://github.com/deylinqff/assets/blob/main/kirito-line.gif" width="100%">
-</p>
+--
 
 ### 🏆 **Poder y Precisión en un Solo Bot**  
 📌 **Creado por:** `Deylin`  
@@ -18,21 +15,14 @@
 🔮 **Diseño inspirado en Sword Art Online**  
 🚀 **¡Rápido, potente y seguro!**  
 
-<!-- DIVISOR ESPECIAL -->
-<p align="center">
-  <img src="https://github.com/deylinqff/assets/blob/main/kirito-line.gif" width="100%">
-</p>
+---
 
 ## 🚀 **Explora Kirito-Bot**  
 <p align="center">
   <img src="https://qu.ax/SuZFt.jpg" alt="Kirito-Bot">
 </p>  
 
-<!-- DIVISOR ESPECIAL -->
-<p align="center">
-  <img src="https://github.com/deylinqff/assets/blob/main/kirito-line.gif" width="100%">
-</p>
-
+---
 ## 🔥 **¡Únete y Personaliza!**  
 <a href="https://github.com/deylinqff">
   <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&duration=4000&pause=1000&color=0099FF&width=435&lines=⚔️+CLONA+EL+REPOSITORIO+Y+MODIFÍCALO+⚔️" alt="Typing SVG">
@@ -40,18 +30,12 @@
 
 📢 **¡No olvides dejar los créditos!** → [**Aquí**](https://github.com/deylinqff/Kirito_Bot/fork)  
 
-<!-- DIVISOR ESPECIAL -->
-<p align="center">
-  <img src="https://github.com/deylinqff/assets/blob/main/kirito-line.gif" width="100%">
-</p>
+---
 
 ## 🌐 **Forma parte de la Comunidad**  
 💬 **Canal Oficial:** [`Click Aquí`](https://whatsapp.com/channel/0029VankMyeBadmR9Ou0So3t)  
 
-<!-- DIVISOR ESPECIAL -->
-<p align="center">
-  <img src="https://github.com/deylinqff/assets/blob/main/kirito-line.gif" width="100%">
-</p>
+---
 
 [![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&pause=400&color=00CCFF&lines=✨+Espero+que+disfrutes+este+repositorio;💙+Creado+con+dedicación;⚔️+By+Mr.|Deyin+🌠🚀)](https://git.io/typing-svg)  
 
@@ -67,7 +51,5 @@
 
 ## ⚔️ [© Powered By Deyin ⚡︎](https://whatsapp.com/channel/0029VawF8fBBvvsktcInIz3m)  
 
-<!-- DIVISOR ESPECIAL -->
-<p align="center">
-  <img src="https://github.com/deylinqff/assets/blob/main/kirito-line.gif" width="100%">
-</p>
+---
+---
