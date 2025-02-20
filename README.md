@@ -1,8 +1,6 @@
 > ⌛ **Versión Actual:** `1.1.2`  
 # ⚔️ **Kirito-Bot** | 
-`El Guardián del Código` 🌌 <a href="https://media.tenor.com/0y8yGK559cAAAAAM/flames-twin.gif"><img
-src="https://media.tenor.com/0y8yGK559cAAAAAM/flames-twin.gif" width="350" height="20" alt="maicolxyz777"/></a>
-
+`El Guardián del Código` 🌌 
 
 <a href="https://media.tenor.com/0y8yGK559cAAAAAM/flames-twin.gif"><img
 src="https://media.tenor.com/0y8yGK559cAAAAAM/flames-twin.gif" width="350" height="20" alt="maicolxyz777"/></a>
