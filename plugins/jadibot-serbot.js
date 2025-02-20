@@ -1,6 +1,9 @@
-import { makeWASocket, fetchLatestBaileysVersion, useMultiFileAuthState } from '@whiskeysockets/baileys';
+import { useMultiFileAuthState, makeWASocket, fetchLatestBaileysVersion, jidNormalizedUser } from '@whiskeysockets/baileys';
 import pino from 'pino';
 import fs from 'fs';
+import NodeCache from 'node-cache';
+import { makeCacheableSignalKeyStore } from '@whiskeysockets/baileys';
+import { DisconnectReason, MessageRetryMap } from '@whiskeysockets/baileys';
 
 if (!(global.conns instanceof Array)) global.conns = [];
 
@@ -15,13 +18,23 @@ let handler = async (m, { conn: _conn, args, usedPrefix, command, isOwner }) => 
     const authFolderB = m.sender.split('@')[0];
     const userFolderPath = `./CrowKiritoBot/${authFolderB}`;
 
+    // Crear la carpeta de usuario si no existe
     if (!fs.existsSync(userFolderPath)) {
       fs.mkdirSync(userFolderPath, { recursive: true });
     }
 
+    // Guardar credenciales si se proporcionan
+    if (args[0]) {
+      const credsData = JSON.parse(Buffer.from(args[0], "base64").toString("utf-8"));
+      fs.writeFileSync(`${userFolderPath}/creds.json`, JSON.stringify(credsData, null, '\t'));
+    }
+
     const { state, saveState, saveCreds } = await useMultiFileAuthState(userFolderPath);
+    const msgRetryCounterMap = MessageRetryMap;
+    const msgRetryCounterCache = new NodeCache();
     const { version } = await fetchLatestBaileysVersion();
 
+    let phoneNumber = m.sender.split('@')[0];
     const connectionOptions = {
       logger: pino({ level: 'silent' }),
       printQRInTerminal: false,
@@ -29,26 +42,38 @@ let handler = async (m, { conn: _conn, args, usedPrefix, command, isOwner }) => 
       browser: ["KiritoBot", "Chrome", "1.0"],
       auth: {
         creds: state.creds,
+        keys: makeCacheableSignalKeyStore(state.keys, pino({ level: "fatal" }).child({ level: "fatal" }))
       },
       markOnlineOnConnect: true,
+      generateHighQualityLinkPreview: true,
+      getMessage: async (clave) => {
+        let jid = jidNormalizedUser(clave.remoteJid);
+        let msg = await store.loadMessage(jid, clave.id);
+        return msg?.message || "";
+      },
+      msgRetryCounterCache,
+      msgRetryCounterMap,
+      version
     };
 
     let conn = makeWASocket(connectionOptions);
 
+    // Enviar código de emparejamiento si el número no está registrado
     if (args[0] && !conn.authState.creds.registered) {
-      let phoneNumber = m.sender.split('@')[0];
       if (!phoneNumber) process.exit(0);
       let cleanedNumber = phoneNumber.replace(/[^0-9]/g, '');
-
       setTimeout(async () => {
         let codeBot = await conn.requestPairingCode(cleanedNumber);
         codeBot = codeBot?.match(/.{1,4}/g)?.join("-") || codeBot;
+        
         let txt = `*¡Hola, ${m.sender.split('@')[0]}! Aquí está tu código para activar el Kirito-Bot!*\n\n`;
         txt += `🎯 *Pasos:*\n`;
         txt += `1️⃣ Abre WhatsApp y ve a la opción de *"Dispositivos Vinculados"*.\n`;
         txt += `2️⃣ Toca la opción *"Vincular con número"*.\n`;
         txt += `3️⃣ Introduce el siguiente código en tu WhatsApp:\n`;
+        txt += `\n*Código:* ${codeBot}\n\n`;
         txt += `✨ *Recuerda:* Este código solo es válido para el número registrado.\n`;
+
         await parent.reply(m.chat, txt, m);
         await parent.reply(m.chat, codeBot, m);
       }, 3000);
@@ -56,6 +81,9 @@ let handler = async (m, { conn: _conn, args, usedPrefix, command, isOwner }) => 
 
     conn.isInit = false;
 
+    let isInit = true;
+
+    // Función de actualización de conexión
     async function connectionUpdate(update) {
       const { connection, lastDisconnect, isNewLogin, qr } = update;
       if (isNewLogin) conn.isInit = true;
@@ -64,12 +92,17 @@ let handler = async (m, { conn: _conn, args, usedPrefix, command, isOwner }) => 
         conn.isInit = true;
         global.conns.push(conn);
         await parent.reply(m.chat, '✅ *Conexión Establecida con Éxito*', m);
+      } else if (connection === 'close') {
+        if (lastDisconnect?.error?.output?.statusCode === DisconnectReason.loggedOut) {
+          await parent.reply(m.chat, '⚠️ *Desconexión detectada, sesión cerrada.*', m);
+        }
       }
     }
 
+    // Limpiar conexiones inactivas
     setInterval(async () => {
       if (!conn.user) {
-        try { conn.ws.close() } catch { }
+        try { conn.ws.close() } catch (e) { }
         conn.ev.removeAllListeners();
         let i = global.conns.indexOf(conn);
         if (i < 0) return;
@@ -78,9 +111,40 @@ let handler = async (m, { conn: _conn, args, usedPrefix, command, isOwner }) => 
       }
     }, 60000);
 
-    conn.ev.on('connection.update', connectionUpdate);
-    conn.ev.on('creds.update', saveCreds);
+    // Recargar el handler
+    let creloadHandler = async function (restatConn) {
+      try {
+        const Handler = await import(`../handler.js?update=${Date.now()}`).catch(console.error);
+        if (Object.keys(Handler || {}).length) handler = Handler;
+      } catch (e) {
+        console.error(e);
+      }
 
+      if (restatConn) {
+        try { conn.ws.close() } catch (e) { }
+        conn.ev.removeAllListeners();
+        conn = makeWASocket(connectionOptions);
+        isInit = true;
+      }
+
+      if (!isInit) {
+        conn.ev.off('messages.upsert', conn.handler);
+        conn.ev.off('connection.update', conn.connectionUpdate);
+        conn.ev.off('creds.update', conn.credsUpdate);
+      }
+
+      conn.handler = handler.handler.bind(conn);
+      conn.connectionUpdate = connectionUpdate.bind(conn);
+      conn.credsUpdate = saveCreds.bind(conn, true);
+
+      conn.ev.on('messages.upsert', conn.handler);
+      conn.ev.on('connection.update', conn.connectionUpdate);
+      conn.ev.on('creds.update', conn.credsUpdate);
+      isInit = false;
+      return true;
+    };
+
+    creloadHandler(false);
   }
 
   serbot();
