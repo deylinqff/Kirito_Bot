@@ -21,7 +21,7 @@ src="https://media.tenor.com/0y8yGK559cAAAAAM/flames-twin.gif" width="350" heigh
 src="https://media.tenor.com/0y8yGK559cAAAAAM/flames-twin.gif" width="350" height="20" alt="maicolxyz777"/></a>
 ## 🚀 **Explora Kirito-Bot**  
 <p align="center">
-  <img src="https://qu.ax/SuZFt.jpg" alt="Kirito-Bot">
+  <img src="https://media.tenor.com/rH0jFMF5z3AAAAAM/kirito-sao.gif" alt="Kirito-Bot">
 </p>  
 
 <a href="https://media.tenor.com/0y8yGK559cAAAAAM/flames-twin.gif"><img
