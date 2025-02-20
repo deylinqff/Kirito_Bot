@@ -24,26 +24,9 @@ const categorias = {
   'rcanal': '📺 R-CANAL',
 };
 
-const emojisCategorias = {
-  'anime': '🎴',
-  'main': '📌',
-  'search': '🔎',
-  'game': '🕹️',
-  'serbot': '🤖',
-  'rpg': '⚔️',
-  'sticker': '🎭',
-  'group': '👥',
-  'premium': '💎',
-  'downloader': '📥',
-  'tools': '🛠️',
-  'fun': '🎉',
-  'nsfw': '🔞',
-  'cmd': '📂',
-  'owner': '👑',
-  'audio': '🎶',
-  'advanced': '🚀',
-  'rcanal': '📺',
-};
+const emojisCategorias = Object.fromEntries(
+  Object.keys(categorias).map(key => [key, categorias[key].split(' ')[0]])
+);
 
 const generarSaludo = () => {
   const hora = new Date().getHours();
@@ -78,7 +61,7 @@ const readMore = more.repeat(4001);
 
 const handler = async (m, { conn, usedPrefix }) => {
   try {
-    const usuario = global.db.data.users[m.sender];
+    const usuario = global.db?.data?.users?.[m.sender];
     if (!usuario) {
       return conn.reply(m.chat, '❌ No estás registrado en la base de datos.', m);
     }
@@ -86,7 +69,7 @@ const handler = async (m, { conn, usedPrefix }) => {
     const { exp = 0, level = 1 } = usuario;
     const { min, xp, max } = xpRange(level, global.multiplier || 1);
     const nombre = (await conn.getName(m.sender)) || 'Usuario';
-    const totalUsuarios = Object.keys(global.db.data.users || {}).length;
+    const totalUsuarios = Object.keys(global.db?.data?.users || {}).length;
     const modo = global.opts['self'] ? 'Privado' : 'Público';
 
     if (!global.plugins) {
@@ -139,17 +122,16 @@ const handler = async (m, { conn, usedPrefix }) => {
 
     const imagenAleatoria = imagenesURL[Math.floor(Math.random() * imagenesURL.length)];
 
+    const dev = 'By Deylin'; // Define "dev" aquí o usa el valor real.
+    const perfil = 'https://example.com/perfil.jpg'; // Define "perfil" con una imagen real.
+    const redes = 'https://example.com/redes'; // Define "redes" con una URL real.
+
     await conn.sendMessage(m.chat, {
       image: { url: imagenAleatoria },
       caption: menuTexto.trim(),
       contextInfo: {
         mentionedJid: [m.sender],
         isForwarded: true,
-        forwardedNewsletterMessageInfo: {
-          newsletterJid: channelRD.id,
-          newsletterName: channelRD.name,
-          serverMessageId: -1,
-        },
         forwardingScore: 999,
         externalAdReply: {
           title: 'KIRITO-BOT',
