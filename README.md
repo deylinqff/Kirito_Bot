@@ -1,6 +1,7 @@
 > ⌛ **Versión Actual:** `1.1.2`  
 # ⚔️ **Kirito-Bot** | 
-`El Guardián del Código` 🌌  
+`El Guardián del Código` 🌌 <a href="https://tinyurl.com/2yeaghq8"><img src="https://tinyurl.com/2yeaghq8" width="20" height="20" alt="maicolxyz777"/></a>
+
 
 ---
 <p align="center">
