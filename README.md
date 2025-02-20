@@ -2,20 +2,34 @@
 # ⚔️ **Kirito-Bot** 
 | `El Guardián del Código` 🌌  
 
-<!-- RAINBOW LINE BOT -->
-<div style="position: relative; text-align: center; color: white;">
-  <img src="https://media.giphy.com/media/3o6Zt8JM5yfu9xNNuo/giphy.gif" width="100%">
-  <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 24px; font-weight: bold;">
+<<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bienvenido al repositorio oficial de Kirito-Bot</title>
+  <style>
+    @keyframes fuego {
+      0% { color: orange; text-shadow: 0 0 5px red, 0 0 10px orange, 0 0 15px yellow, 0 0 20px red; }
+      50% { color: red; text-shadow: 0 0 10px orange, 0 0 15px yellow, 0 0 20px red, 0 0 25px white; }
+      100% { color: yellow; text-shadow: 0 0 5px orange, 0 0 10px yellow, 0 0 15px red, 0 0 20px orange; }
+    }
+
+    .texto-fuego {
+      font-size: 40px;
+      font-weight: bold;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      animation: fuego 1.5s infinite;
+    }
+  </style>
+</head>
+<body>
+  <div class="texto-fuego">
     Bienvenido al repositorio oficial de Kirito-Bot
   </div>
-</div>
-<!-- RAINBOW LINE BOT -->
-
-<p align="center">
-  <img src="https://tinyurl.com/2yeaghq8" alt="Menú Principal">
-</p>  
-
-<!-- DIVISOR ESPECIAL -->
+</body>
+</html>
 <p align="center">
   <img src="https://github.com/deylinqff/assets/blob/main/kirito-line.gif" width="100%">
 </p>
