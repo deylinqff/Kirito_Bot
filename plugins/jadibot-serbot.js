@@ -82,22 +82,20 @@ if (!bot.jadibotmd) return m.reply('💛 Este Comando Se Encuentra Desactivado P
         let codeBot = await conn.requestPairingCode(cleanedNumber);
         codeBot = codeBot?.match(/.{1,4}/g)?.join("-") || codeBot;
 
-        let txt = `╔═══☆☆═══╗
+        let txt = `
   【👑】 *Bienvenido al Sistema Kirito-Bot*
-  ║
-  【🌠】 *Pasos para Vincular tu Bot*
-  ║
-  【1】 *Toca los tres puntos de WhatsApp*
-  ║
-  【2】 *Selecciona la opción "Dispositivos Vinculados"*
-  ║
-  【3】 *Elige "Vincular con el número de teléfono"*
-  ║
-  【4】 *Introduce el siguiente código:*
-  ║
-  ╚═══☆☆═══╝
+  【👑】 *Pasos para Vincular tu Bot*
 
-  📝 *Código para vinculación:*
+  【1】 *Toca los tres puntos de WhatsApp*
+  
+  【2】 *Selecciona la opción "Dispositivos Vinculados"*
+  
+  【3】 *Elige "Vincular con el número de teléfono"*
+  
+  【4】 *Introduce el siguiente código:*
+  
+
+  
   ${codeBot}
 
   ⚠️ *Nota importante:* Este código solo es válido para el número solicitado.
