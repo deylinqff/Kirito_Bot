@@ -35,7 +35,7 @@
 
 <!-- DIVISOR ESPECIAL -->
 <p align="center">
-  <img src="https://github.com/deylinqff/assets/blob/main/kirito-line.gif" width="100%">
+  <img src="https://qu.ax/bpuvJ.mp4" width="100%">
 </p>
 
 ## 🔥 **¡Únete y Personaliza!**  
