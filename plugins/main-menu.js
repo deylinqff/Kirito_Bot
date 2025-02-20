@@ -71,20 +71,6 @@ const formatoMenu = {
   despues: '🔥 *By DEYLIN* 🔥',
 };
 
-          forwardingScore: 999,
-          externalAdReply: {
-              title: botname,
-              body: textbot,
-              thumbnailUrl: banner,
-              mediaType: 1,
-              showAdAttribution: true,
-              renderLargerThumbnail: true,
-          },
-      },
-  }, { quoted: m });
-
-};
-
 const more = String.fromCharCode(8206);
 const readMore = more.repeat(4001);
 
@@ -148,10 +134,25 @@ const handler = async (m, { conn, usedPrefix }) => {
       'https://files.catbox.moe/0tv7r3.jpg',
       'https://files.catbox.moe/yiaw4a.jpg'
     ];
-    
+
     const imagenAleatoria = imagenesURL[Math.floor(Math.random() * imagenesURL.length)];
 
-    await conn.sendFile(m.chat, imagenAleatoria, 'menu.jpg', menuTexto.trim(), m);
+    await conn.sendMessage(m.chat, {
+      image: { url: imagenAleatoria },
+      caption: menuTexto.trim(),
+      contextInfo: {
+        forwardingScore: 999,
+        externalAdReply: {
+          title: botname,
+          body: textbot,
+          thumbnailUrl: banner,
+          mediaType: 1,
+          showAdAttribution: true,
+          renderLargerThumbnail: true,
+        },
+      },
+    }, { quoted: m });
+
   } catch (error) {
     console.error('Error en el menú:', error);
     conn.reply(m.chat, '❌ Error al generar el menú.', m);
