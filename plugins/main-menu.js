@@ -68,8 +68,10 @@ const formatoMenu = {
   cabecera: '┏━☾➥ *%categoria* ««✰',
   cuerpo: '┃%emoji %cmd %isLimit %isPremium',
   pie: '┗━━«✰»━━━━«✰»━━━━«✰»━━┛',
-  despues: '🔥 *By DEYLIN* 🔥',
+  despues: '🔥 *By DEYLIN* 🔥', m, rcanal)
+
 };
+
 
 const more = String.fromCharCode(8206);
 const readMore = more.repeat(4001);
