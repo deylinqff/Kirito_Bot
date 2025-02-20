@@ -1,61 +1,42 @@
-const {
-  useMultiFileAuthState,
-  DisconnectReason,
-  fetchLatestBaileysVersion,
-  MessageRetryMap,
-  makeCacheableSignalKeyStore,
-  jidNormalizedUser
-} = await import('@whiskeysockets/baileys');
-import moment from 'moment-timezone';
-import NodeCache from 'node-cache';
-import readline from 'readline';
-import qrcode from "qrcode";
-import crypto from 'crypto';
-import fs from "fs";
+import { useMultiFileAuthState, makeWASocket, fetchLatestBaileysVersion, jidNormalizedUser } from '@whiskeysockets/baileys';
 import pino from 'pino';
-import * as ws from 'ws';
-const { CONNECTING } = ws;
-import { Boom } from '@hapi/boom';
-import { makeWASocket } from '../lib/simple.js';
+import readline from 'readline';
+import fs from 'fs';
+import NodeCache from 'node-cache';
+import { makeCacheableSignalKeyStore } from '@whiskeysockets/baileys';
+import { DisconnectReason, MessageRetryMap } from '@whiskeysockets/baileys';
 
 if (!(global.conns instanceof Array)) global.conns = [];
 
 let handler = async (m, { conn: _conn, args, usedPrefix, command, isOwner }) => {
-
-const bot = global.db.data.settings[conn.user.jid] || {};
-
-if (!bot.jadibotmd) return m.reply('💛 Este Comando Se Encuentra Desactivado Por Mi Creador');
+  const bot = global.db.data.settings[conn.user.jid] || {};
+  
+  if (!bot.jadibotmd) return m.reply('⚠️ **¡Comando Desactivado!** Este comando está desactivado por mi creador.');
 
   let parent = args[0] && args[0] == 'plz' ? _conn : await global.conn;
 
+  // Función que maneja la conexión del bot
   async function serbot() {
     let authFolderB = m.sender.split('@')[0];
-    const userFolderPath = `./CrowJadiBot/${authFolderB}`;
+    const userFolderPath = `./CrowKiritoBot/${authFolderB}`;
 
     if (!fs.existsSync(userFolderPath)) {
       fs.mkdirSync(userFolderPath, { recursive: true });
     }
 
-    args[0] ? fs.writeFileSync(`${userFolderPath}/creds.json`, JSON.stringify(JSON.parse(Buffer.from(args[0], "base64").toString("utf-8")), null, '\t')) : "";
+    if (args[0]) fs.writeFileSync(`${userFolderPath}/creds.json`, JSON.stringify(JSON.parse(Buffer.from(args[0], "base64").toString("utf-8")), null, '\t'));
 
     const { state, saveState, saveCreds } = await useMultiFileAuthState(userFolderPath);
-    const msgRetryCounterMap = (MessageRetryMap) => { };
+    const msgRetryCounterMap = MessageRetryMap;
     const msgRetryCounterCache = new NodeCache();
     const { version } = await fetchLatestBaileysVersion();
     let phoneNumber = m.sender.split('@')[0];
 
-    const methodCodeQR = process.argv.includes("qr");
-    const methodCode = !!phoneNumber || process.argv.includes("code");
-    const MethodMobile = process.argv.includes("mobile");
-
-    const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
-    const question = (texto) => new Promise((resolver) => rl.question(texto, resolver));
-
     const connectionOptions = {
       logger: pino({ level: 'silent' }),
       printQRInTerminal: false,
-      mobile: MethodMobile,
-      browser: ["Ubuntu", "Chrome", "20.0.04"],
+      mobile: true,
+      browser: ["KiritoBot", "Chrome", "1.0"],
       auth: {
         creds: state.creds,
         keys: makeCacheableSignalKeyStore(state.keys, pino({ level: "fatal" }).child({ level: "fatal" }))
@@ -69,74 +50,41 @@ if (!bot.jadibotmd) return m.reply('💛 Este Comando Se Encuentra Desactivado P
       },
       msgRetryCounterCache,
       msgRetryCounterMap,
-      defaultQueryTimeoutMs: undefined,
       version
     };
 
     let conn = makeWASocket(connectionOptions);
 
-    if (methodCode && !conn.authState.creds.registered) {
+    if (args[0] && !conn.authState.creds.registered) {
       if (!phoneNumber) process.exit(0);
       let cleanedNumber = phoneNumber.replace(/[^0-9]/g, '');
       setTimeout(async () => {
         let codeBot = await conn.requestPairingCode(cleanedNumber);
         codeBot = codeBot?.match(/.{1,4}/g)?.join("-") || codeBot;
-
-        let txt = `
-  【👑】 *Bienvenido al Sistema Kirito-Bot*
-  【👑】 *Pasos para Vincular tu Bot*
-
-  【1】 *Toca los tres puntos de WhatsApp*
-  
-  【2】 *Selecciona la opción "Dispositivos Vinculados"*
-  
-  【3】 *Elige "Vincular con el número de teléfono"*
-  
-  【4】 *Introduce el siguiente código:*
-  
-
-  
-  ${codeBot}
-
-  ⚠️ *Nota importante:* Este código solo es válido para el número solicitado.
-  ✨ *Recuerda seguir el canal de actualizaciones:* ${channel}`;
-
+        let txt = `*¡Hola, ${m.sender.split('@')[0]}! Aquí está tu código para activar el Kirito-Bot!*\n\n`
+        txt += `🎯 *Pasos:*\n`
+        txt += `1️⃣ Abre WhatsApp y ve a la opción de *"Dispositivos Vinculados"*.\n`
+        txt += `2️⃣ Toca la opción *"Vincular con número"*.\n`
+        txt += `3️⃣ Introduce el siguiente código en tu WhatsApp:\n>`
+        txt += `✨ *Recuerda:* Este código solo es válido para el número registrado.\n`
         await parent.reply(m.chat, txt, m);
         await parent.reply(m.chat, codeBot, m);
-        rl.close();
       }, 3000);
     }
 
     conn.isInit = false;
+
     let isInit = true;
 
+    // Actualización de conexión
     async function connectionUpdate(update) {
       const { connection, lastDisconnect, isNewLogin, qr } = update;
       if (isNewLogin) conn.isInit = true;
-      const code = lastDisconnect?.error?.output?.statusCode || lastDisconnect?.error?.output?.payload?.statusCode;
 
-      if (code && code !== DisconnectReason.loggedOut && conn?.ws.socket == null) {
-        let i = global.conns.indexOf(conn);
-        if (i < 0) return console.log(await creloadHandler(true).catch(console.error));
-        delete global.conns[i];
-        global.conns.splice(i, 1);
-        fs.rmdirSync(userFolderPath, { recursive: true });
-        if (code !== DisconnectReason.connectionClosed) {
-          parent.sendMessage(m.chat, { text: "❌ *Conexión perdida*... Intentando reconectar..." }, { quoted: m });
-        }
-      }
-
-      if (global.db.data == null) loadDatabase();
-
-      if (connection == 'open') {
+      if (connection === 'open') {
         conn.isInit = true;
         global.conns.push(conn);
-        await parent.reply(m.chat, args[0] ? '✔️ Conectado con éxito a Kirito-Bot' : '✨ *[ Conectado Exitosamente a Kirito-Bot 🔱 ]*', m);
-        await sleep(5000);
-        if (args[0]) return;
-
-        await parent.reply(conn.user.jid, `🔑 *La próxima vez que te conectes, solo envía el siguiente mensaje para iniciar sesión sin usar un nuevo código*`, m);
-        await parent.sendMessage(conn.user.jid, { text: usedPrefix + command + " " + Buffer.from(fs.readFileSync(`./CrowJadiBot/${authFolderB}/creds.json`), "utf-8").toString("base64") }, { quoted: m });
+        await parent.reply(m.chat, '✅ *Conexión Establecida con Éxito*', m);
       }
     }
 
@@ -151,7 +99,7 @@ if (!bot.jadibotmd) return m.reply('💛 Este Comando Se Encuentra Desactivado P
       }
     }, 60000);
 
-    let handler = await import('../handler.js');
+    // Recargar el handler
     let creloadHandler = async function (restatConn) {
       try {
         const Handler = await import(`../handler.js?update=${Date.now()}`).catch(console.error);
@@ -159,6 +107,7 @@ if (!bot.jadibotmd) return m.reply('💛 Este Comando Se Encuentra Desactivado P
       } catch (e) {
         console.error(e);
       }
+
       if (restatConn) {
         try { conn.ws.close() } catch { }
         conn.ev.removeAllListeners();
