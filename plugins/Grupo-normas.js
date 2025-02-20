@@ -52,7 +52,7 @@ Esta política puede actualizarse en cualquier momento. Se notificará si hay ca
 Al usar Kirito Bot, aceptas estas condiciones.
 `;
 
-let imagURL = '' 
+let imagURL = 'https://files.catbox.moe/hyrmn9.jpg' 
 
 export async function handler(m, { command }) {
     if (command === 'norma') {
