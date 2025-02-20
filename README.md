@@ -37,7 +37,7 @@ src="https://media.tenor.com/0y8yGK559cAAAAAM/flames-twin.gif" width="350" heigh
 src="https://media.tenor.com/0y8yGK559cAAAAAM/flames-twin.gif" width="350" height="20" alt="maicolxyz777"/></a>
 
 <a href="https://media.tenor.com/rH0jFMF5z3AAAAAM/kirito-sao.gif"><img
-src="https://media.tenor.com/rH0jFMF5z3AAAAAM/kirito-sao.gif" width="50" height="50" alt="maicolxyz777"/></a> ***Forma parte de la Comunidad*** 
+src="https://media.tenor.com/rH0jFMF5z3AAAAAM/kirito-sao.gif" width="100" height="100" alt="maicolxyz777"/></a> ***Forma parte de la Comunidad*** 
 💬 **Canal Oficial:** [`Click Aquí`](https://whatsapp.com/channel/0029VankMyeBadmR9Ou0So3t)  
 
 <a href="https://media.tenor.com/0y8yGK559cAAAAAM/flames-twin.gif"><img
