@@ -32,11 +32,11 @@ const politica = `
 5. **Actualización de la Política**: Esta política puede actualizarse en cualquier momento. Se notificará a los usuarios si hay cambios significativos.
 `;
 
-// Handler para mostrar normas y política
 handler.help = ['normas']
-handler.command = ['norma', 'política']
-handler.register = true
-handler.tags = ['main']
+handler.tags = ['grupo']
+handler.command = ['norma']
+
+export default handler
 
 // Responde con las normas o política
 handler.handler = async (m, { command }) => {
