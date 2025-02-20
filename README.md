@@ -1,6 +1,7 @@
 > ⌛ **Versión Actual:** `1.1.2`  
 # ⚔️ **Kirito-Bot** | 
-`El Guardián del Código` 🌌 <a href="https://giphy.com/gifs/anime-gif-sword-art-online-kirito-81wJ9DZneVUBO"><vid src="https://media.giphy.com/media/f9N0nW8SgGAK4/giphy.gif" width="20" height="20" alt="maicolxyz777"/></a>
+`El Guardián del Código` 🌌 <a href="https://giphy.com/gifs/anime-gif-sword-art-online-kirito-81wJ9DZneVUBO"><GIF
+src="https://media.giphy.com/media/f9N0nW8SgGAK4/giphy.gif" width="20" height="20" alt="maicolxyz777"/></a>
 
 
 ---
