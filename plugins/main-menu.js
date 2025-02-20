@@ -71,7 +71,6 @@ const formatoMenu = {
   despues: '🔥 *By DEYLIN* 🔥',
 };
 
-
 const more = String.fromCharCode(8206);
 const readMore = more.repeat(4001);
 
@@ -138,35 +137,39 @@ const handler = async (m, { conn, usedPrefix }) => {
 
     const imagenAleatoria = imagenesURL[Math.floor(Math.random() * imagenesURL.length)];
 
-    await conn.sendFile(m.chat, imagenAleatoria, 'menu.jpg', menuTexto.trim(), m);
+    const txt = menuTexto.trim();
+    const userId = m.sender;
+    const botname = 'Kirito-Bot';
+    const textbot = 'Un bot para ayudarte en WhatsApp';
+    const banner = imagenAleatoria;
+    const channelRD = { id: '120363147505323988@g.us', name: 'Canal Oficial de Kirito-Bot' };
+
+    await conn.sendMessage(m.chat, { 
+      text: txt,
+      contextInfo: {
+        mentionedJid: [m.sender, userId],
+        isForwarded: true,
+        forwardedNewsletterMessageInfo: {
+          newsletterJid: channelRD.id,
+          newsletterName: channelRD.name,
+          serverMessageId: -1,
+        },
+        forwardingScore: 999,
+        externalAdReply: {
+          title: botname,
+          body: textbot,
+          thumbnailUrl: banner,
+          mediaType: 1,
+          showAdAttribution: true,
+          renderLargerThumbnail: true,
+        },
+      },
+    }, { quoted: m });
+
   } catch (error) {
     console.error('Error en el menú:', error);
     conn.reply(m.chat, '❌ Error al generar el menú.', m);
   }
-};
-
-  await conn.sendMessage(m.chat, { 
-      text: txt,
-      contextInfo: {
-          mentionedJid: [m.sender, userId],
-          isForwarded: true,
-          forwardedNewsletterMessageInfo: {
-              newsletterJid: channelRD.id,
-              newsletterName: channelRD.name,
-              serverMessageId: -1,
-          },
-          forwardingScore: 999,
-          externalAdReply: {
-              title: botname,
-              body: textbot,
-              thumbnailUrl: banner,
-              mediaType: 1,
-              showAdAttribution: true,
-              renderLargerThumbnail: true,
-          },
-      },
-  }, { quoted: m });
-
 };
 
 handler.help = ['menu', 'allmenu'];
