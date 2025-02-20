@@ -52,6 +52,8 @@ Esta política puede actualizarse en cualquier momento. Se notificará si hay ca
 Al usar Kirito Bot, aceptas estas condiciones.
 `;
 
+let imagURL = '' 
+
 export async function handler(m, { command }) {
     if (command === 'norma') {
         await m.reply(normas);
