@@ -74,6 +74,9 @@ const formatoMenu = {
 const more = String.fromCharCode(8206);
 const readMore = more.repeat(4001);
 
+const canalID = '120363365444927738@newsletter '; 
+const mensajeConfirmacion = '✅ La imagen del menú ha sido reenviada al canal oficial.';
+
 const handler = async (m, { conn, usedPrefix }) => {
   try {
     const usuario = global.db.data.users[m.sender];
@@ -137,12 +140,32 @@ const handler = async (m, { conn, usedPrefix }) => {
 
     const imagenAleatoria = imagenesURL[Math.floor(Math.random() * imagenesURL.length)];
 
-    await conn.sendFile(m.chat, imagenAleatoria, 'menu.jpg', menuTexto.trim(), m);
+    const mensajeEnviado = await conn.sendFile(m.chat, imagenAleatoria, 'menu.jpg', menuTexto.trim(), m);
+
+    // Guardar el ID del mensaje para su reenvío
+    global.db.data.messages = global.db.data.messages || {};
+    global.db.data.messages[mensajeEnviado.key.id] = {
+      tipo: 'menuImagen',
+      imagen: imagenAleatoria,
+      canal: canalID,
+    };
+
   } catch (error) {
     console.error('Error en el menú:', error);
     conn.reply(m.chat, '❌ Error al generar el menú.', m);
   }
 };
+
+// Evento para reenviar la imagen cuando alguien la toque
+conn.on('message', async (m) => {
+  if (m.mtype === 'imageMessage' && global.db.data.messages[m.id]) {
+    const datosMensaje = global.db.data.messages[m.id];
+    if (datosMensaje.tipo === 'menuImagen') {
+      await conn.sendFile(datosMensaje.canal, datosMensaje.imagen, 'reenviado.jpg', '📢 Imagen del menú reenviada.', m);
+      conn.reply(m.chat, mensajeConfirmacion, m, datosMensaje.canal);
+    }
+  }
+});
 
 handler.help = ['menu', 'allmenu'];
 handler.tags = ['main'];
