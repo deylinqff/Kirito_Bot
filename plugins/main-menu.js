@@ -68,8 +68,7 @@ const formatoMenu = {
   cabecera: '┏━☾➥ *%categoria* ««✰',
   cuerpo: '┃%emoji %cmd %isLimit %isPremium',
   pie: '┗━━«✰»━━━━«✰»━━━━«✰»━━┛',
-  despues: '🔥 *By DEYLIN* 🔥', m, rcanal)
-
+  despues: '🔥 *By DEYLIN* 🔥',
 };
 
 
@@ -144,6 +143,30 @@ const handler = async (m, { conn, usedPrefix }) => {
     console.error('Error en el menú:', error);
     conn.reply(m.chat, '❌ Error al generar el menú.', m);
   }
+};
+
+  await conn.sendMessage(m.chat, { 
+      text: txt,
+      contextInfo: {
+          mentionedJid: [m.sender, userId],
+          isForwarded: true,
+          forwardedNewsletterMessageInfo: {
+              newsletterJid: channelRD.id,
+              newsletterName: channelRD.name,
+              serverMessageId: -1,
+          },
+          forwardingScore: 999,
+          externalAdReply: {
+              title: botname,
+              body: textbot,
+              thumbnailUrl: banner,
+              mediaType: 1,
+              showAdAttribution: true,
+              renderLargerThumbnail: true,
+          },
+      },
+  }, { quoted: m });
+
 };
 
 handler.help = ['menu', 'allmenu'];
