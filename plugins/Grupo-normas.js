@@ -52,13 +52,21 @@ Esta política puede actualizarse en cualquier momento. Se notificará si hay ca
 Al usar Kirito Bot, aceptas estas condiciones.
 `;
 
-    const imagenesURL = 'https://files.catbox.moe/hyrmn9.jpg' 
+const imagenesURL = 'https://files.catbox.moe/hyrmn9.jpg';  // URL de la imagen
 
 export async function handler(m, { command }) {
     if (command === 'norma') {
-        await m.reply(normas);
+        await m.reply({
+            text: normas,
+            image: { url: imagenesURL },
+            caption: 'Normas de uso de Kirito Bot'
+        });
     } else if (command === 'política') {
-        await m.reply(politica);
+        await m.reply({
+            text: politica,
+            image: { url: imagenesURL },
+            caption: 'Política de privacidad de Kirito Bot'
+        });
     }
 }
 
