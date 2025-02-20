@@ -7,7 +7,7 @@
   <img src="https://tinyurl.com/2yeaghq8" alt="Menú Principal">
 </p>  
 
---
+---
 
 ### 🏆 **Poder y Precisión en un Solo Bot**  
 📌 **Creado por:** `Deylin`  
