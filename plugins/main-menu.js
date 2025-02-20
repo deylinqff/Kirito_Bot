@@ -152,7 +152,7 @@ const handler = async (m, { conn, usedPrefix }) => {
         },
         forwardingScore: 999,
         externalAdReply: {
-          title: '🐉 ꙰,𝐊𝐚𝐤𝐚𝐫𝐨𝐭𝐨𝐁𝐨𝐭',
+          title: 'KIRITO-BOT',
           body: dev,
           thumbnailUrl: perfil,
           sourceUrl: redes,
