@@ -1,78 +1,55 @@
-export async function kiritoJadiBot(options) {
-  let { pathKiritoJadiBot, m, conn, args, usedPrefix, command } = options;
-  const mcode = args[0] && /(--code|code)/.test(args[0].trim()) || args[1] && /(--code|code)/.test(args[1].trim());
-  
-  // Función para generar un código de 6 dígitos
-  function generarCodigo() {
-    return Math.floor(100000 + Math.random() * 900000);
-  }
+import { useMultiFileAuthState, fetchLatestBaileysVersion } from '@whiskeysockets/baileys';
+import qrcode from 'qrcode';
+import fs from 'fs';
+import path from 'path';
+import pino from 'pino';
 
-  const pathCreds = path.join(pathKiritoJadiBot, "creds.json");
+let handler = async (m, { conn, args, usedPrefix, command }) => {
+  // Definir el ID del usuario
+  let who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? conn.user.jid : m.sender;
+  let id = `${who.split`@`[0]}`;
+  let pathKiritoJadiBot = path.join(`./kirito/`, id);
+
+  // Crear la carpeta para el sub-bot si no existe
   if (!fs.existsSync(pathKiritoJadiBot)) {
     fs.mkdirSync(pathKiritoJadiBot, { recursive: true });
   }
 
-  try {
-    if (args[0] && args[0] !== undefined) {
-      fs.writeFileSync(pathCreds, JSON.stringify(JSON.parse(Buffer.from(args[0], "base64").toString("utf-8")), null, '\t'));
-    }
-  } catch {
-    conn.reply(m.chat, `Usa correctamente el comando » ${usedPrefix + command} code`, m);
-    return;
-  }
-
-  let { version } = await fetchLatestBaileysVersion();
-  const msgRetryCache = new NodeCache();
-  const { state, saveState, saveCreds } = await useMultiFileAuthState(pathKiritoJadiBot);
+  const { version } = await fetchLatestBaileysVersion();
+  const { state } = await useMultiFileAuthState(pathKiritoJadiBot);
 
   const connectionOptions = {
     printQRInTerminal: false,
     logger: pino({ level: 'silent' }),
-    auth: { creds: state.creds, keys: makeCacheableSignalKeyStore(state.keys, pino({ level: 'silent' })) },
-    msgRetryCache,
+    auth: { creds: state.creds, keys: state.keys },
     version: [2, 3000, 1015901307],
     syncFullHistory: true,
-    browser: mcode ? ['Ubuntu', 'Chrome', '110.0.5585.95'] : ['Kirito-Bot (Sub Bot)', 'Chrome', '2.0.0'],
+    browser: ['Kirito-Bot (Sub Bot)', 'Chrome', '2.0.0'],
   };
 
   let sock = makeWASocket(connectionOptions);
-  sock.isInit = false;
-  let isInit = true;
 
   async function connectionUpdate(update) {
-    const { connection, lastDisconnect, isNewLogin, qr } = update;
-    
-    if (isNewLogin) sock.isInit = false;
-    
-    if (qr && !mcode) {
+    const { connection, qr } = update;
+
+    // Si es un nuevo QR, lo enviamos al usuario para que lo escanee
+    if (qr) {
       if (m?.chat) {
         await conn.sendMessage(m.chat, { image: await qrcode.toBuffer(qr, { scale: 8 }), caption: "*☆𝗞𝗜𝗥𝗜𝗧𝗢 - 𝗕𝗢𝗧☆*\n\n✐ Escanea este QR para convertirte en un *Sub-Bot* Temporal." }, { quoted: m });
       }
-      return;
-    }
-    
-    if (qr && mcode) {
-      let secret = generarCodigo(); // Generar código de 6 dígitos
-      await conn.sendMessage(m.chat, { text: "*☆𝗞𝗜𝗥𝗜𝗧𝗢 - 𝗕𝗢𝗧☆*\n\n✐ Usa este código para ser *Sub-Bot* Temporal." }, { quoted: m });
-      await m.reply(secret.toString()); // Enviar código generado
     }
 
-    if (connection === 'close') {
-      const reason = lastDisconnect?.error?.output?.statusCode || lastDisconnect?.error?.output?.payload?.statusCode;
-      if ([428, 408, 440, 405, 401, 500, 515, 403].includes(reason)) {
-        console.log(`Conexión cerrada para ${path.basename(pathKiritoJadiBot)}.`);
-        fs.rmdirSync(pathKiritoJadiBot, { recursive: true });
-      }
-    }
-
+    // Si la conexión se abre
     if (connection === 'open') {
-      let userName = sock.authState.creds.me.name || 'Anónimo';
-      console.log(`✅ ${userName} (+${path.basename(pathKiritoJadiBot)}) conectado exitosamente.`);
-      sock.isInit = true;
-      global.conns.push(sock);
+      console.log(`✅ Sub-Bot conectado exitosamente.`);
       await conn.sendMessage(m.chat, { text: `@${m.sender.split('@')[0]}, ya eres un *Sub-Bot*.`, mentions: [m.sender] }, { quoted: m });
     }
   }
 
   sock.ev.on("connection.update", connectionUpdate);
-}
+};
+
+handler.help = ['serbot'];
+handler.tags = ['serbot'];
+handler.command = ['serbot'];
+export default handler;
