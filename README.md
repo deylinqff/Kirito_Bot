@@ -3,9 +3,7 @@
 | `El Guardián del Código` 🌌  
 
 <!-- RAINBOW LINE BOT -->
-<video width="100%" controls>
-  <source src="https://files.catbox.moe/rwzvco.mp4" type="video/mp4">
-</video>
+<img src="https://files.catbox.moe/nozcci.jpg" width="100%">
 <!-- RAINBOW LINE BOT -->
 
 <p align="center">
