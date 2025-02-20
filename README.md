@@ -2,10 +2,7 @@
 # ⚔️ **Kirito-Bot** | 
 `El Guardián del Código` 🌌  
 
-<!-- DIVISOR ESPECIAL -->
-<p align="center">
-  <img src="https://github.com/deylinqff/assets/blob/main/kirito-line.gif" width="100%">
-</p>
+---
 
 <p align="center">
   <img src="https://tinyurl.com/2yeaghq8" alt="Menú Principal">
