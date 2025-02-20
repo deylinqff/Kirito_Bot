@@ -52,6 +52,12 @@ Esta política puede actualizarse en cualquier momento. Se notificará si hay ca
 Al usar Kirito Bot, aceptas estas condiciones.
 `;
 
+thumbnailUrl: icono
+}}
+}, { mentions: m.sender })
+m.react(emoji)
+
+}
     const imagenesURL = 'https://files.catbox.moe/hyrmn9.jpg' 
 
 export async function handler(m, { command }) {
