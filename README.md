@@ -3,7 +3,12 @@
 | `El Guardián del Código` 🌌  
 
 <!-- RAINBOW LINE BOT -->
-<img src="https://media.giphy.com/media/3o6Zt8JM5yfu9xNNuo/giphy.gif" width="100%">
+<div style="position: relative; text-align: center; color: white;">
+  <img src="https://media.giphy.com/media/3o6Zt8JM5yfu9xNNuo/giphy.gif" width="100%">
+  <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 24px; font-weight: bold;">
+    Bienvenido al repositorio oficial de Kirito-Bot
+  </div>
+</div>
 <!-- RAINBOW LINE BOT -->
 
 <p align="center">
