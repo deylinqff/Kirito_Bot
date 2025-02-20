@@ -139,7 +139,29 @@ const handler = async (m, { conn, usedPrefix }) => {
 
     const imagenAleatoria = imagenesURL[Math.floor(Math.random() * imagenesURL.length)];
 
-    await conn.sendFile(m.chat, imagenAleatoria, 'menu.jpg', menuTexto.trim(), m);
+    await conn.sendMessage(m.chat, {
+      image: { url: imagenAleatoria },
+      caption: menuTexto.trim(),
+      contextInfo: {
+        mentionedJid: [m.sender],
+        isForwarded: true,
+        forwardedNewsletterMessageInfo: {
+          newsletterJid: channelRD.id,
+          newsletterName: channelRD.name,
+          serverMessageId: -1,
+        },
+        forwardingScore: 999,
+        externalAdReply: {
+          title: '🐉 ꙰,𝐊𝐚𝐤𝐚𝐫𝐨𝐭𝐨𝐁𝐨𝐭',
+          body: dev,
+          thumbnailUrl: perfil,
+          sourceUrl: redes,
+          mediaType: 1,
+          renderLargerThumbnail: false,
+        },
+      },
+    }, { quoted: m });
+
   } catch (error) {
     console.error('Error en el menú:', error);
     conn.reply(m.chat, '❌ Error al generar el menú.', m);
