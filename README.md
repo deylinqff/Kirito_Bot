@@ -36,8 +36,7 @@ src="https://media.tenor.com/0y8yGK559cAAAAAM/flames-twin.gif" width="350" heigh
 <a href="https://media.tenor.com/0y8yGK559cAAAAAM/flames-twin.gif"><img
 src="https://media.tenor.com/0y8yGK559cAAAAAM/flames-twin.gif" width="350" height="10" alt="maicolxyz777"/></a>
 
-<a href="https://whatsapp.com/channel/0029VawF8fBBvvsktcInIz3m"><img
-src="https://whatsapp.com/channel/0029VawF8fBBvvsktcInIz3m" width="100" height="100" alt="maicolxyz777"/></a> ***Forma parte de la Comunidad*** 
+🌐 ***Forma parte de la Comunidad*** 
 💬 **Canal Oficial:** [`Click Aquí`](https://whatsapp.com/channel/0029VawF8fBBvvsktcInIz3m)  
 
 <a href="https://media.tenor.com/0y8yGK559cAAAAAM/flames-twin.gif"><img
